@@ -1,0 +1,77 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--violet);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--ink);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* squelette : styles de mise en place, a remplacer par les modules par section */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: calc(var(--space) * 4);
+  z-index: var(--z-header);
+}
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--violet);
+}
+.h-track {
+  display: flex;
+  height: 100vh;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+.panel {
+  flex: 0 0 100vw;
+  height: 100vh;
+  scroll-snap-align: start;
+}
+.explore-root {
+  width: 100vw;
+  height: 100vh;
+}
