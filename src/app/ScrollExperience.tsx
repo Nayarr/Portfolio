@@ -5,6 +5,10 @@ import { useSmoothScroll } from '@/lib/useSmoothScroll';
 import { SiteHeader } from '@/components/ui/SiteHeader';
 import { SiteFooter } from '@/components/ui/SiteFooter';
 import { Hub } from '@/components/hub/Hub';
+import { Projects } from '@/components/projects/Projects';
+import { Experience } from '@/components/experience/Experience';
+import { About } from '@/components/about/About';
+import { Contact } from '@/components/contact/Contact';
 
 import styles from './ScrollExperience.module.css';
 
@@ -13,6 +17,9 @@ import styles from './ScrollExperience.module.css';
  * Le scroll vertical est lisse par Lenis puis converti en translation X de la
  * piste par GSAP ScrollTrigger (pin + scrub). Sur mobile ou en reduced-motion,
  * la piste retombe en pile verticale native (voir le module CSS).
+ *
+ * Chaque panneau porte un composant d'ecran dedie, developpe sur sa propre
+ * branche : ce fichier ne bouge plus.
  */
 export function ScrollExperience() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -60,13 +67,21 @@ export function ScrollExperience() {
 
       <div ref={rootRef} className={styles.viewport}>
         <div ref={trackRef} className={styles.track}>
-          <section className={styles.panel} id="hub" aria-label="Hub">
+          <div className={styles.panel}>
             <Hub />
-          </section>
-          <section className={styles.panel} id="projets" aria-label="Projets" />
-          <section className={styles.panel} id="experience" aria-label="Experience" />
-          <section className={styles.panel} id="a-propos" aria-label="A propos" />
-          <section className={styles.panel} id="contact" aria-label="Contact" />
+          </div>
+          <div className={styles.panel}>
+            <Projects />
+          </div>
+          <div className={styles.panel}>
+            <Experience />
+          </div>
+          <div className={styles.panel}>
+            <About />
+          </div>
+          <div className={styles.panel}>
+            <Contact />
+          </div>
         </div>
       </div>
 
