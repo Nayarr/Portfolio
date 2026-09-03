@@ -24,8 +24,10 @@ Thumbs.db
 *.log
 npm-debug.log*
 
-# design: fichier genere par Claude Design (lourd), on garde les sources .dc.html
-design-mockup/portfolio-rayan-oughlis.html
+# design: sources Claude Design gardees en local uniquement.
+# La reference versionnee est docs/design/screens/*.jpg (rendus).
+design-mockup/
+.playwright-mcp/
 
 # misc
 coverage/
