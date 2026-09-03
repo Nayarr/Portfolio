@@ -1,0 +1,32 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# build
+dist/
+dist-ssr/
+*.local
+
+# env
+.env
+.env.*
+!.env.example
+
+# editor / os
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# logs
+*.log
+npm-debug.log*
+
+# design: fichier genere par Claude Design (lourd), on garde les sources .dc.html
+design-mockup/portfolio-rayan-oughlis.html
+
+# misc
+coverage/
+.lighthouseci/
