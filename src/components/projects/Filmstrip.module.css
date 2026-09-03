@@ -1,0 +1,112 @@
+.wrap {
+  height: 100%;
+  min-height: 100vh;
+  width: 100%;
+  background: #110d26;
+  color: #e9e3fb;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px clamp(24px, 6vw, 60px) 96px;
+  position: relative;
+  overflow: hidden;
+}
+.wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 80% at 50% 52%, rgba(124, 58, 237, 0.16), transparent 60%);
+  pointer-events: none;
+}
+
+.kicker {
+  position: relative;
+  margin: 0 0 32px;
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  font-family: var(--font-display);
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--violet-bright);
+}
+.count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: #a79dd0;
+}
+
+.strip {
+  position: relative;
+  height: 320px;
+  outline: none;
+}
+.strip:focus-visible {
+  outline: 2px solid var(--neon);
+  outline-offset: 12px;
+  border-radius: 4px;
+}
+
+.tile {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 82px;
+  height: 300px;
+  border: 0;
+  border-radius: 2px;
+  padding: 0;
+  cursor: pointer;
+  opacity: calc(1 - var(--dim, 0) * 0.14);
+  transform: translate(calc(-50% + var(--pos, 0) * 1px), -50%);
+  transition:
+    transform 0.45s var(--ease-out),
+    width 0.35s var(--ease-out),
+    opacity 0.35s var(--ease-out);
+  will-change: transform;
+}
+.tile.current {
+  width: 120px;
+  opacity: 1;
+  box-shadow:
+    0 0 0 1px rgba(185, 140, 255, 0.55),
+    0 34px 80px -18px rgba(124, 58, 237, 0.6);
+}
+
+.name {
+  position: absolute;
+  left: 7px;
+  bottom: 11px;
+  writing-mode: vertical-rl;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.8);
+}
+.idx {
+  position: absolute;
+  top: 9px;
+  right: 7px;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.hint {
+  position: relative;
+  margin: 40px 0 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8b80b8;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile {
+    transition: none;
+  }
+}
