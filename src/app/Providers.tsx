@@ -1,14 +1,17 @@
 import type { ReactNode } from 'react';
 
 import { ScanProvider } from '@/lib/scan-context';
+import { useUiSounds } from '@/lib/useUiSounds';
 import { Cursor } from '@/components/ui/Cursor';
 
 /**
- * Contexte global du site : curseur custom, etat du mode scan.
+ * Contexte global du site : curseur custom, etat du mode scan, sons d'interface.
  * Le smooth-scroll (Lenis) est monte dans ScrollExperience, pas ici,
  * pour ne pas s'appliquer au mode exploration 3D.
  */
 export function Providers({ children }: { children: ReactNode }) {
+  useUiSounds();
+
   return (
     <ScanProvider>
       <Cursor />
