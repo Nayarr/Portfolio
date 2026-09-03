@@ -1,0 +1,71 @@
+.hub {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: calc(var(--space) * 3);
+  padding: 0 calc(var(--space) * 12);
+  max-width: 900px;
+}
+
+.kicker {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.title {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  font-size: clamp(64px, 12vw, 132px);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+.title .accent {
+  margin-left: 0.9em;
+  color: var(--violet);
+}
+
+.lede {
+  margin: 0;
+  max-width: 34em;
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+.lede em {
+  color: var(--ink);
+  font-style: italic;
+}
+
+.stack {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space);
+  max-width: 34em;
+}
+.stack li {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 6px 11px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface);
+  color: var(--ink-muted);
+}
+
+.socials {
+  display: flex;
+  gap: calc(var(--space) * 2);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
