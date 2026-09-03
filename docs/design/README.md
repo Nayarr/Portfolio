@@ -1,19 +1,49 @@
 # Design
 
-Maquette-concept de tous les ecrans, faite avec Claude Design (canvas multi-artboards).
+Maquette-concept de tous les ecrans. Rendus de reference dans `screens/`.
 
-- Sources : [`../../design-mockup/`](../../design-mockup/) (`*.dc.html` + `canvas.json`).
-- Le fichier `design-mockup/portfolio-rayan-oughlis.html` est genere par l'outil et n'est
-  pas versionne (voir `.gitignore`).
+- **Source editable :** canvas Claude Design (multi-artboards). Les sources `.dc.html`
+  restent en local (`design-mockup/`, non versionnees) et se re-exportent depuis le canvas.
+- **Direction :** palette blanc + violet neon. Anton (display), Space Grotesk (UI),
+  JetBrains Mono (data), Instrument Serif (editorial). Jetons dans `src/styles/tokens.css`.
+- Les decisions liees sont dans `docs/adr/`.
 
-## Ecrans
+## Parcours
 
-Hub (scroll) · Hub mode exploration 3D · Mode scan · Projets (pellicule, transition,
-ecran deploye, ecran explore, fiche detaillee) · Experience (circuit electrique) ·
-A propos · Contact.
+| #   | Ecran                    | Fichier                             |
+| --- | ------------------------ | ----------------------------------- |
+| 01  | Hub (scroll)             | `screens/01-hub.jpg`                |
+| 01b | Hub, mode exploration 3D | `screens/02-hub-exploration-3d.jpg` |
+| --  | Mode scan (overlay)      | `screens/03-mode-scan.jpg`          |
+| 02  | Projets, pellicule       | `screens/04-projets-pellicule.jpg`  |
+| --  | Projets, transition      | `screens/05-projets-transition.jpg` |
+| --  | Projet deploye           | `screens/06-projet-deploye.jpg`     |
+| --  | Projet, ecran explore    | `screens/07-projet-explore.jpg`     |
+| --  | Projet, fiche detaillee  | `screens/08-projet-fiche.jpg`       |
+| 03  | Experience (circuit)     | `screens/09-experience.jpg`         |
+| 04  | A propos                 | `screens/10-a-propos.jpg`           |
+| 05  | Contact                  | `screens/11-contact.jpg`            |
 
-## Direction
+Pistes de style ecartees : `screens/ref-skin-cozy.jpg`, `screens/ref-skin-dedsec.jpg`.
 
-Palette blanc + violet neon. Typographies : Anton (display), Space Grotesk (UI),
-JetBrains Mono (data), Instrument Serif (editorial). Details dans `src/styles/tokens.css`
-et les ADR `docs/adr/`.
+## Apercu
+
+### 01, Hub
+
+![Hub](screens/01-hub.jpg)
+
+### 02, Projets
+
+![Projets](screens/04-projets-pellicule.jpg)
+
+### 06, Projet deploye
+
+![Projet deploye](screens/06-projet-deploye.jpg)
+
+### 09, Experience
+
+![Experience](screens/09-experience.jpg)
+
+### 10, A propos
+
+![A propos](screens/10-a-propos.jpg)
