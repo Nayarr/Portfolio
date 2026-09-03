@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { ModeToggle } from './ModeToggle';
 import { SfxToggle } from './SfxToggle';
+import { ScanToggle } from './ScanToggle';
 import styles from './SiteHeader.module.css';
 
 /** Chrome haut, commun a tous les ecrans du mode scroll. */
@@ -13,6 +14,7 @@ export function SiteHeader() {
       </Link>
       <div className={styles.controls}>
         <SfxToggle />
+        <ScanToggle />
         <ModeToggle />
       </div>
     </header>
