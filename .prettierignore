@@ -1,0 +1,6 @@
+dist
+node_modules
+pnpm-lock.yaml
+package-lock.json
+design-mockup
+CHANGELOG.md
