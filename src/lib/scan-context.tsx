@@ -24,6 +24,7 @@ export function ScanProvider({ children }: { children: ReactNode }) {
   return <ScanContext.Provider value={value}>{children}</ScanContext.Provider>;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components -- hook colocated with its provider, conventional
 export function useScan() {
   const ctx = useContext(ScanContext);
   if (!ctx) throw new Error('useScan doit etre utilise dans <ScanProvider>');
