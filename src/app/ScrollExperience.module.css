@@ -1,0 +1,36 @@
+/* Piste horizontale : GSAP epingle .viewport et translate .track en X. */
+.viewport {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  height: 100vh;
+  will-change: transform;
+}
+
+.panel {
+  flex: 0 0 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+/* Repli : pile verticale native, sans pin ni translation. */
+@media (max-width: 767px), (prefers-reduced-motion: reduce) {
+  .viewport {
+    height: auto;
+    overflow: visible;
+  }
+  .track {
+    flex-direction: column;
+    height: auto;
+    transform: none !important;
+  }
+  .panel {
+    flex-basis: auto;
+    min-height: 100vh;
+    height: auto;
+    width: 100vw;
+  }
+}
