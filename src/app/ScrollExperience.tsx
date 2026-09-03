@@ -1,6 +1,7 @@
 import { useHorizontalScroll } from '@/lib/useHorizontalScroll';
 import { ModeToggle } from '@/components/ui/ModeToggle';
 import { SfxToggle } from '@/components/ui/SfxToggle';
+import { Hub } from '@/components/hub/Hub';
 
 /**
  * Mode normal : les sections defilent horizontalement (scroll detourne via Lenis + GSAP).
@@ -21,7 +22,9 @@ export function ScrollExperience() {
       </header>
 
       <div ref={trackRef} className="h-track">
-        <section className="panel" id="hub" aria-label="Hub" />
+        <div className="panel" id="hub">
+          <Hub />
+        </div>
         <section className="panel" id="projets" aria-label="Projets" />
         <section className="panel" id="experience" aria-label="Experience" />
         <section className="panel" id="a-propos" aria-label="A propos" />
