@@ -6,6 +6,7 @@
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
     "types": ["vite/client"],
+    "noEmit": true,
 
     "strict": true,
     "noUnusedLocals": true,
@@ -18,8 +19,7 @@
 
     "paths": {
       "@/*": ["./src/*"]
-    },
-    "baseUrl": "."
+    }
   },
   "include": ["src"]
 }
