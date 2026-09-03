@@ -2,17 +2,29 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 24px;
-  height: 24px;
-  margin: -12px 0 0 -12px;
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
   border-radius: 50%;
   background: var(--violet);
-  filter: blur(6px);
-  opacity: 0.5;
+  filter: blur(7px);
+  opacity: 0.45;
   pointer-events: none;
   z-index: var(--z-cursor);
   mix-blend-mode: multiply;
   will-change: transform;
+  transition:
+    width 0.2s var(--ease-out),
+    height 0.2s var(--ease-out),
+    opacity 0.2s var(--ease-out),
+    margin 0.2s var(--ease-out);
+}
+
+.cursor[data-hot='true'] {
+  width: 54px;
+  height: 54px;
+  margin: -27px 0 0 -27px;
+  opacity: 0.6;
 }
 
 @media (pointer: coarse), (prefers-reduced-motion: reduce) {
