@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap');
+    *{box-sizing:border-box;}
+    body{margin:0;}
+    a{color:#7c3aed;text-decoration:none;}
+    a:hover{color:#211d40;}
+    .anton{font-family:'Anton',system-ui,sans-serif;text-transform:uppercase;}
+    .mono{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;}
+  </style>
+</helmet>
+
+<div style="position:relative;width:1440px;height:900px;overflow:hidden;background:#f7f4fd;color:#211d40;font-family:'Space Grotesk',system-ui,sans-serif;">
+
+  <svg width="1440" height="900" style="position:absolute;inset:0;opacity:.035;mix-blend-mode:multiply;pointer-events:none;">
+    <filter id="gra"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter>
+    <rect width="100%" height="100%" filter="url(#gra)"/>
+  </svg>
+  <div style="position:absolute;left:120px;top:180px;width:640px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,.12),transparent 62%);filter:blur(10px);pointer-events:none;"></div>
+
+  <!-- header -->
+  <div style="position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:flex-start;padding:34px 56px;">
+    <span class="anton" style="font-size:28px;transform:scaleX(.9);transform-origin:left;color:#7c3aed;">RAYAN</span>
+    <span class="mono" style="font-size:12px;letter-spacing:.2em;color:#7d76a6;margin-top:8px;">04 · À PROPOS</span>
+    <a href="#" style="font-size:12px;letter-spacing:.14em;color:#211d40;border-bottom:1px solid #7c3aed;padding-bottom:2px;">CONTACT</a>
+  </div>
+
+  <!-- left: photo + plate -->
+  <div style="position:absolute;left:56px;top:158px;width:300px;">
+    <div style="width:280px;height:300px;border-radius:16px;overflow:hidden;border:1px solid #e0d7f4;background:#efe9fb;position:relative;">
+      <img src="Photo.png" alt="Rayan Oughlis" style="width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05);">
+      <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(124,58,237,.28));mix-blend-mode:multiply;"></div>
+    </div>
+    <div class="mono" style="font-size:10px;letter-spacing:.12em;color:#7d76a6;margin-top:14px;line-height:1.8;">
+      RAYAN OUGHLIS · 20 ANS<br>VITRY-SUR-SEINE 94 · PERMIS B (VÉHICULÉ)
+    </div>
+  </div>
+
+  <!-- right: story -->
+  <div style="position:absolute;left:400px;right:56px;top:150px;">
+    <h1 class="anton" style="margin:0;font-size:52px;line-height:.96;letter-spacing:.01em;max-width:820px;">
+      DÉVELOPPEUR FULL-STACK,<br><span style="color:#7c3aed;">PENCHANT DATA &amp; AUTOMATISATION.</span>
+    </h1>
+    <p style="font-size:15.5px;line-height:1.62;color:#524c78;max-width:730px;margin:22px 0 0;">
+      Rayan, 20 ans, Vitry. BUT Informatique 3ᵉ année, parcours conception / développement / validation. J'aime quand le code sert à quelque chose de concret : automatiser une saisie, structurer de la donnée en vrac, donner à voir des chiffres. En stage j'étais le seul dev d'un cabinet de courtage, du besoin jusqu'à la prod. Sur mon temps libre je maintiens deux applis en prod pour un serveur Minecraft, j'apprends la 3D, et je fais des jeux qui ne sortiront probablement jamais. Objectif : une alternance où je construis des trucs qui tiennent.
+    </p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px 48px;margin-top:34px;max-width:720px;">
+      <div>
+        <div class="mono" style="font-size:10px;letter-spacing:.16em;color:#7d76a6;margin-bottom:12px;">FORMATION</div>
+        <div style="font-size:13.5px;line-height:1.5;color:#211d40;">
+          <b>BUT Informatique</b> · IUT Créteil/Vitry (UPEC)<br>
+          <span class="mono" style="font-size:10px;color:#7d76a6;">2024 → 2027 (prévu)</span><br><br>
+          <b>Bac STI2D</b> · Lycée Paul Langevin, Beauvais<br>
+          <span class="mono" style="font-size:10px;color:#7d76a6;">Mention Très Bien · 2024</span>
+        </div>
+      </div>
+      <div>
+        <div class="mono" style="font-size:10px;letter-spacing:.16em;color:#7d76a6;margin-bottom:12px;">CE QUI M'ANIME</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <span class="mono" style="font-size:11px;color:#524c78;border:1px solid #e0d7f4;border-radius:7px;padding:6px 11px;background:#fff;">UI / UX design</span>
+          <span class="mono" style="font-size:11px;color:#524c78;border:1px solid #e0d7f4;border-radius:7px;padding:6px 11px;background:#fff;">création de jeux vidéo</span>
+          <span class="mono" style="font-size:11px;color:#524c78;border:1px solid #e0d7f4;border-radius:7px;padding:6px 11px;background:#fff;">e-sport</span>
+          <span class="mono" style="font-size:11px;color:#524c78;border:1px solid #e0d7f4;border-radius:7px;padding:6px 11px;background:#fff;">musculation</span>
+        </div>
+        <div class="mono" style="font-size:10px;letter-spacing:.16em;color:#7d76a6;margin:20px 0 10px;">LANGUES</div>
+        <div style="font-size:12.5px;color:#211d40;">Français natif · Anglais B2 · Espagnol B1</div>
+      </div>
+    </div>
+
+    <div style="margin-top:30px;max-width:720px;border-top:1px solid #e0d7f4;padding-top:16px;">
+      <span class="mono" style="font-size:10px;letter-spacing:.16em;color:#7d76a6;">HORS-CODE · </span>
+      <span style="font-size:12.5px;color:#524c78;">Été 2024 : BAFA, puis animateur-surveillant baignade (CE EDF, CIE Thales).</span>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div class="mono" style="position:absolute;left:56px;bottom:36px;font-size:10px;letter-spacing:.16em;color:#7d76a6;line-height:1.7;">DÉVELOPPEUR INDÉPENDANT<br>DISPO ALTERNANCE · SEPT. 2026</div>
+  <div class="mono" style="position:absolute;right:56px;bottom:36px;font-size:10px;letter-spacing:.16em;color:#7d76a6;line-height:1.7;text-align:right;">rayan.ough · INSTAGRAM<br>Nayarr · GITHUB<br>in/oughlis-rayan · LINKEDIN</div>
+
+</div>
+</x-dc>
+</body>
+</html>

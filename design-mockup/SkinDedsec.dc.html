@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=VT323&display=swap');
+    *{box-sizing:border-box;}
+    body{margin:0;}
+    a{color:#b98cff;}
+    a:hover{color:#fff;}
+    .pix{font-family:'VT323',ui-monospace,monospace;}
+    .mono{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;}
+  </style>
+</helmet>
+
+<div style="position:relative;width:1440px;height:900px;overflow:hidden;background:#0d0a1a;color:#ece6fb;font-family:'Space Grotesk',system-ui,sans-serif;">
+
+  <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(185,140,255,.06) 0 1px,transparent 1px 3px);pointer-events:none;"></div>
+
+  <div style="position:absolute;top:34px;left:56px;right:56px;display:flex;justify-content:space-between;align-items:center;">
+    <span class="mono" style="font-size:11px;letter-spacing:.2em;color:#b98cff;">SYS://RO_PORTFOLIO_2026</span>
+    <div style="display:flex;gap:10px;">
+      <span class="mono" style="font-size:11px;letter-spacing:.14em;border:1px solid #b98cff;color:#b98cff;padding:7px 14px;">SON</span>
+      <span class="mono" style="font-size:11px;letter-spacing:.14em;border:1px solid #e089ff;color:#e089ff;padding:7px 14px;">SCAN</span>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:56px;top:150px;max-width:760px;">
+    <span class="mono" style="font-size:12px;letter-spacing:.2em;color:#e089ff;">// PISTE B · DEDSEC / WATCH DOGS PIXEL</span>
+    <div class="pix" style="font-size:150px;line-height:.82;letter-spacing:.02em;margin-top:14px;text-shadow:3px 0 #e089ff,-3px 0 #b98cff;">RAYAN<br>OUGHLIS</div>
+    <p class="mono" style="font-size:14px;line-height:1.6;max-width:520px;margin-top:18px;color:#b3a8dc;">
+      &gt; police pixel, glitch RVB violet, tags à la bombe, grille type terminal.<br>
+      &gt; le MODE SCAN devient le "profiler" : il révèle des données par-dessus l'écran.
+    </p>
+    <div style="display:flex;gap:8px;margin-top:20px;flex-wrap:wrap;">
+      <span class="mono" style="font-size:11px;border:1px solid #372e57;padding:6px 10px;color:#b3a8dc;">JavaScript</span>
+      <span class="mono" style="font-size:11px;border:1px solid #372e57;padding:6px 10px;color:#b3a8dc;">Python</span>
+      <span class="mono" style="font-size:11px;border:1px solid #372e57;padding:6px 10px;color:#b3a8dc;">PHP</span>
+      <span class="mono" style="font-size:11px;border:1px solid #372e57;padding:6px 10px;color:#b3a8dc;">Rust</span>
+    </div>
+  </div>
+
+  <!-- spray tag -->
+  <svg width="360" height="300" viewBox="0 0 360 300" style="position:absolute;right:60px;top:180px;opacity:.9;">
+    <path d="M40 210 Q60 90 150 90 Q250 90 250 160 Q250 220 150 220 L150 260" fill="none" stroke="#b98cff" stroke-width="14" stroke-linecap="round"/>
+    <circle cx="150" cy="258" r="9" fill="#e089ff"/>
+    <path d="M270 70 l40 40 M310 70 l-40 40" stroke="#e089ff" stroke-width="8" stroke-linecap="round"/>
+    <rect x="60" y="250" width="220" height="4" fill="#b98cff" opacity=".4"/>
+  </svg>
+
+  <div class="mono" style="position:absolute;left:56px;bottom:38px;font-size:11px;letter-spacing:.16em;color:#6a5f92;">[01]HUB &gt;&gt; [02]PROJETS &gt;&gt; [03]XP &gt;&gt; [04]ABOUT &gt;&gt; [05]CONTACT</div>
+
+</div>
+</x-dc>
+</body>
+</html>
