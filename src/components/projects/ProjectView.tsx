@@ -66,7 +66,17 @@ export function ProjectView({ project, originRect, onClose }: Props) {
         className={styles.hero}
         style={{ background: `linear-gradient(150deg, ${project.tint[0]}, ${project.tint[1]})` }}
       >
-        <span className={styles.heroLabel}>aperçu, média à venir</span>
+        {project.media ? (
+          <img
+            className={styles.heroImage}
+            src={project.media.src}
+            alt={project.media.alt}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <span className={styles.heroLabel}>aperçu, média à venir</span>
+        )}
       </div>
 
       <div className={`${styles.meta} ${styles.reveal}`}>
