@@ -1,15 +1,28 @@
+/**
+ * Deux colonnes : le visuel a gauche, la lecture a droite. En une seule
+ * colonne, la fiche depassait la hauteur du panneau et ses derniers blocs
+ * (stack, lien "visiter le site") finissaient sous le SiteFooter fixe, hors
+ * d'atteinte puisque le scroll de la page pilote la piste horizontale.
+ */
 .root {
   position: absolute;
   inset: 0;
   z-index: calc(var(--z-header) + 1);
   background: var(--bg);
   color: var(--ink);
-  padding: 88px clamp(24px, 6vw, 72px) 96px;
-  overflow-y: auto;
+  padding: var(--chrome-top) clamp(24px, 6vw, 72px) var(--chrome-bottom);
   visibility: hidden;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  column-gap: clamp(28px, 4vw, 72px);
+  align-content: start;
 }
 
 .close {
+  grid-column: 1 / -1;
+  justify-self: start;
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.14em;
@@ -24,11 +37,15 @@
   color: var(--violet);
 }
 
+.visual {
+  min-width: 0;
+}
+
 .title {
   margin: 12px 0 0;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(56px, 12vw, 150px);
+  font-size: clamp(44px, 6.5vw, 104px);
   line-height: 0.85;
   letter-spacing: -0.02em;
   text-transform: uppercase;
@@ -38,10 +55,10 @@
 
 .hero {
   position: relative;
-  margin-top: -0.14em;
-  width: min(680px, 100%);
+  margin-top: -0.1em;
+  width: 100%;
   aspect-ratio: 16 / 9;
-  max-height: 42vh;
+  max-height: 44vh;
   border-radius: 2px;
   box-shadow: 0 40px 90px -40px rgba(124, 58, 237, 0.4);
   will-change: transform;
@@ -79,12 +96,25 @@
   color: var(--ink-muted);
 }
 
+/* Colonne de lecture : elle defile pour elle-meme si la fiche est longue,
+   sans jamais pousser le panneau ni passer sous le footer. */
 .bento {
+  min-width: 0;
+  min-height: 0;
+  align-self: stretch;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-right: 4px;
+}
+
+/* Bornees en largeur : un projet a une seule metrique ne doit pas etaler
+   sa carte sur toute la colonne. */
+.metrics {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-  margin-top: 28px;
-  max-width: 1000px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 210px));
+  gap: 12px;
 }
 
 .label {
@@ -98,11 +128,9 @@
 }
 
 .pitch {
-  grid-column: 1 / -1;
   margin: 0;
-  max-width: 68ch;
   font-size: 15px;
-  line-height: 1.55;
+  line-height: 1.6;
   color: var(--ink-muted);
 }
 
@@ -148,10 +176,10 @@
 }
 
 .links {
-  grid-column: 1 / -1;
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+  padding-top: 4px;
 }
 .links a {
   font-family: var(--font-mono);
@@ -160,4 +188,19 @@
   text-transform: uppercase;
   border-bottom: 1px solid var(--violet-pale);
   padding-bottom: 3px;
+}
+
+/* Sous 900 px, la colonne de droite passe dessous et c'est la fiche entiere
+   qui defile : deux zones de scroll cote a cote n'ont pas de sens au doigt. */
+@media (max-width: 900px) {
+  .root {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    row-gap: 24px;
+    overflow-y: auto;
+  }
+  .bento {
+    overflow-y: visible;
+    align-self: auto;
+  }
 }
