@@ -1,8 +1,7 @@
 # Portfolio, Rayan Oughlis
 
-Portfolio personnel. Deux facons de le parcourir : un **mode normal** (sections qui defilent
-horizontalement) et un **mode exploration 3D** (une chambre modelisee, vue isometrique, dans
-laquelle on se deplace et on interagit avec les objets).
+Portfolio personnel. Un parcours en **scroll horizontal** (hub, projets, experience, a propos,
+contact) double d'un **mode scan** qui revele une couche "profiler" sur tout le site.
 
 **En ligne :** _(a venir)_ &nbsp;·&nbsp; **Maquette-concept :** [docs/design](docs/design/)
 
@@ -16,8 +15,8 @@ laquelle on se deplace et on interagit avec les objets).
 | Animation | GSAP (ScrollTrigger, Flip, `@gsap/react`)          | [ADR 0002](docs/adr/0002-gsap-seul-pour-l-animation.md)      |
 | Style     | CSS Modules + jetons CSS (`src/styles/tokens.css`) | [ADR 0003](docs/adr/0003-css-modules-plutot-que-tailwind.md) |
 | Scroll    | Lenis (lisse + horizontal)                         |                                                              |
-| 3D        | React Three Fiber + drei + three, route lazy       | [ADR 0004](docs/adr/0004-mode-exploration-3d-opt-in.md)      |
-| SFX       | Howler.js                                          |                                                              |
+| 3D        | Pas de mode exploration 3D pour la v1              | [ADR 0006](docs/adr/0006-pas-de-mode-exploration-3d.md)      |
+| SFX       | Sons synthetises (Web Audio API)                   |                                                              |
 | SEO       | `index.html` + prerender au build                  | [ADR 0005](docs/adr/0005-strategie-seo-prerender.md)         |
 | Deploy    | Vercel                                             |                                                              |
 
@@ -45,14 +44,16 @@ npm run dev
 
 ```
 src/
-  app/            points d'entree : Providers, ScrollExperience, ExploreRoom
+  app/            points d'entree : Providers, ScrollExperience
   components/
-    ui/           curseur, toggles, primitives
-    projects/     pellicule, ecran deploye, ecran explore, fiche
+    ui/           curseur, en-tete, toggles
+    hub/          hero, stack, panneau iso, index des sections
+    projects/     pellicule, ecran deploye, fiche
     experience/   circuit electrique
+    about/        recit, formation, hors-code
+    contact/      coordonnees, liens, CV
     scan/         overlay + annotations du mode scan
-  lib/            scan-context, audio, useHorizontalScroll
-  three/          chambre 3D, hotspots, camera
+  lib/            scan-context, audio, gsap, smooth-scroll, sons UI
   styles/         tokens.css, global.css
 docs/
   adr/            decisions d'architecture

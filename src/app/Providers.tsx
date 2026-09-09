@@ -7,8 +7,7 @@ import { ScanOverlay } from '@/components/scan/ScanOverlay';
 
 /**
  * Contexte global du site : curseur custom, etat du mode scan, sons d'interface.
- * Le smooth-scroll (Lenis) est monte dans ScrollExperience, pas ici,
- * pour ne pas s'appliquer au mode exploration 3D.
+ * Le smooth-scroll (Lenis) est monte dans ScrollExperience.
  */
 export function Providers({ children }: { children: ReactNode }) {
   useUiSounds();

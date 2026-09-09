@@ -13,14 +13,6 @@ const router = createBrowserRouter([
     path: '/',
     element: <ScrollExperience />,
   },
-  {
-    path: '/explore',
-    // Mode exploration 3D : charge en lazy, hors du bundle principal.
-    lazy: async () => {
-      const { ExploreRoom } = await import('@/app/ExploreRoom');
-      return { element: <ExploreRoom /> };
-    },
-  },
 ]);
 
 createRoot(document.getElementById('root')!).render(

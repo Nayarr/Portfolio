@@ -13,11 +13,11 @@ updates:
           - 'react'
           - 'react-dom'
           - '@types/react*'
-      three:
+      animation:
         patterns:
-          - 'three'
-          - '@react-three/*'
-          - '@types/three'
+          - 'gsap'
+          - '@gsap/react'
+          - 'lenis'
     commit-message:
       prefix: chore
       include: scope

@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 
-import { ModeToggle } from './ModeToggle';
 import { SfxToggle } from './SfxToggle';
 import { ScanToggle } from './ScanToggle';
 import styles from './SiteHeader.module.css';
@@ -15,7 +14,6 @@ export function SiteHeader() {
       <div className={styles.controls}>
         <SfxToggle />
         <ScanToggle />
-        <ModeToggle />
       </div>
     </header>
   );

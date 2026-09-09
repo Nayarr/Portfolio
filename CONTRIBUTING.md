@@ -15,7 +15,7 @@ fix/cursor-glow-safari
 chore/eslint-flat-config
 docs/adr-0006-...
 refactor/scan-context
-perf/lazy-load-three
+perf/lighthouse-budget
 ```
 
 - Si une branche vit plus de deux ou trois jours, elle est trop grosse : decouper.

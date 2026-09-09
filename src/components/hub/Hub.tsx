@@ -120,7 +120,7 @@ export function Hub() {
           <path d="M150 210 150 250 176 264 176 224Z" fill="#e7dffa" stroke="var(--violet)" />
           <path d="M150 178 150 210 176 224 176 192Z" fill="#e7dffa" stroke="var(--violet)" />
         </svg>
-        <span className={styles.panelCaption}>mon setup, explorable en 3D</span>
+        <span className={styles.panelCaption}>mon poste de travail</span>
       </div>
 
       <ol className={styles.index} data-rise>
