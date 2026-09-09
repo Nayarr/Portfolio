@@ -174,7 +174,10 @@
   font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--violet-pale);
+  /* Le violet pale plafonne a 1,5:1 sur le fond clair : illisible pour du
+     texte de navigation. Le contraste porte la hierarchie autrement, l'ecran
+     courant restant en --violet plein. */
+  color: var(--ink-faint);
 }
 .index .here {
   font-family: var(--font-display);

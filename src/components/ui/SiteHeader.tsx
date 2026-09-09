@@ -8,6 +8,11 @@ import styles from './SiteHeader.module.css';
 export function SiteHeader() {
   return (
     <header className={styles.header}>
+      {/* La piste est epinglee : sans ce raccourci, joindre le contact au
+          clavier demande de traverser les cinq panneaux. */}
+      <a className={styles.skip} href="#contact">
+        Aller au contact
+      </a>
       <Link to="/" className={styles.wordmark} aria-label="Accueil">
         RAYAN
       </Link>

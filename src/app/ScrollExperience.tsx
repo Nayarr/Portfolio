@@ -22,7 +22,7 @@ import styles from './ScrollExperience.module.css';
  * branche : ce fichier ne bouge plus.
  */
 export function ScrollExperience() {
-  const rootRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
   useSmoothScroll();
@@ -65,7 +65,7 @@ export function ScrollExperience() {
     <>
       <SiteHeader />
 
-      <div ref={rootRef} className={styles.viewport}>
+      <main ref={rootRef} id="contenu" className={styles.viewport}>
         <div ref={trackRef} className={styles.track}>
           <div className={styles.panel}>
             <Hub />
@@ -83,7 +83,7 @@ export function ScrollExperience() {
             <Contact />
           </div>
         </div>
-      </div>
+      </main>
 
       <SiteFooter />
     </>

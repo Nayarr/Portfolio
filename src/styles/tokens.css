@@ -11,7 +11,9 @@
   --line: #e0d7f4;
   --ink: #211d40;
   --ink-muted: #524c78;
-  --ink-faint: #7d76a6;
+  /* 4,7:1 sur --bg. L'ancien #7d76a6 plafonnait a 3,8:1, sous le seuil de
+     4,5:1, alors qu'il porte les etiquettes et le pied de page en 10-12px. */
+  --ink-faint: #6f6899;
 
   /* violet */
   --violet: #7c3aed;

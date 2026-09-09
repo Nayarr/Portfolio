@@ -1,3 +1,5 @@
+import { useRef, type KeyboardEvent } from 'react';
+
 import { PROJECTS } from './projects.data';
 import styles from './Filmstrip.module.css';
 
@@ -19,8 +21,48 @@ function posFor(offset: number): number {
   return Math.sign(offset) * (base + extra);
 }
 
-/** Pellicule : tuiles identiques, projet actif verrouille au centre. */
+/**
+ * Pellicule : tuiles identiques, projet actif verrouille au centre.
+ *
+ * Motif « toolbar » a tabulation glissante : la pellicule ne prend qu'un seul
+ * arret de tabulation, les fleches deplacent le focus d'une tuile a l'autre.
+ * L'ancien montage (`role="listbox"` avec des `<button role="option">`)
+ * n'etait pas valide : une listbox n'accepte pas d'enfants focalisables, et
+ * les tuiles restaient inatteignables au clavier une par une.
+ */
 export function Filmstrip({ active, onActivate, onOpen }: Props) {
+  const stripRef = useRef<HTMLDivElement>(null);
+
+  /** Deplace la selection et emmene le focus avec elle. */
+  const moveTo = (index: number) => {
+    const next = Math.min(Math.max(index, 0), PROJECTS.length - 1);
+    onActivate(next);
+    stripRef.current
+      ?.querySelector<HTMLButtonElement>(`[data-tile-id="${PROJECTS[next].id}"]`)
+      ?.focus();
+  };
+
+  const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    switch (e.key) {
+      case 'ArrowRight':
+        e.preventDefault();
+        moveTo(active + 1);
+        break;
+      case 'ArrowLeft':
+        e.preventDefault();
+        moveTo(active - 1);
+        break;
+      case 'Home':
+        e.preventDefault();
+        moveTo(0);
+        break;
+      case 'End':
+        e.preventDefault();
+        moveTo(PROJECTS.length - 1);
+        break;
+    }
+  };
+
   return (
     <div className={styles.wrap}>
       <p className={styles.kicker}>
@@ -31,40 +73,38 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
       </p>
 
       <div
+        ref={stripRef}
         className={styles.strip}
-        role="listbox"
+        role="toolbar"
         aria-label="Projets"
-        aria-activedescendant={`tile-${PROJECTS[active].id}`}
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === 'ArrowRight') onActivate(Math.min(active + 1, PROJECTS.length - 1));
-          if (e.key === 'ArrowLeft') onActivate(Math.max(active - 1, 0));
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            onOpen(active);
-          }
-        }}
+        aria-orientation="horizontal"
+        onKeyDown={onKeyDown}
       >
         {PROJECTS.map((project, i) => {
           const offset = i - active;
+          const current = i === active;
           return (
             <button
               key={project.id}
               id={`tile-${project.id}`}
               data-tile-id={project.id}
               type="button"
-              role="option"
-              aria-selected={i === active}
-              className={`${styles.tile} ${i === active ? styles.current : ''}`}
+              /* Un seul arret de tabulation pour toute la pellicule. */
+              tabIndex={current ? 0 : -1}
+              aria-current={current ? 'true' : undefined}
+              className={`${styles.tile} ${current ? styles.current : ''}`}
               style={{
                 ['--pos' as string]: posFor(offset),
                 ['--dim' as string]: Math.min(Math.abs(offset), 6),
                 background: `linear-gradient(160deg, ${project.tint[0]}, ${project.tint[1]})`,
               }}
-              onClick={() => (i === active ? onOpen(i) : onActivate(i))}
+              onClick={() => (current ? onOpen(i) : moveTo(i))}
             >
               <span className={styles.name}>{project.name}</span>
               <span className={styles.idx}>{project.index}</span>
+              <span className={styles.sr}>
+                {current ? 'Ouvrir la fiche du projet' : 'Selectionner ce projet'}
+              </span>
             </button>
           );
         })}
