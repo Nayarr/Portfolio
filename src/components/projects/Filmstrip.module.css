@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 120px clamp(24px, 6vw, 60px) 96px;
+  padding: var(--chrome-top) clamp(24px, 6vw, 60px) var(--chrome-bottom);
   position: relative;
   overflow: hidden;
 }

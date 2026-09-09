@@ -8,7 +8,7 @@
   overflow: hidden;
   display: flex;
   align-items: center;
-  padding: 120px clamp(24px, 6vw, 96px) 110px;
+  padding: var(--chrome-top) clamp(24px, 6vw, 96px) calc(var(--chrome-bottom) + 84px);
 }
 
 .glow {
@@ -162,7 +162,7 @@
   position: absolute;
   left: clamp(24px, 6vw, 96px);
   right: clamp(24px, 6vw, 96px);
-  bottom: 40px;
+  bottom: calc(var(--chrome-bottom) - 8px);
   list-style: none;
   margin: 0;
   padding: 18px 0 0;

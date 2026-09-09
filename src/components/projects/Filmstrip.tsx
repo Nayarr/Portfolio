@@ -71,7 +71,7 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
       </div>
 
       <p className={styles.hint}>
-        Fleches pour parcourir, le projet actif reste au centre. Entree ou clic pour ouvrir.
+        Flèches pour parcourir, le projet actif reste au centre. Entrée ou clic pour ouvrir.
       </p>
     </div>
   );

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { isMuted, playSfx, setMuted } from '@/lib/audio';
+import styles from './SfxToggle.module.css';
 
 /** Coupe / active les effets sonores. Etat conserve dans le module audio. */
 export function SfxToggle() {
@@ -14,7 +15,17 @@ export function SfxToggle() {
   };
 
   return (
-    <button type="button" className="sfx-toggle" aria-pressed={!muted} onClick={onClick}>
+    <button
+      type="button"
+      className={`${styles.toggle} ${muted ? styles.muted : ''}`}
+      aria-pressed={!muted}
+      onClick={onClick}
+    >
+      <span className={styles.bars} aria-hidden="true">
+        <span />
+        <span />
+        <span />
+      </span>
       Son {muted ? 'off' : 'on'}
     </button>
   );
