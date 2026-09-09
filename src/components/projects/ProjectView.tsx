@@ -59,30 +59,32 @@ export function ProjectView({ project, originRect, onClose }: Props) {
         Retour aux projets
       </button>
 
-      <h2 className={`${styles.title} ${styles.reveal}`}>{project.name}</h2>
+      <div className={styles.visual}>
+        <h2 className={`${styles.title} ${styles.reveal}`}>{project.name}</h2>
 
-      <div
-        ref={heroRef}
-        className={styles.hero}
-        style={{ background: `linear-gradient(150deg, ${project.tint[0]}, ${project.tint[1]})` }}
-      >
-        {project.media ? (
-          <img
-            className={styles.heroImage}
-            src={project.media.src}
-            alt={project.media.alt}
-            loading="lazy"
-            decoding="async"
-          />
-        ) : (
-          <span className={styles.heroLabel}>aperçu, média à venir</span>
-        )}
-      </div>
+        <div
+          ref={heroRef}
+          className={styles.hero}
+          style={{ background: `linear-gradient(150deg, ${project.tint[0]}, ${project.tint[1]})` }}
+        >
+          {project.media ? (
+            <img
+              className={styles.heroImage}
+              src={project.media.src}
+              alt={project.media.alt}
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <span className={styles.heroLabel}>aperçu, média à venir</span>
+          )}
+        </div>
 
-      <div className={`${styles.meta} ${styles.reveal}`}>
-        <span>{project.year}</span>
-        <span>{project.kind}</span>
-        <span>{project.role}</span>
+        <div className={`${styles.meta} ${styles.reveal}`}>
+          <span>{project.year}</span>
+          <span>{project.kind}</span>
+          <span>{project.role}</span>
+        </div>
       </div>
 
       <div className={styles.bento}>
@@ -97,12 +99,14 @@ export function ProjectView({ project, originRect, onClose }: Props) {
           </ul>
         </div>
 
-        {project.metrics.map((metric) => (
-          <div key={metric.label} className={`${styles.metric} ${styles.reveal}`}>
-            <strong>{metric.value}</strong>
-            <span>{metric.label}</span>
-          </div>
-        ))}
+        <div className={styles.metrics}>
+          {project.metrics.map((metric) => (
+            <div key={metric.label} className={`${styles.metric} ${styles.reveal}`}>
+              <strong>{metric.value}</strong>
+              <span>{metric.label}</span>
+            </div>
+          ))}
+        </div>
 
         {project.links.length > 0 && (
           <nav className={`${styles.links} ${styles.reveal}`} aria-label="Liens du projet">
