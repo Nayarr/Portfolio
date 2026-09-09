@@ -34,6 +34,21 @@ button {
   cursor: pointer;
 }
 
+/**
+ * Anneau de focus unique pour tout le site. Seule la pellicule des projets
+ * definissait le sien, les 26 autres cibles n'en avaient aucun : au clavier,
+ * on ne savait pas ou on se trouvait. `:focus-visible` laisse la souris
+ * tranquille.
+ */
+:focus-visible {
+  /* --violet-bright plutot que --violet : le chrome et les panneaux
+     alternent fonds clairs et sombres, et lui tient les 3:1 sur les deux
+     (3,6:1 sur le fond clair, 4,8:1 sur le fond sombre). */
+  outline: 2px solid var(--violet-bright);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

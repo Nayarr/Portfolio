@@ -28,3 +28,24 @@
   align-items: center;
   gap: calc(var(--space) * 2);
 }
+
+/* Lien d'evitement : hors ecran, il revient au premier Tab. */
+.skip {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  transform: translateY(-200%);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--surface);
+  background: var(--violet);
+  border-radius: 999px;
+  padding: 10px 18px;
+  transition: transform 0.18s var(--ease-out);
+}
+.skip:focus-visible {
+  transform: translateY(0);
+  color: var(--surface);
+}
