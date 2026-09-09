@@ -14,13 +14,14 @@ Chaque ligne devient une issue GitHub, prise une par une sur une branche `feat/.
 - [x] `feat/sfx` : sons synthetises (Web Audio), clic et scan, respect de reduced-motion
 - [x] `feat/cursor` : halo violet qui suit le pointeur
 - [x] `chore/remove-3d-mode` : abandon du mode exploration 3D (voir ADR 0006)
+- [x] `fix/typography` : polices auto-hebergees, texte accentue, chrome fixe qui ne recouvre plus
 
 ## v1.0, lancement
 
-- [ ] `chore/cv` : deposer `public/cv.pdf` (version LaTeX)
+- [x] `chore/cv` : deposer `public/cv.pdf` (version LaTeX)
 - [ ] `feat/project-explore` : ecran editorial intermediaire des projets (panneau + galerie)
 - [ ] `chore/project-media` : vraies captures / videos a la place des degrades
-- [ ] `chore/seo` : meta, OpenGraph, image OG, prerender au build (ADR 0005)
+- [x] `chore/seo` : meta, JSON-LD, image OG, robots + sitemap au build (ADR 0007)
 - [ ] `chore/a11y-pass` : focus visible, navigation clavier, contrastes, reduced-motion
 - [ ] `perf/lighthouse-budget` : budget Lighthouse CI en garde-fou
 - [ ] `chore/polish` : espacements et finitions ecran par ecran sur les previews
