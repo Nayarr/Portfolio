@@ -1,35 +1,33 @@
 # Feuille de route
 
 Chaque ligne devient une issue GitHub, prise une par une sur une branche `feat/...`.
-Les milestones regroupent les issues par jalon.
 
-## v0.1, mode scroll (jalon 1)
+## v0.1, site visitable (fait)
 
-- [ ] `feat/app-shell` : layout, header fixe, providers cables, smooth-scroll Lenis
-- [ ] `feat/horizontal-scroll` : detournement du scroll + snap sur section (GSAP ScrollTrigger)
-- [ ] `feat/hub-screen` : hero, stack, liens, toggle de mode
-- [ ] `feat/projects-filmstrip` : pellicule, tuiles identiques, projet actif centre
-- [ ] `feat/project-flip` : morph tuile vers plein ecran (GSAP Flip) + ecran deploye
-- [ ] `feat/project-explore` : panneau editorial, galerie photo, boutons visiter / detail
-- [ ] `feat/project-detail` : fiche bento, chiffres, etude de cas
-- [ ] `feat/experience-circuit` : mini-jeu de circuit, revelation des etapes
-- [ ] `feat/about-screen` : photo, recit, formation, hors-code
-- [ ] `feat/contact-screen` : coordonnees, liens, telechargement du CV
-- [ ] `feat/scan-mode` : overlay profiler + annotations, toggle global
-- [ ] `feat/sfx` : sprite audio Howler, sons de clic et de scan, respect de reduced-motion
-- [ ] `feat/cursor` : halo violet qui suit le pointeur
+- [x] `feat/app-shell` : layout, header fixe, providers, smooth-scroll Lenis, scroll horizontal GSAP
+- [x] `feat/hub` : hero, stack, liens, panneau iso, index de sections, entree GSAP
+- [x] `feat/projects` : pellicule (tuiles identiques, actif centre) + prise de vue plein panneau avec FLIP
+- [x] `feat/experience-circuit` : circuit a alimenter, revelation des etapes
+- [x] `feat/about` : photo, recit, formation, hors-code
+- [x] `feat/contact` : coordonnees, liens, telechargement du CV
+- [x] `feat/scan-mode` : overlay profiler + annotations, toggle global
+- [x] `feat/sfx` : sons synthetises (Web Audio), clic et scan, respect de reduced-motion
+- [x] `feat/cursor` : halo violet qui suit le pointeur
+- [x] `chore/remove-3d-mode` : abandon du mode exploration 3D (voir ADR 0006)
 
-## v0.2, exploration 3D (jalon 2)
+## v1.0, lancement
 
-- [ ] `feat/explore-room` : chargement de room.glb, camera isometrique, deplacement
-- [ ] `feat/explore-hotspots` : objets interactifs qui ouvrent les sections
-- [ ] `feat/explore-scan` : mode scan dans la chambre
-- [ ] `perf/lazy-load-three` : verifier le budget de bundle, code-splitting
-
-## v1.0, lancement (jalon 3)
-
-- [ ] `chore/seo` : meta, OpenGraph, image OG, prerender au build
-- [ ] `perf/lighthouse-budget` : budget Lighthouse CI en garde-fou
+- [ ] `chore/cv` : deposer `public/cv.pdf` (version LaTeX)
+- [ ] `feat/project-explore` : ecran editorial intermediaire des projets (panneau + galerie)
+- [ ] `chore/project-media` : vraies captures / videos a la place des degrades
+- [ ] `chore/seo` : meta, OpenGraph, image OG, prerender au build (ADR 0005)
 - [ ] `chore/a11y-pass` : focus visible, navigation clavier, contrastes, reduced-motion
+- [ ] `perf/lighthouse-budget` : budget Lighthouse CI en garde-fou
+- [ ] `chore/polish` : espacements et finitions ecran par ecran sur les previews
 - [ ] `chore/domain` : domaine perso + redirections
-- [ ] `docs/readme-final` : capture, lien live, section decisions
+- [ ] `docs/readme-final` : capture, lien live
+
+## Plus tard, eventuel
+
+- Modeles 3D integres au site (objet sur le hub, un par projet, elements decoratifs),
+  pas un espace navigable a part. L'ancien code 3D est sur la branche `feat/explore-room`.

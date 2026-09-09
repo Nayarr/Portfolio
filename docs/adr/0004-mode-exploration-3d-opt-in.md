@@ -1,7 +1,7 @@
 # 0004, Mode exploration 3D en opt-in
 
 Date : 2026-09-03
-Statut : accepte
+Statut : remplace par l'ADR 0006 (2026-09-09)
 
 ## Contexte
 

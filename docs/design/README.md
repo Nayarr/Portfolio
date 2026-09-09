@@ -10,21 +10,22 @@ Maquette-concept de tous les ecrans. Rendus de reference dans `screens/`.
 
 ## Parcours
 
-| #   | Ecran                    | Fichier                             |
-| --- | ------------------------ | ----------------------------------- |
-| 01  | Hub (scroll)             | `screens/01-hub.jpg`                |
-| 01b | Hub, mode exploration 3D | `screens/02-hub-exploration-3d.jpg` |
-| --  | Mode scan (overlay)      | `screens/03-mode-scan.jpg`          |
-| 02  | Projets, pellicule       | `screens/04-projets-pellicule.jpg`  |
-| --  | Projets, transition      | `screens/05-projets-transition.jpg` |
-| --  | Projet deploye           | `screens/06-projet-deploye.jpg`     |
-| --  | Projet, ecran explore    | `screens/07-projet-explore.jpg`     |
-| --  | Projet, fiche detaillee  | `screens/08-projet-fiche.jpg`       |
-| 03  | Experience (circuit)     | `screens/09-experience.jpg`         |
-| 04  | A propos                 | `screens/10-a-propos.jpg`           |
-| 05  | Contact                  | `screens/11-contact.jpg`            |
+| #   | Ecran                   | Fichier                             |
+| --- | ----------------------- | ----------------------------------- |
+| 01  | Hub (scroll)            | `screens/01-hub.jpg`                |
+| --  | Mode scan (overlay)     | `screens/03-mode-scan.jpg`          |
+| 02  | Projets, pellicule      | `screens/04-projets-pellicule.jpg`  |
+| --  | Projets, transition     | `screens/05-projets-transition.jpg` |
+| --  | Projet deploye          | `screens/06-projet-deploye.jpg`     |
+| --  | Projet, ecran explore   | `screens/07-projet-explore.jpg`     |
+| --  | Projet, fiche detaillee | `screens/08-projet-fiche.jpg`       |
+| 03  | Experience (circuit)    | `screens/09-experience.jpg`         |
+| 04  | A propos                | `screens/10-a-propos.jpg`           |
+| 05  | Contact                 | `screens/11-contact.jpg`            |
 
 Pistes de style ecartees : `screens/ref-skin-cozy.jpg`, `screens/ref-skin-dedsec.jpg`.
+Mode exploration 3D abandonne pour la v1 (voir ADR 0006), maquette conservee :
+`screens/02-hub-exploration-3d.jpg`.
 
 ## Apercu
 

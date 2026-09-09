@@ -44,9 +44,3 @@ button {
     scroll-behavior: auto !important;
   }
 }
-
-/* Le mode exploration 3D occupe tout l'ecran. */
-.explore-root {
-  width: 100vw;
-  height: 100vh;
-}
