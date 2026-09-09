@@ -4,26 +4,114 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href="%SITE_URL%/" />
 
-    <title>Rayan Oughlis, developpeur full-stack</title>
+    <title>Rayan Oughlis, développeur full-stack</title>
     <meta
       name="description"
-      content="Portfolio de Rayan Oughlis, developpeur full-stack oriente data et automatisation. Recherche d'alternance."
+      content="Portfolio de Rayan Oughlis, développeur full-stack orienté data et automatisation. Projets en production, stage lead technique, recherche d'alternance d'un an à partir de septembre 2026."
     />
+    <meta name="author" content="Rayan Oughlis" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Rayan Oughlis, developpeur full-stack" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="Rayan Oughlis" />
+    <meta property="og:url" content="%SITE_URL%/" />
+    <meta property="og:title" content="Rayan Oughlis, développeur full-stack" />
     <meta
       property="og:description"
-      content="Developpeur full-stack oriente data et automatisation. Recherche d'alternance."
+      content="Développeur full-stack, penchant data et automatisation. Projets en production, recherche d'alternance."
     />
-    <meta property="og:image" content="/og.jpg" />
+    <meta property="og:image" content="%SITE_URL%/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Carte de partage du portfolio de Rayan Oughlis, développeur full-stack."
+    />
+
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Rayan Oughlis, développeur full-stack" />
+    <meta
+      name="twitter:description"
+      content="Développeur full-stack, penchant data et automatisation. Projets en production, recherche d'alternance."
+    />
+    <meta name="twitter:image" content="%SITE_URL%/og.jpg" />
 
     <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f7f4fd" />
+
+    <!--
+      Le site est une SPA : sans ce bloc, un agregateur qui n'execute pas le JS
+      ne voit qu'une div vide. Schema.org donne l'essentiel du profil,
+      independamment du rendu.
+    -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Rayan Oughlis",
+        "url": "%SITE_URL%/",
+        "image": "%SITE_URL%/og.jpg",
+        "jobTitle": "Développeur full-stack",
+        "description": "Développeur full-stack orienté data et automatisation, en recherche d'alternance d'un an.",
+        "email": "mailto:rayan.oughlis@etu.u-pec.fr",
+        "telephone": "+33769415909",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Vitry-sur-Seine",
+          "postalCode": "94400",
+          "addressCountry": "FR"
+        },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "IUT de Créteil-Vitry, Université Paris-Est Créteil"
+        },
+        "knowsLanguage": ["fr", "en", "es"],
+        "knowsAbout": [
+          "Développement web",
+          "TypeScript",
+          "React",
+          "Python",
+          "Flask",
+          "SQL",
+          "OCR",
+          "Automatisation",
+          "Intelligence artificielle"
+        ],
+        "sameAs": [
+          "https://github.com/Nayarr",
+          "https://linkedin.com/in/oughlis-rayan/",
+          "https://instagram.com/rayan.ough"
+        ]
+      }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <!--
+      Repli sans JavaScript. Le navigateur le masque des que le script tourne,
+      mais les robots qui n'executent pas le JS le lisent, et un visiteur dont
+      le bundle echoue garde de quoi prendre contact.
+    -->
+    <div id="root">
+      <noscript>
+        <h1>Rayan Oughlis, développeur full-stack</h1>
+        <p>
+          Développeur full-stack orienté data et automatisation, à Vitry-sur-Seine. En recherche
+          d'une alternance d'un an à partir de septembre 2026.
+        </p>
+        <p>
+          <a href="mailto:rayan.oughlis@etu.u-pec.fr">rayan.oughlis@etu.u-pec.fr</a> &middot;
+          <a href="/cv.pdf">CV en PDF</a> &middot;
+          <a href="https://github.com/Nayarr">GitHub</a> &middot;
+          <a href="https://linkedin.com/in/oughlis-rayan/">LinkedIn</a>
+        </p>
+        <p>
+          Ce portfolio a besoin de JavaScript pour son parcours anim&eacute;. Les coordonn&eacute;es
+          ci-dessus restent valables.
+        </p>
+      </noscript>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

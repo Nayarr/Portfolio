@@ -1,7 +1,7 @@
 # 0005, Strategie SEO : prerender au build
 
 Date : 2026-09-03
-Statut : accepte
+Statut : la clause "prerender" est remplacee par l’ADR 0007 (2026-09-09)
 
 ## Contexte
 

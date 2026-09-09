@@ -12,5 +12,5 @@
     "checkJs": false,
     "isolatedModules": true
   },
-  "include": ["vite.config.ts", "eslint.config.js", "commitlint.config.js"]
+  "include": ["vite.config.ts", "vite/**/*.ts", "eslint.config.js", "commitlint.config.js"]
 }
