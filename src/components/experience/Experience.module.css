@@ -6,7 +6,7 @@
   color: var(--ink);
   display: flex;
   align-items: center;
-  padding: 120px clamp(24px, 6vw, 96px) 96px;
+  padding: var(--chrome-top) clamp(24px, 6vw, 96px) var(--chrome-bottom);
   position: relative;
   overflow: hidden;
 }

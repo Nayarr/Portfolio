@@ -1,0 +1,18 @@
+/**
+ * Polices auto-hebergees via @fontsource : pas de requete vers Google Fonts,
+ * donc pas de tiers dans le chemin critique ni de fuite d'IP visiteur.
+ * Les familles correspondent aux jetons de `tokens.css`.
+ */
+
+/* Anton, display (nom geant, titres d'ecran). Une seule graisse. */
+@import '@fontsource/anton/400.css';
+
+/* Space Grotesk, UI et corps de texte. Fonte variable, une seule requete. */
+@import '@fontsource-variable/space-grotesk/index.css';
+
+/* JetBrains Mono, data et etiquettes techniques. Fonte variable. */
+@import '@fontsource-variable/jetbrains-mono/index.css';
+
+/* Instrument Serif, editorial (citations, accents de mise en page). */
+@import '@fontsource/instrument-serif/400.css';
+@import '@fontsource/instrument-serif/400-italic.css';

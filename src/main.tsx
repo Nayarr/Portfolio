@@ -5,6 +5,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Providers } from '@/app/Providers';
 import { ScrollExperience } from '@/app/ScrollExperience';
 
+import '@/styles/fonts.css';
 import '@/styles/tokens.css';
 import '@/styles/global.css';
 

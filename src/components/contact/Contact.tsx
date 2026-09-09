@@ -7,7 +7,7 @@ export function Contact() {
     <section className={styles.contact} id="contact" aria-label="Contact">
       <div className={styles.inner}>
         <p className={styles.status}>
-          En recherche d&apos;alternance, 1 an, rythme 1 sem. / 1 sem., dispo sept. 2026
+          En recherche d’alternance, 1 an, rythme 1 sem. / 1 sem., dispo sept. 2026
         </p>
 
         <h2 className={styles.title}>
@@ -37,7 +37,7 @@ export function Contact() {
               Instagram, rayan.ough &#8599;
             </a>
             <a className={styles.cv} href={CV_HREF} download={CV_FILENAME}>
-              &#8595; Telecharger le CV (PDF)
+              &#8595; Télécharger le CV (PDF)
             </a>
           </nav>
         </div>

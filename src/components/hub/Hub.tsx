@@ -18,7 +18,7 @@ const SOCIALS = [
   },
 ];
 
-/** Ecran 01, Hub. Hero editorial : nom, accroche, stack, liens, setup isometrique. */
+/** Ecran 01, Hub. Hero editorial : nom, accroche, stack, liens, panneau isometrique. */
 export function Hub() {
   const rootRef = useRef<HTMLElement>(null);
 
@@ -45,7 +45,7 @@ export function Hub() {
 
       <div className={styles.content}>
         <p className={styles.kicker} data-rise>
-          Developpeur full-stack, freelance (EI), Vitry-sur-Seine 94
+          Développeur full-stack, freelance (EI), Vitry-sur-Seine 94
         </p>
 
         <h1 className={styles.title}>
@@ -57,7 +57,7 @@ export function Hub() {
 
         <p className={styles.lede} data-rise>
           Je conçois des applications web, des pipelines de données et des agents IA, et je fais en
-          sorte qu&apos;on les <em>ressente</em> au fil de la navigation.
+          sorte qu’on les <em>ressente</em> au fil de la navigation.
         </p>
 
         <ul className={styles.stack} data-rise>
@@ -126,8 +126,8 @@ export function Hub() {
       <ol className={styles.index} data-rise>
         <li className={styles.here}>01, Hub</li>
         <li>02, Projets</li>
-        <li>03, Experience</li>
-        <li>04, A propos</li>
+        <li>03, Expérience</li>
+        <li>04, À propos</li>
         <li>05, Contact</li>
         <li className={styles.arrow} aria-hidden="true">
           &rarr;

@@ -10,7 +10,9 @@
   border: 1px solid var(--violet);
   border-radius: 999px;
   padding: 8px 16px;
-  background: rgba(124, 58, 237, 0.08);
+  /* Le chrome est fixe et survole des panneaux clairs comme sombres :
+     fond opaque obligatoire, sinon l'encre disparait sur les ecrans sombres. */
+  background: var(--surface);
 }
 .toggle.on {
   color: var(--dark-bg);
