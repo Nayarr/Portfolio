@@ -1,3 +1,5 @@
+import tropioutilsMedia from './media/tropioutils.jpg';
+
 export type Project = {
   id: string;
   index: string;
@@ -9,7 +11,12 @@ export type Project = {
   pitch: string;
   metrics: { value: string; label: string }[];
   links: { label: string; href: string }[];
-  /** degrade violet pour le bloc media en attendant les vraies captures */
+  /**
+   * Capture du projet. Absente, l'ecran retombe sur `tint` : mieux vaut un
+   * degrade assume qu'une image bouche-trou qui ne montre rien.
+   */
+  media?: { src: string; alt: string };
+  /** degrade violet, repli quand il n'y a pas encore de capture */
   tint: [string, string];
 };
 
@@ -86,6 +93,10 @@ export const PROJECTS: Project[] = [
       'Plateforme web communautaire pour un serveur Minecraft : carte interactive et économie de jeu complète (banque, marché, change, trades, loterie, paris, leaderboard, tracker de shinies, admin). Worker de découpe de tuiles cartographiques, 60+ migrations SQL.',
     metrics: [{ value: '60+', label: 'migrations SQL' }],
     links: [{ label: 'Visiter le site', href: 'https://tropi-outil.vercel.app' }],
+    media: {
+      src: tropioutilsMedia,
+      alt: 'Accueil de TropiOutils : les huit outils de la communaute et les compteurs de chunks explores, de contributeurs actifs et de maps fusionnees.',
+    },
     tint: ['#2f1f70', '#7c3aed'],
   },
   {
