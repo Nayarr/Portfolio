@@ -1,3 +1,8 @@
+/**
+ * Hub : le nom en grand a gauche, la stack rangee a droite.
+ * Le panneau isometrique "mon poste de travail" a disparu : il occupait la
+ * moitie de l'ecran sans rien apprendre a personne.
+ */
 .hub {
   position: relative;
   /* `min-height` et non `height` : une diapo dont le contenu ne tient pas
@@ -7,10 +12,11 @@
   width: 100%;
   background: var(--bg);
   color: var(--ink);
-  overflow: hidden;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.65fr);
   align-items: center;
-  padding: var(--chrome-top) clamp(24px, 6vw, 96px) calc(var(--chrome-bottom) + 84px);
+  gap: clamp(32px, 6vw, 96px);
+  padding: var(--chrome-top) clamp(24px, 6vw, 96px) calc(var(--chrome-bottom) + 40px);
 }
 
 .glow {
@@ -31,7 +37,7 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-  max-width: 620px;
+  min-width: 0;
 }
 
 .kicker {
@@ -49,151 +55,154 @@
   flex-direction: column;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(64px, 13vw, 132px);
-  line-height: 0.9;
-  letter-spacing: -0.03em;
+  /* Le nom peut respirer davantage depuis que la droite n'est plus occupee
+     par un panneau. */
+  font-size: clamp(64px, 11vw, 168px);
+  line-height: 0.82;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
 }
+.title span:last-child {
+  padding-left: clamp(24px, 7vw, 118px);
+}
 .accent {
-  margin-left: 0.9em;
   color: var(--violet);
-  text-shadow: 0 0 30px rgba(124, 58, 237, 0.28);
+  text-shadow: 0 18px 44px rgba(124, 58, 237, 0.28);
 }
 
 .lede {
   margin: 0;
-  max-width: 34em;
-  font-size: 19px;
+  max-width: 46ch;
+  font-size: clamp(16px, 1.4vw, 19px);
   line-height: 1.5;
   color: var(--ink-muted);
 }
 .lede em {
-  color: var(--ink);
+  font-family: var(--font-serif);
   font-style: italic;
-}
-
-.stack {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  max-width: 34em;
-}
-.stack li {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  padding: 6px 11px;
-  border: 1px solid var(--line);
-  border-radius: 7px;
-  background: var(--surface);
-  color: var(--ink-muted);
 }
 
 .foot {
   display: flex;
   align-items: center;
-  gap: 18px;
-  flex-wrap: wrap;
+  gap: 20px;
 }
 .socials {
   display: flex;
-  gap: 16px;
+  align-items: center;
+  gap: 14px;
 }
 .socials a {
-  color: var(--ink-faint);
-  display: flex;
+  color: var(--ink);
+  display: inline-flex;
+  /* 24 px de cible tactile minimum autour d'une icone de 18. */
+  padding: 3px;
 }
 .socials a:hover {
   color: var(--violet);
 }
 .socials svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
+  display: block;
 }
-.avail {
+
+/* Colonne de droite : la stack, rangee par famille. */
+.stack {
+  position: relative;
+  min-width: 0;
+  border-left: 1px solid var(--line);
+  padding-left: clamp(20px, 2.6vw, 40px);
+}
+.stackTag {
+  margin: 0 0 22px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.stackList {
+  margin: 0;
+}
+.stackGroup {
+  margin-bottom: 20px;
+}
+.stackGroup dt {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 13px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--ink-faint);
-  padding-left: 12px;
-  border-left: 1px solid var(--line);
+  color: var(--violet);
+  margin-bottom: 8px;
 }
-
-.panel {
-  position: absolute;
-  right: clamp(24px, 5vw, 74px);
-  top: 50%;
-  transform: translateY(-50%) rotate(-2deg);
-  width: min(420px, 34vw);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  padding: 22px;
-  box-shadow: 0 40px 80px -40px rgba(124, 58, 237, 0.35);
+.stackGroup dd {
+  margin: 0;
 }
-.panel svg {
-  width: 100%;
-  height: auto;
-}
-.panelCaption {
-  display: block;
-  margin-top: 6px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  color: var(--ink-faint);
-}
-
-.index {
-  position: absolute;
-  left: clamp(24px, 6vw, 96px);
-  right: clamp(24px, 6vw, 96px);
-  bottom: calc(var(--chrome-bottom) - 8px);
+.stackGroup ul {
   list-style: none;
   margin: 0;
-  padding: 18px 0 0;
-  border-top: 1px solid var(--line);
+  padding: 0;
   display: flex;
-  gap: 28px;
-  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.stackGroup li {
   font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  /* Le violet pale plafonne a 1,5:1 sur le fond clair : illisible pour du
-     texte de navigation. Le contraste porte la hierarchie autrement, l'ecran
-     courant restant en --violet plein. */
-  color: var(--ink-faint);
-}
-.index .here {
-  font-family: var(--font-display);
+  font-size: 11px;
   letter-spacing: 0.04em;
-  color: var(--violet);
-}
-.index .arrow {
-  margin-left: auto;
-  font-family: var(--font-display);
-  font-size: 30px;
-  color: var(--ink);
+  color: var(--ink-muted);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 5px 10px;
+  background: var(--surface);
 }
 
-@media (max-width: 1024px) {
-  .panel {
-    display: none;
-  }
+/* La disponibilite ferme la colonne : c'est l'information que cherche un
+   recruteur, elle merite de terminer le regard. */
+.avail {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 28px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  max-width: 30ch;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
 }
-@media (max-width: 767px) {
-  /* Le defilement lateral affichait une barre native sous l'index. Les cinq
-     entrees tiennent sur deux lignes, c'est plus lisible et sans chrome. */
-  .index {
-    flex-wrap: wrap;
-    gap: 10px 20px;
-    font-size: 11px;
+.availDot {
+  width: 7px;
+  height: 7px;
+  margin-top: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--violet);
+  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.18);
+}
+
+@media (max-width: 900px) {
+  .hub {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 36px;
   }
-  .index .arrow {
-    display: none;
+  .stack {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    padding-left: 0;
+    padding-top: 24px;
+  }
+  .title {
+    font-size: clamp(48px, 15vw, 96px);
+  }
+  .title span:last-child {
+    padding-left: clamp(16px, 8vw, 48px);
   }
 }

@@ -4,8 +4,8 @@ import { gsap } from '@/lib/gsap';
 import { DeckProvider, type DeckApi } from '@/lib/deck';
 import { useWheelNavigation } from '@/lib/useWheelNavigation';
 import { SiteHeader } from '@/components/ui/SiteHeader';
-import { SiteFooter } from '@/components/ui/SiteFooter';
 import { NextSlide } from '@/components/ui/NextSlide';
+import { SectionIndex } from '@/components/ui/SectionIndex';
 import { Hub } from '@/components/hub/Hub';
 import { Projects } from '@/components/projects/Projects';
 import { Experience } from '@/components/experience/Experience';
@@ -136,8 +136,8 @@ export function Deck() {
         </div>
       </main>
 
+      <SectionIndex />
       <NextSlide />
-      <SiteFooter />
     </DeckProvider>
   );
 }
