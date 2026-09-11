@@ -17,7 +17,22 @@ export type Project = {
    * Capture du projet. Absente, l'ecran retombe sur la palette : mieux vaut un
    * aplat assume qu'une image bouche-trou qui ne montre rien.
    */
-  media?: { src: string; alt: string };
+  media?: {
+    src: string;
+    alt: string;
+    /**
+     * `capture` (par defaut) : l'image montre le produit, elle remplit le
+     * cadre en `cover`. `logo` : la marque seule, contenue et centree sur la
+     * couleur du projet. Un logo recadre en `cover` serait tronque.
+     */
+    kind?: 'capture' | 'logo';
+  };
+  /**
+   * Pourquoi il n'y a pas de capture du produit. Affiche sous le visuel.
+   * Un projet sous accord de confidentialite vaut mieux d'etre explique que
+   * laisse sans raison apparente.
+   */
+  mediaNote?: string;
   /**
    * Couleurs dominantes du projet, relevees sur le produit lui-meme.
    * Elles habillent la tuile de la pellicule et servent de fond a l'ecran du
@@ -84,6 +99,8 @@ export const PROJECTS: Project[] = [
       { value: 'x5', label: 'impressions du site après refonte SEO' },
     ],
     links: [{ label: 'Repo GitHub', href: 'https://github.com/Nayarr' }],
+    mediaNote:
+      'L’extension traite des permis et des cartes grises de clients du cabinet : aucune capture de l’outil en fonctionnement n’est diffusable.',
     palette: { from: '#0b63f6', to: '#7fb2ff', ink: '#ffd60a' },
   },
   {

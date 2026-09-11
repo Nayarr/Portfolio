@@ -71,18 +71,26 @@ export function ProjectView({ project, originRect, onClose }: Props) {
         >
           {project.media ? (
             <img
-              className={styles.heroImage}
+              className={project.media.kind === 'logo' ? styles.heroLogo : styles.heroImage}
               src={project.media.src}
               alt={project.media.alt}
               loading="lazy"
               decoding="async"
             />
           ) : (
-            <span className={styles.heroLabel} style={{ color: project.palette.ink }}>
-              aperçu, média à venir
-            </span>
+            /* Pas d'etiquette "a venir" quand une note explique qu'il n'y en
+               aura pas : les deux se contrediraient. */
+            !project.mediaNote && (
+              <span className={styles.heroLabel} style={{ color: project.palette.ink }}>
+                aperçu, média à venir
+              </span>
+            )
           )}
         </div>
+
+        {project.mediaNote && (
+          <p className={`${styles.mediaNote} ${styles.reveal}`}>{project.mediaNote}</p>
+        )}
 
         <div className={`${styles.meta} ${styles.reveal}`}>
           <span>{project.year}</span>

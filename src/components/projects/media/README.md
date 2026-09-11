@@ -23,6 +23,17 @@ aplat assume vaut mieux qu'une image bouche-trou.
 | `assurfast` | non     | --     | Extension Chrome, a capturer en local (un devis pre-rempli) |
 | `chiron`    | non     | --     | A fournir                                                   |
 
+## Deux sortes de visuel
+
+`media.kind` vaut `capture` par defaut : l'image montre le produit et remplit
+le cadre en `cover`, ancree en haut.
+
+`kind: 'logo'` affiche la marque seule, contenue et centree, jamais recadree.
+A utiliser quand le produit lui-meme n'est pas montrable. Dans ce cas, remplir
+aussi `mediaNote` pour dire pourquoi : un projet sous confidentialite vaut
+mieux d'etre explique que laisse sans raison apparente. L'etiquette "media a
+venir" s'efface d'elle-meme quand une note est presente.
+
 ## Ajouter une capture
 
 1. Deposer le fichier ici, nomme d'apres l'`id` du projet.
