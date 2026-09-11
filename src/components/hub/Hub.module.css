@@ -222,3 +222,36 @@
     padding-left: clamp(16px, 8vw, 48px);
   }
 }
+
+/**
+ * Ecran court, typiquement un portable 1366 x 768 une fois la barre du
+ * navigateur deduite. La colonne de droite compte cinq familles et
+ * trente-six pastilles : elle depassait, et la ligne de disponibilite,
+ * l'information qu'un recruteur vient chercher, finissait 24 px sous la barre
+ * d'index, donc derriere son flou.
+ *
+ * On resserre le rythme vertical de cette colonne plutot que de reduire le
+ * corps du texte : les pastilles restent lisibles, c'est l'air entre elles qui
+ * cede. Au-dessus de 720 px de haut, rien ne change.
+ */
+@media (max-height: 720px) and (min-width: 901px) {
+  .stackTag {
+    margin-bottom: 12px;
+  }
+  .stackGroup {
+    margin-bottom: 8px;
+  }
+  .stackGroup dt {
+    margin-bottom: 5px;
+  }
+  .stackGroup ul {
+    gap: 5px;
+  }
+  .stackGroup li {
+    padding: 3px 8px;
+  }
+  .avail {
+    margin-top: 12px;
+    padding-top: 10px;
+  }
+}

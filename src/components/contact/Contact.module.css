@@ -154,3 +154,26 @@
     align-items: flex-start;
   }
 }
+
+/**
+ * Ecran court. Le titre "On en parle ?" tient deja compte de la hauteur, mais
+ * le calibrage visait 720 px : a 650, le bouton de telechargement du CV
+ * repassait 27 px sous la barre d'index, et cet ecran ne defile pas. On
+ * resserre le titre et les gouttieres plutot que les cibles tactiles, qui
+ * doivent garder leur taille au doigt.
+ */
+@media (max-height: 720px) and (min-width: 768px) {
+  .title {
+    font-size: clamp(56px, min(16vw, 15vh), 170px);
+  }
+  .grid {
+    margin-top: clamp(24px, 5vh, 96px);
+    gap: 28px;
+  }
+  .links {
+    gap: 12px;
+  }
+  .status {
+    padding: 7px 14px;
+  }
+}
