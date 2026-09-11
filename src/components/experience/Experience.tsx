@@ -212,39 +212,49 @@ export function Experience() {
               </div>
 
               <div className={styles.tray} role="group" aria-label="Modules en réserve">
-                {reserve.length === 0 ? (
-                  <p className={styles.trayEmpty}>Plus de module en réserve.</p>
-                ) : (
-                  reserve.map(({ id, piece }) => {
-                    const active = choisie === id;
-                    return (
-                      <span key={id} className={styles.trayItem}>
-                        <button
-                          type="button"
-                          className={[
-                            styles.trayPiece,
-                            active ? styles.trayPieceOn : '',
-                            glisse?.id === id && glisse.actif ? styles.trayPiecePrise : '',
-                          ].join(' ')}
-                          aria-pressed={active}
-                          aria-label={`Module ${piece.forme}${active ? ', sélectionné' : ''}`}
-                          onPointerDown={(e) => commencer(id, e)}
-                          onClick={() => setChoisie(active ? null : id)}
-                        >
-                          <Pipe piece={piece} alimente={false} raccorde={false} />
-                        </button>
-                        <button
-                          type="button"
-                          className={styles.trayTurn}
-                          aria-label={`Tourner le module ${piece.forme}`}
-                          onClick={() => tournerEnReserve(id)}
-                        >
-                          &#8635;
-                        </button>
-                      </span>
-                    );
-                  })
-                )}
+                {reserve.map(({ id, piece }) => {
+                  const active = choisie === id;
+                  return (
+                    <span key={id} className={styles.trayItem}>
+                      <button
+                        type="button"
+                        className={[
+                          styles.trayPiece,
+                          active ? styles.trayPieceOn : '',
+                          glisse?.id === id && glisse.actif ? styles.trayPiecePrise : '',
+                        ].join(' ')}
+                        aria-pressed={active}
+                        aria-label={`Module ${piece.forme}${active ? ', sélectionné' : ''}`}
+                        onPointerDown={(e) => commencer(id, e)}
+                        onClick={() => setChoisie(active ? null : id)}
+                      >
+                        <Pipe piece={piece} alimente={false} raccorde={false} />
+                      </button>
+                      <button
+                        type="button"
+                        className={styles.trayTurn}
+                        aria-label={`Tourner le module ${piece.forme}`}
+                        onClick={() => tournerEnReserve(id)}
+                      >
+                        &#8635;
+                      </button>
+                    </span>
+                  );
+                })}
+
+                {/**
+                 * Emplacements liberes. Ils gardent leur place, sinon la
+                 * reserve perdait une ligne des qu'on prenait un module, et
+                 * toute la colonne de gauche remontait sous le doigt. Leur
+                 * nombre est constant : chaque module est soit ici, soit sur
+                 * la grille.
+                 */}
+                {Array.from({ length: A_PLACER.length - reserve.length }, (_, n) => (
+                  <span key={`vide-${n}`} className={styles.trayItem} aria-hidden="true">
+                    <span className={styles.trayVide} />
+                    <span className={styles.trayTurnVide} />
+                  </span>
+                ))}
               </div>
             </>
           )}
