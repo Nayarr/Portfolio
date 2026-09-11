@@ -1,4 +1,4 @@
-import photo from './rayan-oughlis.png';
+import photo from './rayan-oughlis.jpg';
 import styles from './About.module.css';
 
 /**
@@ -17,7 +17,10 @@ export function About() {
       <div className={styles.grid}>
         <aside className={styles.side}>
           <div className={styles.photo}>
-            <img src={photo} alt="Rayan Oughlis" />
+            <img
+              src={photo}
+              alt="Rayan Oughlis, assis à une table de pique-nique sur le campus, un ordinateur portable posé à côté de lui"
+            />
           </div>
           <p className={styles.id}>
             Rayan Oughlis
