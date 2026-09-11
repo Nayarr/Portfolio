@@ -96,7 +96,8 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
               style={{
                 ['--pos' as string]: posFor(offset),
                 ['--dim' as string]: Math.min(Math.abs(offset), 6),
-                background: `linear-gradient(160deg, ${project.tint[0]}, ${project.tint[1]})`,
+                ['--ink' as string]: project.palette.ink,
+                background: `linear-gradient(165deg, ${project.palette.from}, ${project.palette.to})`,
               }}
               onClick={() => (current ? onOpen(i) : moveTo(i))}
             >
