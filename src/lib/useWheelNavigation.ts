@@ -44,6 +44,7 @@ type Options = {
 export function useWheelNavigation({ cible, onDeplacer, verrouille }: Options) {
   const cumul = useRef(0);
   const departTactile = useRef<number | null>(null);
+  const departTactileX = useRef<number | null>(null);
 
   useEffect(() => {
     const zone = cible.current;
@@ -65,6 +66,7 @@ export function useWheelNavigation({ cible, onDeplacer, verrouille }: Options) {
 
     const onTouchStart = (e: TouchEvent) => {
       departTactile.current = e.touches[0]?.clientY ?? null;
+      departTactileX.current = e.touches[0]?.clientX ?? null;
     };
 
     const onTouchEnd = (e: TouchEvent) => {
@@ -75,6 +77,13 @@ export function useWheelNavigation({ cible, onDeplacer, verrouille }: Options) {
       const arrivee = e.changedTouches[0]?.clientY ?? depart;
       const delta = depart - arrivee;
       if (Math.abs(delta) < SEUIL_TACTILE) return;
+      // Un glissement doit etre franchement vertical. Sans ca, un geste en
+      // diagonale sur la pellicule des projets changeait la tuile et l'ecran
+      // du meme coup : l'ecran defilait sous le doigt alors qu'on parcourait
+      // les projets.
+      const departX = departTactileX.current;
+      const arriveeX = e.changedTouches[0]?.clientX ?? departX ?? 0;
+      if (departX !== null && Math.abs(departX - arriveeX) >= Math.abs(delta)) return;
       if (peutDefilerDedans(e.target, Math.sign(delta), zone)) return;
       onDeplacer(Math.sign(delta));
     };

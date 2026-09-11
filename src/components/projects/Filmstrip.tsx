@@ -1,4 +1,4 @@
-import { useRef, type KeyboardEvent } from 'react';
+import { useRef, type KeyboardEvent, type TouchEvent } from 'react';
 
 import { PROJECTS } from './projects.data';
 import styles from './Filmstrip.module.css';
@@ -12,6 +12,8 @@ type Props = {
 const TILE = 82;
 const ACTIVE = 120;
 const GAP = 8;
+/** Distance de doigt avant de changer de tuile. */
+const SEUIL_TACTILE = 40;
 
 /** Position horizontale d'une tuile par rapport au centre (tuile active = 0). */
 function posFor(offset: number): number {
@@ -40,6 +42,40 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
     stripRef.current
       ?.querySelector<HTMLButtonElement>(`[data-tile-id="${PROJECTS[next].id}"]`)
       ?.focus();
+  };
+
+  /**
+   * Glissement horizontal. Au doigt, la pellicule ne repondait qu'a la touche
+   * d'une tuile : le geste qu'on attend d'un carrousel ne faisait rien, et
+   * les tuiles lointaines, a demi sorties de l'ecran, etaient hors d'atteinte.
+   *
+   * La selection change sans emmener le focus : un glissement n'est pas une
+   * navigation au clavier, et deplacer le focus ferait apparaitre l'anneau de
+   * mise au point sur un ecran tactile.
+   */
+  const depart = useRef<{ x: number; y: number } | null>(null);
+
+  const onTouchStart = (e: TouchEvent<HTMLDivElement>) => {
+    const t = e.touches[0];
+    depart.current = t ? { x: t.clientX, y: t.clientY } : null;
+  };
+
+  const onTouchEnd = (e: TouchEvent<HTMLDivElement>) => {
+    const debut = depart.current;
+    depart.current = null;
+    const fin = e.changedTouches[0];
+    if (!debut || !fin) return;
+
+    const dx = debut.x - fin.clientX;
+    const dy = debut.y - fin.clientY;
+    // Un glissement plus vertical qu'horizontal appartient au diaporama.
+    if (Math.abs(dx) < SEUIL_TACTILE || Math.abs(dx) <= Math.abs(dy)) return;
+
+    // Pas de stopPropagation ici : React delegue ses ecouteurs a la racine,
+    // donc celui-ci s'execute apres l'ecouteur natif du diaporama. C'est le
+    // diaporama qui arbitre, en n'acceptant qu'un glissement franchement
+    // vertical (voir useWheelNavigation).
+    onActivate(Math.min(Math.max(active + Math.sign(dx), 0), PROJECTS.length - 1));
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
@@ -79,6 +115,8 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
         aria-label="Projets"
         aria-orientation="horizontal"
         onKeyDown={onKeyDown}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
       >
         {PROJECTS.map((project, i) => {
           const offset = i - active;
@@ -114,7 +152,7 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
       {/* Le conseil parlait de fleches et d'Entree, ce qui ne veut rien dire
           au doigt. Il decrit maintenant le geste, le clavier en complement. */}
       <p className={styles.hint}>
-        Touche une tuile pour la choisir, la tuile centrale pour l’ouvrir.
+        Glisse pour parcourir, touche la tuile centrale pour l’ouvrir.
         <span className={styles.hintKeys}> Au clavier : flèches, puis Entrée.</span>
       </p>
     </div>
