@@ -37,8 +37,17 @@ export function Deck() {
   const verrouRef = useRef(false);
   const tweenRef = useRef<gsap.core.Tween | null>(null);
   const [index, setIndex] = useState(0);
+  /**
+   * Le miroir de `index` que lit l'observateur de redimensionnement. Il est
+   * ecrit dans un effet et non pendant le rendu : React peut rendre deux fois
+   * avant de valider, et une ecriture pendant le rendu laisse alors la ref sur
+   * une valeur d'un rendu abandonne. L'observateur se declenche apres la mise
+   * en page, donc bien apres l'effet, il lit toujours l'index a jour.
+   */
   const indexRef = useRef(0);
-  indexRef.current = index;
+  useEffect(() => {
+    indexRef.current = index;
+  }, [index]);
 
   const goTo = useCallback((cible: number) => {
     setIndex(() => Math.min(Math.max(cible, 0), ECRANS.length - 1));
