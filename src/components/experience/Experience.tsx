@@ -1,5 +1,18 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
+import { Pipe } from './Pipe';
+import {
+  A_PLACER,
+  COLONNES,
+  LIGNES,
+  LIGNE_SOURCE,
+  SOLUTION,
+  grilleInitiale,
+  index,
+  lignesAlimentees,
+  piecesDuPlateau,
+  type Piece,
+} from './circuit';
 import styles from './Experience.module.css';
 
 type Step = {
@@ -8,6 +21,7 @@ type Step = {
   lines: string[];
 };
 
+/** Une etape par ligne de la grille, de la plus recente a la plus ancienne. */
 const STEPS: Step[] = [
   {
     title: 'Freelance / EI, développeur full-stack',
@@ -37,21 +51,66 @@ const STEPS: Step[] = [
   },
 ];
 
-const reduced =
-  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+/** Les cases que le joueur manipule. Les autres sont scellees. */
+const MANIPULABLES = new Set(A_PLACER);
 
-/** Ecran 03, Experience. Circuit a alimenter : chaque etape revelee s'allume. */
+/**
+ * Ecran 03, Experience. Une grille de tuyauterie relie la source a chaque
+ * experience : on pose les modules manquants depuis la reserve, on les tourne,
+ * et la ligne s'allume quand le courant passe.
+ *
+ * Le jeu est un habillage, pas un peage. Les cartes restent lisibles sans y
+ * toucher : c'est la section la plus importante du site, et un recruteur
+ * presse ne doit pas avoir a jouer pour lire un parcours. Le circuit donne
+ * envie de s'attarder, et le bouton donne la reponse a qui n'a pas le temps.
+ */
 export function Experience() {
-  const [revealed, setRevealed] = useState(reduced ? STEPS.length : 2);
+  const [grille, setGrille] = useState<(Piece | null)[]>(grilleInitiale);
+  const [reserve, setReserve] = useState(piecesDuPlateau);
+  const [choisie, setChoisie] = useState<number | null>(null);
 
-  const revealNext = () => {
-    setRevealed((n) => {
-      if (n >= STEPS.length) return n;
-      return n + 1;
-    });
+  const allumees = useMemo(() => lignesAlimentees(grille), [grille]);
+  const total = allumees.filter(Boolean).length;
+  const resolu = total === LIGNES;
+
+  /** Pose le module choisi sur une case vide, ou tourne celui deja pose. */
+  const toucherCase = (i: number) => {
+    if (grille[i]) {
+      setGrille((g) =>
+        g.map((p, n) => (n === i && p ? { ...p, rotation: (p.rotation + 1) % 4 } : p)),
+      );
+      return;
+    }
+    if (choisie === null) return;
+
+    const prise = reserve.find((p) => p.id === choisie);
+    if (!prise) return;
+
+    setGrille((g) => g.map((p, n) => (n === i ? { ...prise.piece } : p)));
+    setReserve((t) => t.filter((p) => p.id !== choisie));
+    setChoisie(null);
   };
 
-  const revealAll = () => setRevealed(STEPS.length);
+  /** Tourne un module reste en reserve, avant de le poser. */
+  const tournerEnReserve = (id: number) => {
+    setReserve((t) =>
+      t.map((p) =>
+        p.id === id ? { ...p, piece: { ...p.piece, rotation: (p.piece.rotation + 1) % 4 } } : p,
+      ),
+    );
+  };
+
+  const donnerLaReponse = () => {
+    setGrille(SOLUTION.map((p) => (p ? { ...p } : null)));
+    setReserve([]);
+    setChoisie(null);
+  };
+
+  const rejouer = () => {
+    setGrille(grilleInitiale());
+    setReserve(piecesDuPlateau());
+    setChoisie(null);
+  };
 
   return (
     <section className={styles.experience} id="experience" aria-label="Expérience">
@@ -63,63 +122,113 @@ export function Experience() {
             le courant
           </h2>
           <p className={styles.text}>
-            Alimente le circuit étape par étape. Une étape alimentée, c’est une étape qui se
-            raconte.
+            Pose les modules qui manquent, tourne-les pour aligner les tuyaux, et amène le courant
+            jusqu’à chaque expérience. Les cartes se lisent sans jouer.
           </p>
+
           <div className={styles.controls}>
             <button
               type="button"
               className={styles.revealAll}
-              onClick={revealAll}
-              disabled={revealed >= STEPS.length}
+              onClick={resolu ? rejouer : donnerLaReponse}
             >
-              Tout révéler
+              {resolu ? 'Rejouer' : 'Donne moi la réponse !'}
             </button>
-            <span className={styles.count}>
-              {Math.min(revealed, STEPS.length)} / {STEPS.length} alimentées
+            <span className={styles.count} role="status">
+              {total} / {LIGNES} alimentées
             </span>
           </div>
-          <p className={styles.legend}>Éteint = lilas, alimenté = néon.</p>
-        </header>
 
-        <ol className={styles.circuit}>
-          <li className={styles.source} aria-hidden="true">
-            <span className={styles.plug} />
-            Source
-          </li>
-          {STEPS.map((step, i) => {
-            const lit = i < revealed;
-            const next = i === revealed;
-            return (
-              <li key={step.title} className={`${styles.step} ${lit ? styles.lit : ''}`}>
-                <span className={styles.wire} aria-hidden="true" />
-                <div className={styles.node} aria-hidden="true" />
-                <div className={styles.card}>
-                  {lit ? (
-                    <>
-                      <h3>{step.title}</h3>
-                      <p className={styles.period}>{step.period}</p>
-                      {step.lines.map((line) => (
-                        <p key={line} className={styles.line}>
-                          {line}
-                        </p>
-                      ))}
-                    </>
-                  ) : (
+          <div className={styles.tray} role="group" aria-label="Modules en réserve">
+            {reserve.length === 0 ? (
+              <p className={styles.trayEmpty}>Plus de module en réserve.</p>
+            ) : (
+              reserve.map(({ id, piece }) => {
+                const active = choisie === id;
+                return (
+                  <span key={id} className={styles.trayItem}>
                     <button
                       type="button"
-                      className={styles.reveal}
-                      onClick={revealNext}
-                      disabled={!next}
+                      className={`${styles.trayPiece} ${active ? styles.trayPieceOn : ''}`}
+                      aria-pressed={active}
+                      aria-label={`Module ${piece.forme}${active ? ', sélectionné' : ''}`}
+                      onClick={() => setChoisie(active ? null : id)}
                     >
-                      {next ? 'Alimenter cette étape' : 'À alimenter'}
+                      <Pipe piece={piece} alimente={false} />
                     </button>
-                  )}
-                </div>
-              </li>
-            );
-          })}
-        </ol>
+                    <button
+                      type="button"
+                      className={styles.trayTurn}
+                      aria-label={`Tourner le module ${piece.forme}`}
+                      onClick={() => tournerEnReserve(id)}
+                    >
+                      &#8635;
+                    </button>
+                  </span>
+                );
+              })
+            )}
+          </div>
+        </header>
+
+        <div className={styles.board}>
+          {STEPS.map((step, ligne) => (
+            <div key={step.title} className={styles.row}>
+              <div className={styles.cells}>
+                {/* Une seule ligne recoit le courant : ailleurs le gabarit
+                    garde la place pour que les grilles restent alignees. */}
+                {ligne === LIGNE_SOURCE ? (
+                  <span className={styles.source} aria-hidden="true" />
+                ) : (
+                  <span className={styles.sourceVide} aria-hidden="true" />
+                )}
+                {Array.from({ length: COLONNES }, (_, colonne) => {
+                  const i = index(colonne, ligne);
+                  const piece = grille[i];
+                  const libre = MANIPULABLES.has(i);
+
+                  // Une case hors trace n'accueille jamais rien : c'est du
+                  // decor, pas un bouton desactive de plus dans l'ordre de
+                  // lecture d'un lecteur d'ecran.
+                  if (!SOLUTION[i]) {
+                    return <span key={i} className={styles.cellVide} aria-hidden="true" />;
+                  }
+
+                  return (
+                    <button
+                      key={i}
+                      type="button"
+                      className={[
+                        styles.cell,
+                        piece ? styles.cellPleine : '',
+                        libre ? '' : styles.cellFixe,
+                      ].join(' ')}
+                      onClick={() => toucherCase(i)}
+                      disabled={!libre}
+                      aria-label={
+                        piece
+                          ? `Colonne ${colonne + 1}, module ${piece.forme}, tourner`
+                          : `Colonne ${colonne + 1}, case vide`
+                      }
+                    >
+                      {piece && <Pipe piece={piece} alimente={allumees[ligne] ?? false} />}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <article className={`${styles.card} ${allumees[ligne] ? styles.cardOn : ''}`}>
+                <h3>{step.title}</h3>
+                <p className={styles.period}>{step.period}</p>
+                {step.lines.map((line) => (
+                  <p key={line} className={styles.line}>
+                    {line}
+                  </p>
+                ))}
+              </article>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
