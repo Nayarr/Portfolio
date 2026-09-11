@@ -64,3 +64,11 @@
     gap: 14px;
   }
 }
+
+/* Meme raison que pour le logotype : voir SiteHeader.module.css. */
+:global(html[data-takeover='on']) .footer {
+  color: rgb(255 255 255 / 0.68);
+}
+:global(html[data-takeover='on']) .links a {
+  color: rgb(255 255 255 / 0.68);
+}
