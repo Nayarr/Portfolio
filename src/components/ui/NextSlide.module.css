@@ -1,0 +1,57 @@
+.next {
+  position: fixed;
+  right: clamp(24px, 6vw, 96px);
+  /* Au-dessus de la bande du pied de page, dont les liens occupent
+     deja le coin bas droit. */
+  bottom: calc(var(--chrome-bottom) + 6px);
+  z-index: var(--z-chrome);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px 10px 22px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition:
+    color 0.2s var(--ease-out),
+    border-color 0.2s var(--ease-out),
+    transform 0.2s var(--ease-out);
+}
+.next:hover {
+  color: var(--ink);
+  border-color: var(--violet);
+  transform: translateX(3px);
+}
+
+.arrow {
+  font-family: var(--font-display);
+  font-size: 20px;
+  line-height: 1;
+  color: var(--violet);
+}
+
+/* Au-dessus d'une fiche projet, qui impose son propre fond sature. */
+:global(html[data-takeover='on']) .next {
+  background: rgb(255 255 255 / 0.12);
+  border-color: rgb(255 255 255 / 0.28);
+  color: rgb(255 255 255 / 0.8);
+}
+:global(html[data-takeover='on']) .arrow {
+  color: inherit;
+}
+
+@media (max-width: 767px) {
+  .next {
+    right: 16px;
+    bottom: 16px;
+    padding: 9px 14px 9px 16px;
+  }
+  .label {
+    display: none;
+  }
+}

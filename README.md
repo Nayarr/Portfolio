@@ -1,7 +1,7 @@
 # Portfolio, Rayan Oughlis
 
-Portfolio personnel. Un parcours en **scroll horizontal** de cinq ecrans : hub, projets,
-experience, a propos, contact. Chaque fiche projet prend la direction artistique de son projet.
+Portfolio personnel. Un **diaporama** de cinq ecrans : hub, projets, experience, a propos,
+contact. Un geste, une diapo. Chaque fiche projet prend la direction artistique de son projet.
 
 **En ligne :** <https://rayan-oughlis.vercel.app> &nbsp;·&nbsp; **Maquette-concept :** [docs/design](docs/design/)
 
@@ -9,17 +9,17 @@ experience, a propos, contact. Chaque fiche projet prend la direction artistique
 
 ## Stack et choix
 
-| Domaine   | Choix                                                | Voir                                                         |
-| --------- | ---------------------------------------------------- | ------------------------------------------------------------ |
-| Build     | Vite + React 19 + TypeScript (SPA)                   | [ADR 0001](docs/adr/0001-vite-plutot-que-next.md)            |
-| Animation | GSAP (ScrollTrigger, Flip, `@gsap/react`)            | [ADR 0002](docs/adr/0002-gsap-seul-pour-l-animation.md)      |
-| Style     | CSS Modules + jetons CSS (`src/styles/tokens.css`)   | [ADR 0003](docs/adr/0003-css-modules-plutot-que-tailwind.md) |
-| Scroll    | Lenis (lisse + horizontal)                           |                                                              |
-| Polices   | @fontsource, auto-hebergees (`src/styles/fonts.css`) |                                                              |
-| 3D        | Pas de mode exploration 3D pour la v1                | [ADR 0006](docs/adr/0006-pas-de-mode-exploration-3d.md)      |
-| SEO       | Meta + JSON-LD + repli `noscript`, sans prerender    | [ADR 0007](docs/adr/0007-seo-sans-prerender.md)              |
-| Deploy    | Vercel                                               |                                                              |
-| Qualite   | Budget Lighthouse en CI (`lighthouserc.json`)        |                                                              |
+| Domaine    | Choix                                                | Voir                                                         |
+| ---------- | ---------------------------------------------------- | ------------------------------------------------------------ |
+| Build      | Vite + React 19 + TypeScript (SPA)                   | [ADR 0001](docs/adr/0001-vite-plutot-que-next.md)            |
+| Animation  | GSAP (`@gsap/react`)                                 | [ADR 0002](docs/adr/0002-gsap-seul-pour-l-animation.md)      |
+| Style      | CSS Modules + jetons CSS (`src/styles/tokens.css`)   | [ADR 0003](docs/adr/0003-css-modules-plutot-que-tailwind.md) |
+| Navigation | Diaporama maison, un geste par ecran                 | [ADR 0008](docs/adr/0008-diaporama-plutot-que-scroll.md)     |
+| Polices    | @fontsource, auto-hebergees (`src/styles/fonts.css`) |                                                              |
+| 3D         | Pas de mode exploration 3D pour la v1                | [ADR 0006](docs/adr/0006-pas-de-mode-exploration-3d.md)      |
+| SEO        | Meta + JSON-LD + repli `noscript`, sans prerender    | [ADR 0007](docs/adr/0007-seo-sans-prerender.md)              |
+| Deploy     | Vercel                                               |                                                              |
+| Qualite    | Budget Lighthouse en CI (`lighthouserc.json`)        |                                                              |
 
 L'URL publique se configure par la variable `VITE_SITE_URL` (voir [.env.example](.env.example)) :
 elle alimente les URL canoniques, la carte de partage, le `robots.txt` et le `sitemap.xml`,
@@ -49,7 +49,7 @@ npm run dev
 
 ```
 src/
-  app/            points d'entree : Providers, ScrollExperience
+  app/            points d'entree : Providers, Deck
   components/
     ui/           curseur, en-tete, toggles
     hub/          hero, stack, panneau iso, index des sections
@@ -57,7 +57,7 @@ src/
     experience/   circuit electrique
     about/        recit, formation, hors-code
     contact/      coordonnees, liens, CV
-  lib/            gsap, smooth-scroll, cv
+  lib/            gsap, deck, gestes de navigation, cv
   styles/         tokens.css, global.css
 docs/
   adr/            decisions d'architecture

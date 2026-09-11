@@ -4,6 +4,15 @@
   box-sizing: border-box;
 }
 
+/* Le site est un diaporama : aucune page ne defile, donc pas de barre de
+   defilement. Le deplacement se fait d'une diapo a l'autre (voir app/Deck). */
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
 html {
   color-scheme: light;
 }

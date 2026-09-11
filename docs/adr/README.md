@@ -12,5 +12,6 @@ qui remplace, on ne modifie pas l'ancienne). Format inspire de Michael Nygard.
 | 0005 | Strategie SEO : prerender au build    | Partiellement remplace par le 0007 |
 | 0006 | Pas de mode exploration 3D pour la v1 | Accepte                            |
 | 0007 | SEO sans prerender                    | Accepte                            |
+| 0008 | Diaporama plutot que scroll pilote    | Accepte                            |
 
 Gabarit : `contexte` / `decision` / `consequences` / `alternatives ecartees`.

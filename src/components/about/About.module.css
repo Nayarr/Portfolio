@@ -1,6 +1,8 @@
 .about {
-  height: 100%;
-  min-height: 100vh;
+  /* `min-height` et non `height` : une diapo dont le contenu ne tient pas
+     dans la hauteur disponible doit grandir et laisser le panneau
+     defiler, sinon le centrage flex la fait deborder par le haut. */
+  min-height: 100%;
   width: 100%;
   background: var(--bg);
   color: var(--ink);
