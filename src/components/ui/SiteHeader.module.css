@@ -79,3 +79,10 @@
     backdrop-filter: blur(10px);
   }
 }
+
+/* Une fiche projet ouverte impose sa propre couleur de fond, souvent saturee.
+   Le logotype y repasse en neutre clair, le violet du site n'y tient pas le
+   contraste. Voir ProjectView.tsx. */
+:global(html[data-takeover='on']) .wordmark {
+  color: #ffffff;
+}
