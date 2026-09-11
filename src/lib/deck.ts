@@ -9,6 +9,14 @@ export type DeckApi = {
   goTo: (index: number) => void;
 };
 
+/**
+ * Emis par le logotype du chrome au retour a l'accueil. Toute couche qui
+ * recouvre le diaporama, la fiche projet aujourd'hui, l'ecoute pour se fermer :
+ * le chrome est rendu hors de la piste, il n'a aucune autre prise sur leur
+ * etat local.
+ */
+export const RETOUR_ACCUEIL = 'portfolio:retour-accueil';
+
 const DeckContext = createContext<DeckApi | null>(null);
 
 export const DeckProvider = DeckContext.Provider;

@@ -14,6 +14,12 @@
 }
 
 .wordmark {
+  /* C'est un bouton depuis qu'il ramene a la premiere diapo : sans reset il
+     arrive avec la bordure, le fond et la police du navigateur. */
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
   font-family: var(--font-display);
   font-size: 28px;
   letter-spacing: 0.01em;

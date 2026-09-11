@@ -1,14 +1,25 @@
-import { Link } from 'react-router-dom';
-
-import { useDeck } from '@/lib/deck';
+import { RETOUR_ACCUEIL, useDeck } from '@/lib/deck';
 import styles from './SiteHeader.module.css';
 
 /** Index de la diapo contact, cible du lien d'evitement. */
 const CONTACT = 4;
+/** Index du hub. */
+const ACCUEIL = 0;
 
 /** Chrome haut, commun a toutes les diapos. */
 export function SiteHeader() {
   const { goTo } = useDeck();
+
+  /**
+   * Le logotype etait un `<Link to="/">`, or le site n'a qu'une route : le
+   * clic ne faisait rien. Il ramene maintenant a la premiere diapo, en
+   * refermant au passage une eventuelle fiche projet, qui recouvrirait
+   * sinon le hub une fois revenu.
+   */
+  const rentrer = () => {
+    window.dispatchEvent(new Event(RETOUR_ACCUEIL));
+    goTo(ACCUEIL);
+  };
 
   return (
     <header className={styles.header}>
@@ -20,9 +31,14 @@ export function SiteHeader() {
       </button>
       {/* Le libelle doit contenir le texte visible : sinon la commande vocale
           "clique RAYAN" ne trouve pas la cible (label-content-name-mismatch). */}
-      <Link to="/" className={styles.wordmark} aria-label="Rayan Oughlis, retour a l’accueil">
+      <button
+        type="button"
+        className={styles.wordmark}
+        onClick={rentrer}
+        aria-label="Rayan Oughlis, retour a l’accueil"
+      >
         RAYAN
-      </Link>
+      </button>
     </header>
   );
 }
