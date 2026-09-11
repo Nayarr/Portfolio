@@ -1,3 +1,4 @@
+import assurfastLogo from './media/assurfast.png';
 import echoceanMedia from './media/echocean.jpg';
 import hubleauMedia from './media/hubleau.jpg';
 import papyrusMedia from './media/papyrus.jpg';
@@ -99,6 +100,11 @@ export const PROJECTS: Project[] = [
       { value: 'x5', label: 'impressions du site après refonte SEO' },
     ],
     links: [{ label: 'Repo GitHub', href: 'https://github.com/Nayarr' }],
+    media: {
+      src: assurfastLogo,
+      alt: 'Logo ASSURFAST : le nom en capitales bleu marine, suivi d’un eclair jaune dans un bouclier.',
+      kind: 'logo',
+    },
     mediaNote:
       'L’extension traite des permis et des cartes grises de clients du cabinet : aucune capture de l’outil en fonctionnement n’est diffusable.',
     palette: { from: '#0b63f6', to: '#7fb2ff', ink: '#ffd60a' },
