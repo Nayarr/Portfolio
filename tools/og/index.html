@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Carte de partage</title>
+    <script type="module">
+      import '/src/styles/fonts.css';
+      import '/src/styles/tokens.css';
+    </script>
+    <style>
+      /* Le gabarit fait exactement 1200 x 630, la taille attendue par
+         Open Graph et Twitter. Le rendu est capture a l'echelle 1. */
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      .carte {
+        position: relative;
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--font-body);
+        box-sizing: border-box;
+        padding: 78px 96px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      /* Halo violet en haut a droite, comme sur le hub. */
+      .carte::before {
+        content: '';
+        position: absolute;
+        inset: -20% -30% auto auto;
+        width: 900px;
+        height: 900px;
+        background: radial-gradient(closest-side, var(--violet-pale), transparent 72%);
+        opacity: 0.85;
+      }
+      /* Trame millimetree, tres pale : elle donne le grain du site. */
+      .carte::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+          repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 60px),
+          repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 60px);
+        opacity: 0.55;
+      }
+      .cadre {
+        position: absolute;
+        inset: 34px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+      }
+      .contenu {
+        position: relative;
+        z-index: 1;
+      }
+      .kicker {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin: 0 0 26px;
+        font-family: var(--font-mono);
+        font-size: 18px;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: var(--violet-sub);
+      }
+      .kicker::before {
+        content: '';
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: var(--violet);
+      }
+      .nom {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 400;
+        font-size: 128px;
+        line-height: 0.82;
+        letter-spacing: 0.005em;
+        text-transform: uppercase;
+      }
+      .nom span {
+        display: block;
+      }
+      .nom .accent {
+        color: var(--violet);
+      }
+      .accroche {
+        margin: 40px 0 0;
+        max-width: 800px;
+        font-size: 27px;
+        line-height: 1.42;
+        color: var(--ink-muted);
+        /* Sans equilibrage, la derniere ligne se reduisait a deux mots
+           orphelins sous un pave pleine largeur. */
+        text-wrap: balance;
+      }
+      .signature {
+        position: absolute;
+        right: 96px;
+        bottom: 86px;
+        z-index: 1;
+        font-family: var(--font-mono);
+        font-size: 17px;
+        letter-spacing: 0.2em;
+        color: var(--ink-faint);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="carte">
+      <div class="cadre"></div>
+      <div class="contenu">
+        <p class="kicker">Portfolio &middot; Alternance 2026</p>
+        <h1 class="nom">
+          <span>Rayan</span>
+          <span class="accent">Oughlis</span>
+        </h1>
+        <p class="accroche">
+          Développeur full stack, automatisation &amp; IA. Je conçois des applications web, des
+          pipelines de données et des agents IA.
+        </p>
+      </div>
+      <p class="signature">BUT3 &middot; UPEC</p>
+    </div>
+  </body>
+</html>
