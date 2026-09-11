@@ -13,7 +13,7 @@
   background: var(--bg);
   color: var(--ink);
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.65fr);
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.82fr);
   align-items: center;
   gap: clamp(32px, 6vw, 96px);
   padding: var(--chrome-top) clamp(24px, 6vw, 96px) calc(var(--chrome-bottom) + 40px);
@@ -57,7 +57,7 @@
   font-weight: 400;
   /* Le nom peut respirer davantage depuis que la droite n'est plus occupee
      par un panneau. */
-  font-size: clamp(64px, 11vw, 168px);
+  font-size: clamp(56px, 8.6vw, 132px);
   line-height: 0.82;
   letter-spacing: -0.01em;
   text-transform: uppercase;
@@ -127,16 +127,15 @@
   margin: 0;
 }
 .stackGroup {
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 }
 .stackGroup dt {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 13px;
-  letter-spacing: 0.1em;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--violet);
-  margin-bottom: 8px;
+  color: var(--ink-faint);
+  margin-bottom: 7px;
 }
 .stackGroup dd {
   margin: 0;
@@ -149,15 +148,32 @@
   flex-wrap: wrap;
   gap: 6px;
 }
+/**
+ * Pastilles reprises du CV : meme forme, memes trois tons. Les couleurs
+ * viennent des jetons du site plutot que des valeurs du CV, pour n'avoir
+ * qu'une palette a maintenir, mais le rendu est le meme.
+ */
 .stackGroup li {
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.04em;
-  color: var(--ink-muted);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 5px 10px;
-  background: var(--surface);
+  font-size: 10.5px;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--pill-bord);
+  border-radius: 4px;
+  padding: 5px 9px;
+  white-space: nowrap;
+}
+.ton1 {
+  background: var(--bg-2);
+  color: var(--ink);
+}
+.ton2 {
+  background: var(--violet-pale);
+  color: var(--ink);
+}
+.ton3 {
+  background: var(--violet-sub);
+  color: #ffffff;
+  border-color: var(--violet-sub);
 }
 
 /* La disponibilite ferme la colonne : c'est l'information que cherche un
@@ -166,8 +182,8 @@
   display: flex;
   align-items: flex-start;
   gap: 9px;
-  margin: 28px 0 0;
-  padding-top: 18px;
+  margin: 20px 0 0;
+  padding-top: 16px;
   border-top: 1px solid var(--line);
   max-width: 30ch;
   font-family: var(--font-mono);
