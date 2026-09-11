@@ -33,3 +33,30 @@ jobs:
 
       - name: Build
         run: npm run build
+
+  # Garde-fou de qualite. Mesure reelle au moment de la mise en place :
+  # accessibilite 100, SEO 100, bonnes pratiques 100, performance 94.
+  # Les seuils sont poses juste en dessous pour absorber le bruit des runners,
+  # et la performance est en avertissement plutot qu'en erreur : elle depend
+  # trop de la machine pour bloquer une PR.
+  lighthouse:
+    runs-on: ubuntu-latest
+    needs: verify
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Lighthouse
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: ./lighthouserc.json
+          uploadArtifacts: true

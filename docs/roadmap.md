@@ -24,10 +24,10 @@ Chaque ligne devient une issue GitHub, prise une par une sur une branche `feat/.
 - [x] `chore/seo` : meta, JSON-LD, image OG, robots + sitemap au build (ADR 0007)
 - [x] `chore/a11y-pass` : focus visible, navigation clavier, contrastes, reduced-motion
 - [x] `fix/mobile-layout` : pile verticale reellement utilisable au telephone
-- [ ] `perf/lighthouse-budget` : budget Lighthouse CI en garde-fou
+- [x] `chore/lighthouse-budget` : budget Lighthouse en CI, a11y/SEO/BP a 100
 - [ ] `chore/polish` : espacements et finitions ecran par ecran sur les previews
-- [ ] `chore/domain` : domaine perso + redirections
-- [ ] `docs/readme-final` : capture, lien live
+- [ ] `chore/domain` : domaine perso (le site tourne sur rayan-oughlis.vercel.app)
+- [x] `docs/readme-final` : lien live dans le README
 
 ## Plus tard, eventuel
 
