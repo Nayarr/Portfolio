@@ -6,8 +6,16 @@
   position: fixed;
   inset: auto 0 0 0;
   z-index: var(--z-chrome);
-  padding: 0 clamp(24px, 6vw, 96px) calc(var(--space) * 3);
+  padding: calc(var(--space) * 2) clamp(24px, 6vw, 96px) calc(var(--space) * 3);
   pointer-events: none;
+  /**
+   * Une diapo trop haute pour l'ecran defile sous la barre, et le texte y
+   * passait en clair. Un simple flou suffit a l'en detacher, et reste neutre :
+   * la barre survole aussi bien le hub clair que le panneau projets sombre,
+   * ou un fond teinte jurerait d'un cote ou de l'autre.
+   */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 .index > * {
   pointer-events: auto;
@@ -94,10 +102,16 @@
   .list {
     gap: 4px 16px;
   }
+  /* Les entrees ne montrent plus que leur numero : sans elargissement elles
+     tomberaient a 18 px de large, sous le minimum tactile. */
   .item {
     font-size: 10px;
     letter-spacing: 0.1em;
     gap: 5px;
+    min-width: 26px;
+    min-height: 26px;
+    justify-content: center;
+    align-items: center;
   }
   /* Au telephone, seuls les numeros tiennent : le nom de l'ecran courant
      suffit a se reperer. */

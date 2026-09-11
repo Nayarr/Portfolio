@@ -7,7 +7,7 @@
  */
 
 export const COLONNES = 5;
-export const LIGNES = 4;
+export const LIGNES = 3;
 /** Ligne par laquelle le courant entre, la derniere. */
 export const LIGNE_SOURCE = LIGNES - 1;
 
@@ -111,9 +111,8 @@ export const SOLUTION: (Piece | null)[] = (() => {
   grille[index(0, LIGNE_SOURCE)] = { forme: 'droit', rotation: 0 };
 
   // Tronc : un te qui dessert l'est a chaque ligne, un coude au sommet.
-  grille[index(1, 3)] = { forme: 'te', rotation: 2 }; // ouvre N, E, O
-  grille[index(1, 2)] = { forme: 'te', rotation: 3 }; // ouvre N, E, S
-  grille[index(1, 1)] = { forme: 'te', rotation: 3 };
+  grille[index(1, 2)] = { forme: 'te', rotation: 2 }; // ouvre N, E, O
+  grille[index(1, 1)] = { forme: 'te', rotation: 3 }; // ouvre N, E, S
   grille[index(1, 0)] = { forme: 'coude', rotation: 1 }; // ouvre E, S
 
   for (let ligne = 0; ligne < LIGNES; ligne += 1) {
@@ -126,15 +125,7 @@ export const SOLUTION: (Piece | null)[] = (() => {
 })();
 
 /** Cases que le joueur doit remplir. Les autres sont posees d'avance. */
-export const A_PLACER = [
-  index(1, 3),
-  index(1, 2),
-  index(1, 0),
-  index(2, 1),
-  index(3, 2),
-  index(4, 0),
-  index(4, 3),
-];
+export const A_PLACER = [index(1, 2), index(1, 0), index(2, 1), index(3, 2), index(4, 0)];
 
 /** Grille de depart : la solution moins les cases a placer. */
 export function grilleInitiale(): (Piece | null)[] {
@@ -149,8 +140,8 @@ export function grilleInitiale(): (Piece | null)[] {
  * chaque visite et reste reproductible en cas de bug.
  */
 export function piecesDuPlateau(): { id: number; piece: Piece }[] {
-  const rotationsBrouillees = [1, 3, 2, 1, 2, 3, 1];
-  const ordre = [3, 0, 5, 1, 6, 2, 4];
+  const rotationsBrouillees = [1, 3, 2, 1, 2];
+  const ordre = [2, 0, 4, 1, 3];
   return ordre.map((rang, n) => {
     const source = SOLUTION[A_PLACER[rang]]!;
     return {

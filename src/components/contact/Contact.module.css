@@ -86,7 +86,12 @@
 .email:hover {
   color: #fff;
 }
+/* Les liens de contact doivent faire 24 px de haut au minimum : ce sont les
+   cibles les plus importantes du site, et elles etaient les plus petites. */
 .phone {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
   font-family: var(--font-mono);
   font-size: 14px;
   letter-spacing: 0.14em;
@@ -104,6 +109,9 @@
   text-transform: uppercase;
 }
 .links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
   color: var(--dark-ink);
   border-bottom: 1px solid var(--dark-line);
   padding-bottom: 4px;

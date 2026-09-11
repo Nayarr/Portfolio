@@ -26,14 +26,6 @@ type Step = {
 /** Une etape par ligne de la grille, de la plus recente a la plus ancienne. */
 const STEPS: Step[] = [
   {
-    title: 'Freelance / EI, développeur full-stack',
-    period: 'Juin 2026 vers présent, France',
-    lines: [
-      'Direction et stratégie, dev web / mobile et SaaS.',
-      'IA et automatisation (workflows, agents, pipelines), dashboards KPI temps réel.',
-    ],
-  },
-  {
     title: 'ASSURFAST, lead technique projets (stage S4)',
     period: 'Avr. vers juin 2026, 8 semaines, Alfortville',
     lines: [
@@ -197,7 +189,13 @@ export function Experience() {
 
         <div className={styles.board}>
           {STEPS.map((step, ligne) => (
-            <div key={step.title} className={styles.row}>
+            <div
+              key={step.title}
+              className={styles.row}
+              /* Le rang sert a reordonner au telephone : toutes les lignes de
+                 grille d'abord, puis toutes les cartes. */
+              style={{ ['--ligne' as string]: ligne }}
+            >
               <div className={styles.cells}>
                 {/* Une seule ligne recoit le courant : ailleurs le gabarit
                     garde la place pour que les grilles restent alignees. */}
