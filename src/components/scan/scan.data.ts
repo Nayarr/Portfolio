@@ -20,7 +20,8 @@ export const FUN_FACTS = [
     text: '~150 visiteurs / mois sur mes projets perso, à vrai dire de base je les avais fait pour moi mais bon',
     at: { top: '52%', right: '9%' },
   },
-  { text: 'Vive la KC', at: { top: '80%', right: '12%' }, big: true },
+  // Deplacee : a 80%/12% elle passait derriere le releve de competences.
+  { text: 'Vive la KC', at: { top: '64%', left: '46%' }, big: true },
 ] as const;
 
 export const READOUT = {

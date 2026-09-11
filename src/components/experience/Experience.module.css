@@ -81,13 +81,17 @@
   text-transform: uppercase;
   color: var(--ink-faint);
 }
+/* La legende explique le code couleur du circuit : elle appartient aux
+   controles, pas au bas de la colonne. Les 150 px de marge en dur laissaient
+   un trou et la faisaient lire comme un element egare. */
 .legend {
-  margin: 150px 0 0;
+  margin: 18px 0 0;
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--violet-pale);
+  /* --violet-pale plafonnait a 1,5:1 sur le fond clair. */
+  color: var(--ink-faint);
 }
 
 .circuit {

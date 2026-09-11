@@ -25,7 +25,7 @@ Chaque ligne devient une issue GitHub, prise une par une sur une branche `feat/.
 - [x] `chore/a11y-pass` : focus visible, navigation clavier, contrastes, reduced-motion
 - [x] `fix/mobile-layout` : pile verticale reellement utilisable au telephone
 - [x] `chore/lighthouse-budget` : budget Lighthouse en CI, a11y/SEO/BP a 100
-- [ ] `chore/polish` : espacements et finitions ecran par ecran sur les previews
+- [x] `chore/polish` : mode scan lisible et utilisable, finitions ecran par ecran
 - [ ] `chore/domain` : domaine perso (le site tourne sur rayan-oughlis.vercel.app)
 - [x] `docs/readme-final` : lien live dans le README
 
