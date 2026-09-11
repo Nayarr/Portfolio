@@ -1,6 +1,4 @@
-import { useRef } from 'react';
-
-import { useEffect, type CSSProperties } from 'react';
+import { useCallback, useEffect, useRef, type CSSProperties } from 'react';
 
 import { gsap, useGSAP } from '@/lib/gsap';
 import type { Project } from './projects.data';
@@ -16,6 +14,82 @@ type Props = {
 export function ProjectView({ project, originRect, onClose }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+
+  /** Retrouve la tuile d'ou la fiche est sortie, pour y revenir. */
+  const tuile = useCallback(
+    () => document.querySelector<HTMLElement>(`[data-tile-id="${project.id}"]`),
+    [project.id],
+  );
+
+  /**
+   * Fermeture animee : l'inverse de l'ouverture. Sans elle la fiche
+   * disparaissait d'un coup alors qu'elle etait entree en fondu depuis sa
+   * tuile, ce qui donnait une experience bancale d'un cote seulement.
+   *
+   * Le rectangle de destination est relu au moment de fermer, et non repris
+   * de l'ouverture : la pellicule a pu bouger entre-temps.
+   */
+  const fermeture = useRef(false);
+  const fermer = useCallback(() => {
+    if (fermeture.current) return;
+    fermeture.current = true;
+
+    const root = rootRef.current;
+    const hero = heroRef.current;
+    const cible = tuile();
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!root || !hero || !cible || reduced) {
+      onClose();
+      return;
+    }
+
+    const depart = hero.getBoundingClientRect();
+    const arrivee = cible.getBoundingClientRect();
+
+    const tl = gsap.timeline({ defaults: { ease: 'power3.inOut' }, onComplete: onClose });
+    tl.to(root.querySelectorAll(`.${styles.reveal}`), {
+      autoAlpha: 0,
+      y: 14,
+      duration: 0.22,
+      stagger: { each: 0.03, from: 'end' },
+    });
+    tl.to(
+      hero,
+      {
+        x: arrivee.left + arrivee.width / 2 - (depart.left + depart.width / 2),
+        y: arrivee.top + arrivee.height / 2 - (depart.top + depart.height / 2),
+        scaleX: arrivee.width / depart.width,
+        scaleY: arrivee.height / depart.height,
+        duration: 0.45,
+      },
+      '-=0.1',
+    );
+    tl.to(root, { autoAlpha: 0, duration: 0.25 }, '-=0.3');
+  }, [onClose, tuile]);
+
+  /** Echap ferme la fiche, comme toute couche qui recouvre la page. */
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      e.preventDefault();
+      fermer();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [fermer]);
+
+  /**
+   * Le focus entre dans la fiche a l'ouverture et retourne sur la tuile a la
+   * fermeture : sinon il restait sur une tuile devenue invisible, puis se
+   * retrouvait en tete de document au retour.
+   */
+  useEffect(() => {
+    const retour = tuile();
+    closeRef.current?.focus();
+    return () => retour?.focus();
+  }, [tuile]);
 
   useGSAP(
     () => {
@@ -91,7 +165,7 @@ export function ProjectView({ project, originRect, onClose }: Props) {
 
   return (
     <div ref={rootRef} className={styles.root} style={theme}>
-      <button type="button" className={styles.close} onClick={onClose}>
+      <button ref={closeRef} type="button" className={styles.close} onClick={fermer}>
         Retour aux projets
       </button>
 
