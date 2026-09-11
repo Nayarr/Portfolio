@@ -1,8 +1,8 @@
 .wrap {
-  /* `min-height` et non `height` : une diapo dont le contenu ne tient pas
-     dans la hauteur disponible doit grandir et laisser le panneau
-     defiler, sinon le centrage flex la fait deborder par le haut. */
-  min-height: 100%;
+  /* Etiree par le flex du parent plutot que par un pourcentage : voir
+     Projects.module.css. */
+  flex: 1;
+  min-height: 0;
   width: 100%;
   background: #110d26;
   color: #e9e3fb;
