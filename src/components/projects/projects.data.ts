@@ -51,7 +51,12 @@ export const PROJECTS: Project[] = [
     name: 'Chiron.',
     year: '2026',
     kind: 'Projet universitaire, SAE BUT3, en equipe',
-    role: 'Conception et developpement',
+    /**
+     * Perimetre confirme. L'animation des dailies Scrum et le role de product
+     * owner face au MOA ne sont pas encore arretes : a ajouter ici une fois
+     * actes, c'est la part qui distingue le plus le profil.
+     */
+    role: 'Dev, planification et documentation',
     stack: ['React 19', 'TypeScript', 'FastAPI', 'PostgreSQL', 'Docker', 'PyTorch'],
     pitch:
       'Plateforme de dossier patient qui réunit deux mondes d’imagerie qui ne se parlent pas : la radiologie DICOM et la biopsie numérisée. Une lame pèse de 100 Mo à plusieurs gigaoctets, donc elle est tuilée en pyramide DZI et servie au zoom. S’y ajoutent une segmentation de noyaux par IA en aide au diagnostic, et un compte rendu que le serveur force à suivre son protocole en quatre étapes.',
