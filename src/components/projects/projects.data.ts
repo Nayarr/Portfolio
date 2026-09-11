@@ -96,8 +96,8 @@ export const PROJECTS: Project[] = [
       'Ce site. Un diaporama de cinq écrans, sans défilement de page : un geste, un écran. Chaque fiche projet prend la direction artistique de son projet, et l’écran expérience est un circuit de tuyauterie à câbler. Pas de bibliothèque d’interface, pas de framework CSS : tout est écrit à la main.',
     metrics: [
       { value: '100 / 100', label: 'accessibilité et SEO, Lighthouse' },
-      { value: '128 ko', label: 'JavaScript transféré, compressé' },
-      { value: '9', label: 'décisions d’architecture consignées' },
+      /* Une branche et une revue par changement, sur un projet mene seul. */
+      { value: '43', label: 'pull requests, une par changement' },
     ],
     links: [
       { label: 'Visiter le site', href: 'https://rayan-oughlis.vercel.app' },
