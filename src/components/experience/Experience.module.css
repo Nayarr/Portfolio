@@ -1,3 +1,7 @@
+/**
+ * Ecran experience : une grille de tuyauterie a gauche de chaque carte.
+ * Une ligne de grille par experience, un tronc vertical qui les dessert.
+ */
 .experience {
   /* `min-height` et non `height` : une diapo dont le contenu ne tient pas
      dans la hauteur disponible doit grandir et laisser le panneau
@@ -27,34 +31,35 @@
 .inner {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(260px, 360px) minmax(0, 1fr);
-  gap: clamp(32px, 6vw, 80px);
+  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 64px);
   width: 100%;
-  max-width: 1180px;
+  max-width: 1240px;
   margin: 0 auto;
   align-items: start;
 }
 
 .intro {
   position: sticky;
-  top: 120px;
+  top: 0;
 }
 .title {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(40px, 6vw, 58px);
+  font-size: clamp(36px, 5vw, 54px);
   line-height: 0.92;
   letter-spacing: 0.01em;
   text-transform: uppercase;
 }
 .text {
-  margin: 20px 0 24px;
-  max-width: 34ch;
-  font-size: 15px;
+  margin: 18px 0 22px;
+  max-width: 36ch;
+  font-size: 14.5px;
   line-height: 1.55;
   color: var(--ink-muted);
 }
+
 .controls {
   display: flex;
   align-items: center;
@@ -67,14 +72,17 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--violet);
+  background: var(--surface);
   border: 1px solid var(--violet-pale);
   border-radius: 999px;
-  padding: 8px 16px;
-  background: none;
+  padding: 9px 18px;
+  transition:
+    background 0.2s var(--ease-out),
+    color 0.2s var(--ease-out);
 }
-.revealAll:disabled {
-  opacity: 0.4;
-  cursor: default;
+.revealAll:hover {
+  background: var(--violet);
+  color: var(--surface);
 }
 .count {
   font-family: var(--font-mono);
@@ -83,135 +91,222 @@
   text-transform: uppercase;
   color: var(--ink-faint);
 }
-/* La legende explique le code couleur du circuit : elle appartient aux
-   controles, pas au bas de la colonne. Les 150 px de marge en dur laissaient
-   un trou et la faisaient lire comme un element egare. */
-.legend {
-  margin: 18px 0 0;
+
+/* Reserve de modules a poser. */
+.tray {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.trayEmpty {
+  margin: 0;
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  /* --violet-pale plafonnait a 1,5:1 sur le fond clair. */
   color: var(--ink-faint);
 }
+.trayItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.trayPiece {
+  width: 44px;
+  height: 44px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  transition:
+    border-color 0.2s var(--ease-out),
+    box-shadow 0.2s var(--ease-out);
+}
+.trayPiece:hover {
+  border-color: var(--violet-pale);
+}
+.trayPieceOn {
+  border-color: var(--violet);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.16);
+}
+.trayTurn {
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--ink-faint);
+  font-size: 13px;
+  line-height: 1;
+}
+.trayTurn:hover {
+  color: var(--violet);
+}
 
-.circuit {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+/* La grille et les cartes, une ligne par experience. */
+/* Aucun interligne : les cases doivent se toucher pour que le tronc vertical
+   soit continu. Ce sont les cartes qui portent leur propre respiration. */
+.board {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  min-width: 0;
 }
-
-.source {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  padding-left: 4px;
-}
-.plug {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--violet);
-  box-shadow: 0 0 18px 3px rgba(124, 58, 237, 0.55);
-}
-
-.step {
-  position: relative;
+.row {
   display: grid;
-  grid-template-columns: 40px 1fr;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: clamp(12px, 2vw, 24px);
   align-items: stretch;
 }
-.wire {
-  position: absolute;
-  left: 19px;
-  top: -18px;
-  bottom: 50%;
-  width: 3px;
-  background: var(--violet-pale);
-}
-.step.lit .wire {
-  background: var(--violet);
-  box-shadow: 0 0 10px 1px rgba(124, 58, 237, 0.6);
-}
-.node {
-  align-self: center;
-  width: 14px;
-  height: 14px;
-  margin-left: 13px;
-  border-radius: 50%;
-  border: 2px solid var(--violet-pale);
-  background: var(--bg);
-}
-.step.lit .node {
-  border-color: var(--violet);
-  background: var(--violet);
-  box-shadow: 0 0 12px 2px rgba(124, 58, 237, 0.55);
+
+.cells {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
 }
 
-.card {
-  border-radius: 12px;
-  padding: 16px 18px;
-  border: 1px solid var(--line);
-  background: var(--bg-2);
+/* Prise d'arrivee du courant, a gauche de la seule ligne source. */
+.source,
+.sourceVide {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+  flex: none;
+  align-self: center;
 }
-.step.lit .card {
+.source {
+  border-radius: 50%;
+  background: var(--violet);
+  box-shadow: 0 0 0 5px rgba(124, 58, 237, 0.18);
+}
+
+/* La case epouse la hauteur de sa ligne, donnee par la carte : c'est ce qui
+   fait se rejoindre les tuyaux verticaux du tronc. */
+.cell,
+.cellVide {
+  width: clamp(38px, 4.2vw, 52px);
+  min-height: 52px;
+  flex: none;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+/* Case du trace, vide : elle attend un module. */
+.cell {
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  transition:
+    border-color 0.2s var(--ease-out),
+    background 0.2s var(--ease-out);
+}
+.cell:hover:not(:disabled) {
   border-color: var(--violet);
+  background: rgba(124, 58, 237, 0.06);
+}
+/* Une case occupee n'a plus besoin de montrer qu'elle attend quelque chose. */
+.cellPleine {
+  border-color: transparent;
+}
+.cellPleine:hover:not(:disabled) {
+  border-color: var(--violet-pale);
+}
+/* Module pose d'avance : il fait partie du decor, on ne le manipule pas. */
+.cellFixe {
+  border-color: transparent;
+  cursor: default;
+}
+
+.pipe {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+.gaine {
+  stroke: var(--bg-2);
+  stroke-width: 22;
+  stroke-linecap: round;
+  fill: none;
+}
+.fil {
+  stroke: var(--violet-pale);
+  stroke-width: 10;
+  stroke-linecap: round;
+  fill: none;
+  transition:
+    stroke 0.35s var(--ease-out),
+    filter 0.35s var(--ease-out);
+}
+.filActif {
+  stroke: var(--violet);
+  filter: drop-shadow(0 0 4px rgba(154, 92, 255, 0.7));
+}
+.noyau {
+  fill: var(--violet-pale);
+  transition: fill 0.35s var(--ease-out);
+}
+.noyauActif {
+  fill: var(--violet-bright);
+}
+
+/* Carte d'experience, lisible qu'elle soit alimentee ou non. */
+.card {
+  margin: 5px 0;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--line);
+  border-radius: 12px;
   background: var(--surface);
+  padding: 14px 18px;
+  min-width: 0;
+  transition:
+    border-color 0.35s var(--ease-out),
+    box-shadow 0.35s var(--ease-out);
+}
+.cardOn {
+  border-color: var(--violet-pale);
+  border-left-color: var(--violet);
+  box-shadow: 0 18px 40px -30px rgba(124, 58, 237, 0.75);
 }
 .card h3 {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 19px;
-  letter-spacing: 0.5px;
+  font-size: 17px;
+  letter-spacing: 0.01em;
   text-transform: uppercase;
 }
 .period {
-  margin: 6px 0 10px;
+  margin: 5px 0 8px;
   font-family: var(--font-mono);
   font-size: 10px;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--violet);
 }
 .line {
-  margin: 0 0 4px;
-  font-size: 12.5px;
+  margin: 0 0 3px;
+  font-size: 13.5px;
   line-height: 1.5;
   color: var(--ink-muted);
 }
-.reveal {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  background: none;
-  border: 0;
-  padding: 4px 0;
-}
-.reveal:not(:disabled) {
-  color: var(--violet);
-  cursor: pointer;
-}
 
-@media (max-width: 767px) {
+/* Au telephone, la grille passe sous le texte et les cartes sous la grille. */
+@media (max-width: 900px) {
   .inner {
     grid-template-columns: 1fr;
   }
   .intro {
     position: static;
   }
-  .legend {
-    margin-top: 24px;
+  .row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .cells {
+    overflow-x: auto;
+    padding-bottom: 4px;
   }
 }
