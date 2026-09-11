@@ -160,7 +160,7 @@ export function ProjectView({ project, originRect, onClose }: Props) {
     '--p-ground-2': `color-mix(in srgb, ${project.palette.to} 42%, #0a0a14)`,
     '--p-accent': project.palette.ink,
     '--p-ink': `color-mix(in srgb, ${project.palette.ink} 16%, #ffffff)`,
-    '--p-muted': `color-mix(in srgb, ${project.palette.ink} 22%, #b9c2d6)`,
+    '--p-muted': `color-mix(in srgb, ${project.palette.ink} 22%, #ccd3e2)`,
   } as CSSProperties;
 
   return (

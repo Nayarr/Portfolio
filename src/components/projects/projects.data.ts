@@ -1,4 +1,5 @@
 import assurfastLogo from './media/assurfast.png';
+import portfolioMedia from './media/portfolio.jpg';
 import echoceanMedia from './media/echocean.jpg';
 import hubleauMedia from './media/hubleau.jpg';
 import papyrusMedia from './media/papyrus.jpg';
@@ -85,8 +86,33 @@ export const PROJECTS: Project[] = [
     palette: { from: '#1e2a3a', to: '#46586f', ink: '#10b981' },
   },
   {
-    id: 'assurfast',
+    id: 'portfolio',
     index: '02',
+    name: 'Portfolio',
+    year: '2026',
+    kind: 'Perso, en ligne',
+    role: 'Conception et développement, seul',
+    stack: ['React 19', 'TypeScript', 'Vite', 'GSAP', 'CSS Modules'],
+    pitch:
+      'Ce site. Un diaporama de cinq écrans, sans défilement de page : un geste, un écran. Chaque fiche projet prend la direction artistique de son projet, et l’écran expérience est un circuit de tuyauterie à câbler. Pas de bibliothèque d’interface, pas de framework CSS : tout est écrit à la main.',
+    metrics: [
+      { value: '100 / 100', label: 'accessibilité et SEO, Lighthouse' },
+      { value: '128 ko', label: 'JavaScript transféré, compressé' },
+      { value: '9', label: 'décisions d’architecture consignées' },
+    ],
+    links: [
+      { label: 'Visiter le site', href: 'https://rayan-oughlis.vercel.app' },
+      { label: 'Repo GitHub', href: 'https://github.com/Nayarr/Portfolio' },
+    ],
+    media: {
+      src: portfolioMedia,
+      alt: 'Accueil du portfolio : le nom en très grandes capitales à gauche, la stack rangée par famille en pastilles à droite.',
+    },
+    palette: { from: '#7c3aed', to: '#cdbcf3', ink: '#ffffff' },
+  },
+  {
+    id: 'assurfast',
+    index: '03',
     name: 'ASSURFAST',
     year: '2026',
     kind: 'Stage S4, seul profil technique',
@@ -111,7 +137,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'papyrus',
-    index: '03',
+    index: '04',
     name: 'Papyrus',
     year: '2025',
     kind: 'Projet universitaire, collaboratif',
@@ -132,7 +158,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'echocean',
-    index: '04',
+    index: '05',
     name: 'ECHOcean',
     year: '2025',
     kind: 'Projet universitaire',
@@ -150,7 +176,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'hubleau',
-    index: '05',
+    index: '06',
     name: 'Hubleau',
     year: '2025',
     kind: 'Projet universitaire',
