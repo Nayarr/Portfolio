@@ -65,7 +65,9 @@ export function ProjectView({ project, originRect, onClose }: Props) {
         <div
           ref={heroRef}
           className={styles.hero}
-          style={{ background: `linear-gradient(150deg, ${project.tint[0]}, ${project.tint[1]})` }}
+          style={{
+            background: `linear-gradient(150deg, ${project.palette.from}, ${project.palette.to})`,
+          }}
         >
           {project.media ? (
             <img
@@ -76,7 +78,9 @@ export function ProjectView({ project, originRect, onClose }: Props) {
               decoding="async"
             />
           ) : (
-            <span className={styles.heroLabel}>aperçu, média à venir</span>
+            <span className={styles.heroLabel} style={{ color: project.palette.ink }}>
+              aperçu, média à venir
+            </span>
           )}
         </div>
 
