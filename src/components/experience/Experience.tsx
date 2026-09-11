@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { Pipe } from './Pipe';
+import { useDragModule } from './useDragModule';
 import {
   A_PLACER,
   COLONNES,
@@ -73,6 +74,19 @@ export function Experience() {
   const total = allumees.filter(Boolean).length;
   const resolu = total === LIGNES;
 
+  /** Sort un module de la reserve et le pose sur une case libre. */
+  const poser = useCallback((id: number, cible: number) => {
+    setReserve((t) => {
+      const prise = t.find((p) => p.id === id);
+      if (!prise) return t;
+      setGrille((g) => (g[cible] ? g : g.map((p, n) => (n === cible ? { ...prise.piece } : p))));
+      return t.filter((p) => p.id !== id);
+    });
+    setChoisie(null);
+  }, []);
+
+  const { glisse, survolee, commencer } = useDragModule({ onDepose: poser });
+
   /** Pose le module choisi sur une case vide, ou tourne celui deja pose. */
   const toucherCase = (i: number) => {
     if (grille[i]) {
@@ -82,14 +96,10 @@ export function Experience() {
       return;
     }
     if (choisie === null) return;
-
-    const prise = reserve.find((p) => p.id === choisie);
-    if (!prise) return;
-
-    setGrille((g) => g.map((p, n) => (n === i ? { ...prise.piece } : p)));
-    setReserve((t) => t.filter((p) => p.id !== choisie));
-    setChoisie(null);
+    poser(choisie, i);
   };
+
+  const moduleGlisse = glisse ? reserve.find((p) => p.id === glisse.id) : undefined;
 
   /** Tourne un module reste en reserve, avant de le poser. */
   const tournerEnReserve = (id: number) => {
@@ -149,9 +159,14 @@ export function Experience() {
                   <span key={id} className={styles.trayItem}>
                     <button
                       type="button"
-                      className={`${styles.trayPiece} ${active ? styles.trayPieceOn : ''}`}
+                      className={[
+                        styles.trayPiece,
+                        active ? styles.trayPieceOn : '',
+                        glisse?.id === id && glisse.actif ? styles.trayPiecePrise : '',
+                      ].join(' ')}
                       aria-pressed={active}
                       aria-label={`Module ${piece.forme}${active ? ', sélectionné' : ''}`}
+                      onPointerDown={(e) => commencer(id, e)}
                       onClick={() => setChoisie(active ? null : id)}
                     >
                       <Pipe piece={piece} alimente={false} />
@@ -198,10 +213,13 @@ export function Experience() {
                     <button
                       key={i}
                       type="button"
+                      data-case={i}
+                      data-accepte={libre && !piece ? 'oui' : 'non'}
                       className={[
                         styles.cell,
                         piece ? styles.cellPleine : '',
                         libre ? '' : styles.cellFixe,
+                        survolee === i ? styles.cellVisee : '',
                       ].join(' ')}
                       onClick={() => toucherCase(i)}
                       disabled={!libre}
@@ -230,6 +248,18 @@ export function Experience() {
           ))}
         </div>
       </div>
+
+      {/* Le module suit le pointeur pendant le deplacement. Hors flux et sans
+          interception, pour ne pas masquer la case visee sous le curseur. */}
+      {glisse?.actif && moduleGlisse && (
+        <span
+          className={styles.fantome}
+          style={{ left: glisse.x, top: glisse.y }}
+          aria-hidden="true"
+        >
+          <Pipe piece={moduleGlisse.piece} alimente={false} />
+        </span>
+      )}
     </section>
   );
 }
