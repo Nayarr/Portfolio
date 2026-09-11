@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import { playSfx } from '@/lib/audio';
 import styles from './Experience.module.css';
 
 type Step = {
@@ -48,7 +47,6 @@ export function Experience() {
   const revealNext = () => {
     setRevealed((n) => {
       if (n >= STEPS.length) return n;
-      if (!reduced) playSfx('zap');
       return n + 1;
     });
   };
