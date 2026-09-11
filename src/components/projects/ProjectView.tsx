@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, type CSSProperties } from 'react';
 
+import { RETOUR_ACCUEIL } from '@/lib/deck';
 import { gsap, useGSAP } from '@/lib/gsap';
 import type { Project } from './projects.data';
 import styles from './ProjectView.module.css';
@@ -78,6 +79,15 @@ export function ProjectView({ project, originRect, onClose }: Props) {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
+  }, [fermer]);
+
+  /**
+   * Le logotype du chrome ramene au hub. La fiche recouvre le diaporama sans
+   * en faire partie : sans ca, elle resterait par-dessus une fois arrive.
+   */
+  useEffect(() => {
+    window.addEventListener(RETOUR_ACCUEIL, fermer);
+    return () => window.removeEventListener(RETOUR_ACCUEIL, fermer);
   }, [fermer]);
 
   /**

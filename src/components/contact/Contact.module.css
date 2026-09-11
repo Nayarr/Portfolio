@@ -51,7 +51,11 @@
   margin: 28px 0 0;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(72px, 16vw, 170px);
+  /* `16vh` en plus de `16vw` : sur un portable 1280 x 720, le titre seul
+     prenait 279 px sur les 528 disponibles et poussait le bouton de
+     telechargement sous la barre d'index. Sur un ecran haut, c'est la
+     largeur qui commande a nouveau et le titre garde sa taille. */
+  font-size: clamp(72px, min(16vw, 19vh), 170px);
   line-height: 0.82;
   letter-spacing: 0.01em;
   text-transform: uppercase;
@@ -67,7 +71,8 @@
   justify-content: space-between;
   align-items: flex-end;
   gap: 40px;
-  margin-top: clamp(40px, 8vw, 96px);
+  /* Meme raison : la gouttiere se cale sur la hauteur disponible. */
+  margin-top: clamp(32px, 8vh, 96px);
 }
 
 .primary {
@@ -119,17 +124,25 @@
 .links a:hover {
   color: #fff;
 }
-.cv {
+/**
+ * Selecteur `.links a.cv` et non `.cv` seul : a specificite egale a `.links a`
+ * (0,1,1), c'est la regle generale qui gagnait. Son `padding-bottom: 4px`
+ * ecrasait le `padding: 12px 22px` du bouton, qui se retrouvait avec 12 px en
+ * haut et 4 en bas : le libelle paraissait colle au bord haut. Les `!important`
+ * qui compensaient le meme probleme sur la bordure et la couleur tombent avec.
+ */
+.links a.cv {
   margin-top: 8px;
-  border: 0 !important;
-  color: var(--dark-bg) !important;
+  border: 0;
+  color: var(--dark-bg);
   background: var(--neon);
   border-radius: 999px;
   padding: 12px 22px;
+  justify-content: center;
   box-shadow: 0 0 30px 2px rgba(185, 140, 255, 0.4);
 }
-.cv:hover {
-  color: var(--dark-bg) !important;
+.links a.cv:hover {
+  color: var(--dark-bg);
   filter: brightness(1.08);
 }
 
