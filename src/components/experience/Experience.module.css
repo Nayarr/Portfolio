@@ -158,9 +158,10 @@
   border-color: var(--violet);
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.16);
 }
+/* 24 px de cote au minimum : en deca, la cible est trop petite au doigt. */
 .trayTurn {
-  width: 22px;
-  height: 22px;
+  width: 26px;
+  height: 26px;
   border: 0;
   border-radius: 50%;
   background: none;
@@ -319,7 +320,15 @@
   color: var(--ink-muted);
 }
 
-/* Au telephone, la grille passe sous le texte et les cartes sous la grille. */
+/**
+ * Au telephone, la grille et les cartes se separent.
+ *
+ * En empilant ligne de grille puis carte, ligne puis carte, le tronc vertical
+ * se retrouvait coupe par une carte a chaque etage : le circuit ne se lisait
+ * plus du tout. `display: contents` sort les lignes du flux et l'ordre
+ * regroupe les quatre lignes de grille d'un cote, les quatre cartes de
+ * l'autre. Le circuit redevient un bloc entier, et les cartes une liste.
+ */
 @media (max-width: 900px) {
   .inner {
     grid-template-columns: 1fr;
@@ -327,13 +336,30 @@
   .intro {
     position: static;
   }
+  .board {
+    display: flex;
+    flex-direction: column;
+  }
   .row {
-    grid-template-columns: 1fr;
-    gap: 8px;
+    display: contents;
   }
   .cells {
+    order: var(--ligne);
     overflow-x: auto;
-    padding-bottom: 4px;
+    padding-bottom: 2px;
+  }
+  .card {
+    order: calc(10 + var(--ligne));
+  }
+  /* Les cartes sont desormais collees les unes aux autres : il leur faut leur
+     propre respiration, la grille n'assurant plus l'ecart. */
+  .card + .card,
+  .cells + .card {
+    margin-top: 10px;
+  }
+  /* Premiere carte : elle ouvre la liste, sous le circuit. */
+  .cells + .card {
+    margin-top: 24px;
   }
 }
 
