@@ -1,4 +1,3 @@
-import { CV_FILENAME, CV_HREF } from '@/lib/cv';
 import styles from './Contact.module.css';
 
 /** Ecran 05, Contact. Coordonnees, liens, telechargement du CV. */
@@ -35,9 +34,6 @@ export function Contact() {
             </a>
             <a href="https://instagram.com/rayan.ough" target="_blank" rel="noreferrer">
               Instagram, rayan.ough &#8599;
-            </a>
-            <a className={styles.cv} href={CV_HREF} download={CV_FILENAME}>
-              &#8595; Télécharger le CV (PDF)
             </a>
           </nav>
         </div>
