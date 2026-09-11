@@ -20,9 +20,13 @@ export function About() {
             <img src={photo} alt="Rayan Oughlis" />
           </div>
           <p className={styles.id}>
-            Rayan Oughlis, 20 ans
+            Rayan Oughlis
             <br />
-            Vitry-sur-Seine 94, permis B (véhiculé)
+            20 ans
+            <br />
+            Paris
+            <br />
+            permis B (véhiculé)
           </p>
         </aside>
 
