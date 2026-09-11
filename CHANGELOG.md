@@ -15,10 +15,10 @@ Format : [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/). Versionnage :
 - Ecran projets : pellicule a tuiles identiques, ouverture plein panneau en FLIP.
 - Ecran experience : circuit a alimenter, revelation chronologique des etapes.
 - Ecrans a propos et contact.
-- Mode scan : overlay profiler et annotations, bascule globale.
-- Sons synthetises en Web Audio, curseur a halo violet.
+- Curseur a halo violet.
 
 ### Retire
 
+- Mode scan et effets sonores : trop de surface pour ce qu'ils apportaient.
 - Mode exploration 3D et route `/explore` : dependances `three`, `@react-three/fiber`,
   `@react-three/drei` sorties du projet (voir ADR 0006).

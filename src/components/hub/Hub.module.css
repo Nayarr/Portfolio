@@ -136,19 +136,6 @@
   width: 100%;
   height: auto;
 }
-.scanTag {
-  position: absolute;
-  left: -14px;
-  top: -14px;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  color: var(--violet);
-  border: 1px dashed var(--violet-bright);
-  border-radius: 7px;
-  padding: 5px 10px;
-  background: var(--bg);
-}
 .panelCaption {
   display: block;
   margin-top: 6px;

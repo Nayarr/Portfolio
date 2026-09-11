@@ -20,7 +20,7 @@
   --violet-bright: #9a5cff;
   --violet-pale: #cdbcf3;
 
-  /* fonds sombres (mode scan, planetes projet) */
+  /* fonds sombres (panneau projets, fiches) */
   --dark-bg: #140f2b;
   --dark-ink: #e9e3fb;
   --dark-line: #4a3f7a;
@@ -40,14 +40,9 @@
      cette place pour ne pas passer dessous. */
   --chrome-top: 104px;
   --chrome-bottom: 112px;
-  /**
-   * Empilement, du fond vers l'avant. Le mode scan recouvre le contenu et la
-   * fiche projet, mais jamais le chrome : sans quoi la bascule qui l'a active
-   * se retrouve sous son propre voile, donc illisible.
-   */
+  /* Empilement, du fond vers l'avant. */
   --z-content: 1;
   --z-takeover: 50;
-  --z-scan: 80;
   --z-chrome: 90;
   --z-cursor: 100;
 

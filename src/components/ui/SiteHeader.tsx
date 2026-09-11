@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
 
-import { SfxToggle } from './SfxToggle';
-import { ScanToggle } from './ScanToggle';
 import styles from './SiteHeader.module.css';
 
 /** Chrome haut, commun a tous les ecrans du mode scroll. */
@@ -18,10 +16,6 @@ export function SiteHeader() {
       <Link to="/" className={styles.wordmark} aria-label="Rayan Oughlis, retour a l’accueil">
         RAYAN
       </Link>
-      <div className={styles.controls}>
-        <SfxToggle />
-        <ScanToggle />
-      </div>
     </header>
   );
 }

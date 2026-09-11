@@ -1,7 +1,7 @@
 # Portfolio, Rayan Oughlis
 
-Portfolio personnel. Un parcours en **scroll horizontal** (hub, projets, experience, a propos,
-contact) double d'un **mode scan** qui revele une couche "profiler" sur tout le site.
+Portfolio personnel. Un parcours en **scroll horizontal** de cinq ecrans : hub, projets,
+experience, a propos, contact. Chaque fiche projet prend la direction artistique de son projet.
 
 **En ligne :** <https://rayan-oughlis.vercel.app> &nbsp;·&nbsp; **Maquette-concept :** [docs/design](docs/design/)
 
@@ -17,7 +17,6 @@ contact) double d'un **mode scan** qui revele une couche "profiler" sur tout le 
 | Scroll    | Lenis (lisse + horizontal)                           |                                                              |
 | Polices   | @fontsource, auto-hebergees (`src/styles/fonts.css`) |                                                              |
 | 3D        | Pas de mode exploration 3D pour la v1                | [ADR 0006](docs/adr/0006-pas-de-mode-exploration-3d.md)      |
-| SFX       | Sons synthetises (Web Audio API)                     |                                                              |
 | SEO       | Meta + JSON-LD + repli `noscript`, sans prerender    | [ADR 0007](docs/adr/0007-seo-sans-prerender.md)              |
 | Deploy    | Vercel                                               |                                                              |
 | Qualite   | Budget Lighthouse en CI (`lighthouserc.json`)        |                                                              |
@@ -58,8 +57,7 @@ src/
     experience/   circuit electrique
     about/        recit, formation, hors-code
     contact/      coordonnees, liens, CV
-    scan/         overlay + annotations du mode scan
-  lib/            scan-context, audio, gsap, smooth-scroll, sons UI
+  lib/            gsap, smooth-scroll, cv
   styles/         tokens.css, global.css
 docs/
   adr/            decisions d'architecture

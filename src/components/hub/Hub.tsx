@@ -94,7 +94,6 @@ export function Hub() {
       </div>
 
       <div className={styles.panel} data-rise aria-hidden="true">
-        <span className={styles.scanTag}>Scan pour révéler</span>
         <svg viewBox="0 0 426 330">
           <path d="M213 40 396 150 213 260 30 150Z" fill="var(--bg)" stroke="var(--line)" />
           <path
