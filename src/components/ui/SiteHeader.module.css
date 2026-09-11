@@ -49,3 +49,33 @@
   transform: translateY(0);
   color: var(--surface);
 }
+
+/* Au telephone, les trois elements se serraient et les libelles des bascules
+   passaient sur deux lignes. On resserre la gouttiere et on empeche le retour
+   a la ligne plutot que de reduire encore la taille du texte. */
+@media (max-width: 767px) {
+  .header {
+    padding: calc(var(--space) * 2) calc(var(--space) * 2);
+    gap: calc(var(--space) * 1.5);
+  }
+  .wordmark {
+    font-size: 22px;
+  }
+  .controls {
+    gap: var(--space);
+  }
+  .controls button {
+    white-space: nowrap;
+    padding: 7px 12px;
+    letter-spacing: 0.1em;
+  }
+}
+
+/* L'en-tete reste fixe au telephone et survole des panneaux clairs comme
+   sombres : il lui faut son propre fond pour rester lisible. */
+@media (max-width: 767px) {
+  .header {
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+  }
+}

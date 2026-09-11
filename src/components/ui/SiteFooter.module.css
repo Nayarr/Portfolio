@@ -29,3 +29,29 @@
   align-items: flex-end;
   gap: 4px;
 }
+
+/**
+ * En pile verticale, un pied de page fixe mangerait 108 px du bas de chacun
+ * des cinq ecrans, et son encre claire passerait sur les panneaux sombres.
+ * Il redevient un pied de page normal, en fin de page, une seule fois.
+ */
+@media (max-width: 767px) {
+  .footer {
+    position: static;
+    background: var(--bg);
+    border-top: 1px solid var(--line);
+    padding: calc(var(--space) * 3) calc(var(--space) * 3);
+    align-items: center;
+    gap: var(--space);
+  }
+  .status br {
+    display: none;
+  }
+  .status {
+    line-height: 1.4;
+  }
+  .links {
+    flex-direction: row;
+    gap: 14px;
+  }
+}

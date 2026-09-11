@@ -34,7 +34,10 @@ export function ScrollExperience() {
 
       const mm = gsap.matchMedia();
       mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
-        const distance = () => track.scrollWidth - window.innerWidth;
+        // clientWidth et non innerWidth : innerWidth compte la barre de
+        // defilement verticale, ce qui arretait la piste quelques pixels
+        // avant d'avoir revele tout le dernier panneau.
+        const distance = () => track.scrollWidth - document.documentElement.clientWidth;
 
         gsap.to(track, {
           x: () => -distance(),

@@ -19,6 +19,17 @@
   margin: 0 auto;
 }
 
+/**
+ * `min-width: 0` sur les deux colonnes : par defaut un element de grille a
+ * `min-width: auto`, donc sa largeur minimale est celle de son plus long mot.
+ * "AUTOMATISATION." en Anton 34px forcait la piste plus large que l'ecran, et
+ * le titre comme le recit se faisaient rogner au telephone.
+ */
+.side,
+.story {
+  min-width: 0;
+}
+
 .side {
   align-self: start;
 }
@@ -147,6 +158,13 @@
     grid-template-columns: 1fr;
   }
   .about {
-    padding: 96px 24px 64px;
+    padding: var(--chrome-top) 24px calc(var(--chrome-bottom) + 24px);
+    align-items: flex-start;
+  }
+  .title {
+    font-size: 30px;
+  }
+  .photo {
+    max-width: 200px;
   }
 }
