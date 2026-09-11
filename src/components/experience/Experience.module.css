@@ -127,18 +127,29 @@
   padding-top: 18px;
   border-top: 1px solid var(--line);
 }
-.trayEmpty {
-  margin: 0;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-}
 .trayItem {
   display: inline-flex;
   align-items: center;
   gap: 2px;
+}
+
+/**
+ * Emplacement libere. Il occupe exactement la place d'un module, bouton de
+ * rotation compris : sans lui, la reserve changeait de nombre de lignes selon
+ * ce qui restait, et la colonne entiere montait ou descendait des qu'on
+ * prenait un module.
+ */
+.trayVide {
+  display: block;
+  width: 44px;
+  height: 44px;
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+}
+.trayTurnVide {
+  display: block;
+  width: 26px;
+  height: 26px;
 }
 .trayPiece {
   width: 44px;
