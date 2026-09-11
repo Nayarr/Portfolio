@@ -47,9 +47,15 @@
 
 /* Le focus vit sur la tuile, plus sur la pellicule : c'est la tuile qui le
    recoit maintenant que les fleches deplacent le focus. */
+/**
+ * `outline-offset` de 3 px et non 6 : avec 2 px d'epaisseur, le contour
+ * portait a 8 px du bord, soit exactement l'ecart entre deux tuiles. Il
+ * arrivait donc pile sur le bord de la tuile voisine, qu'il semblait
+ * chevaucher. A 3 px il reste 3 px d'air de chaque cote.
+ */
 .tile:focus-visible {
   outline: 2px solid var(--neon);
-  outline-offset: 6px;
+  outline-offset: 3px;
   border-radius: 4px;
   z-index: 20;
 }
@@ -87,6 +93,10 @@
 .tile.current {
   width: 120px;
   opacity: 1;
+  /* Les tuiles sont positionnees sans z-index : sans ca, celles qui suivent
+     dans le DOM, donc celles de droite, recouvrent l'anneau et le halo de la
+     tuile active. */
+  z-index: 10;
   box-shadow:
     0 0 0 1px rgba(185, 140, 255, 0.55),
     0 34px 80px -18px rgba(124, 58, 237, 0.6);
