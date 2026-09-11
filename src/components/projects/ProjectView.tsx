@@ -169,9 +169,12 @@ export function ProjectView({ project, originRect, onClose }: Props) {
         Retour aux projets
       </button>
 
-      <div className={styles.visual}>
-        <h2 className={`${styles.title} ${styles.reveal}`}>{project.name}</h2>
+      {/* Le titre est un enfant direct de la grille, et non de la colonne du
+          visuel : c'est ce qui permet a la colonne de lecture de commencer au
+          niveau de l'apercu et non du nom. */}
+      <h2 className={`${styles.title} ${styles.reveal}`}>{project.name}</h2>
 
+      <div className={styles.visual}>
         <div
           ref={heroRef}
           className={styles.hero}

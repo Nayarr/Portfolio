@@ -19,7 +19,11 @@
 
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  grid-template-rows: auto minmax(0, 1fr);
+  /* Trois rangees : le bouton de retour, le nom du projet seul, puis le
+     visuel et la lecture cote a cote. Le nom occupe sa propre rangee pour
+     que la colonne de droite demarre au niveau de l'apercu : le nom passe
+     ainsi en tete de la hierarchie au lieu de partager sa ligne. */
+  grid-template-rows: auto auto minmax(0, 1fr);
   column-gap: clamp(28px, 4vw, 72px);
   align-content: start;
 }
@@ -42,10 +46,14 @@
 }
 
 .visual {
+  grid-row: 3;
+  grid-column: 1;
   min-width: 0;
 }
 
 .title {
+  grid-row: 2;
+  grid-column: 1;
   /* La colonne de gauche se termine bien avant le bas du panneau. La
      descendre d'un cran repartit le vide au lieu de le laisser s'accumuler
      sous la derniere ligne. En vh, pour que l'ecart suive la hauteur reelle. */
@@ -126,6 +134,8 @@
 /* Colonne de lecture : elle defile pour elle-meme si la fiche est longue,
    sans jamais pousser le panneau ni passer sous le footer. */
 .bento {
+  grid-row: 3;
+  grid-column: 2;
   min-width: 0;
   min-height: 0;
   align-self: stretch;
@@ -223,11 +233,18 @@
 @media (max-width: 900px) {
   .root {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto auto auto;
     row-gap: 24px;
     overflow-y: auto;
   }
+  /* En une colonne, la lecture se place simplement sous le visuel. */
+  .title,
+  .visual {
+    grid-column: 1;
+  }
   .bento {
+    grid-row: 4;
+    grid-column: 1;
     overflow-y: visible;
     align-self: auto;
   }
