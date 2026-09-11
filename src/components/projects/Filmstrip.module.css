@@ -125,3 +125,10 @@
     transition: none;
   }
 }
+
+/* Le rappel clavier n'a pas de sens sur un ecran tactile sans clavier. */
+@media (hover: none) and (pointer: coarse) {
+  .hintKeys {
+    display: none;
+  }
+}

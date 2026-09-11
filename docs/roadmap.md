@@ -20,9 +20,10 @@ Chaque ligne devient une issue GitHub, prise une par une sur une branche `feat/.
 
 - [x] `chore/cv` : deposer `public/cv.pdf` (version LaTeX)
 - [ ] `feat/project-explore` : ecran editorial intermediaire des projets (panneau + galerie)
-- [ ] `chore/project-media` : vraies captures / videos a la place des degrades
+- [x] `chore/project-media` : champ `media`, capture TropiOutils (cinq captures restent a fournir)
 - [x] `chore/seo` : meta, JSON-LD, image OG, robots + sitemap au build (ADR 0007)
-- [ ] `chore/a11y-pass` : focus visible, navigation clavier, contrastes, reduced-motion
+- [x] `chore/a11y-pass` : focus visible, navigation clavier, contrastes, reduced-motion
+- [x] `fix/mobile-layout` : pile verticale reellement utilisable au telephone
 - [ ] `perf/lighthouse-budget` : budget Lighthouse CI en garde-fou
 - [ ] `chore/polish` : espacements et finitions ecran par ecran sur les previews
 - [ ] `chore/domain` : domaine perso + redirections

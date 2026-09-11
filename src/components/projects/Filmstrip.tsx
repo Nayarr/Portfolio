@@ -110,8 +110,11 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
         })}
       </div>
 
+      {/* Le conseil parlait de fleches et d'Entree, ce qui ne veut rien dire
+          au doigt. Il decrit maintenant le geste, le clavier en complement. */}
       <p className={styles.hint}>
-        Flèches pour parcourir, le projet actif reste au centre. Entrée ou clic pour ouvrir.
+        Touche une tuile pour la choisir, la tuile centrale pour l’ouvrir.
+        <span className={styles.hintKeys}> Au clavier : flèches, puis Entrée.</span>
       </p>
     </div>
   );

@@ -197,8 +197,14 @@
   }
 }
 @media (max-width: 767px) {
+  /* Le defilement lateral affichait une barre native sous l'index. Les cinq
+     entrees tiennent sur deux lignes, c'est plus lisible et sans chrome. */
   .index {
-    overflow-x: auto;
-    white-space: nowrap;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+    font-size: 11px;
+  }
+  .index .arrow {
+    display: none;
   }
 }

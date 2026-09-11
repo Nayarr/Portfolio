@@ -49,3 +49,14 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --dur: 0.6s;
 }
+
+/**
+ * Au telephone, le pied de page n'est plus fixe (voir SiteFooter.module.css) :
+ * les ecrans n'ont plus a lui reserver sa bande. Seul l'en-tete reste au-dessus.
+ */
+@media (max-width: 767px) {
+  :root {
+    --chrome-top: 76px;
+    --chrome-bottom: 40px;
+  }
+}
