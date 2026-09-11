@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { useMediaQuery } from '@/lib/useMediaQuery';
@@ -89,7 +89,44 @@ export function Experience() {
     setChoisie(null);
   }, []);
 
-  const { glisse, survolee, commencer } = useDragModule({ onDepose: poser });
+  /**
+   * Reprise d'un module deja pose.
+   *
+   * Une erreur de placement etait definitive : la case occupee ne repondait
+   * qu'a la rotation, et rien ne permettait de recuperer le module pour
+   * l'essayer ailleurs. Il repart maintenant en reserve des que l'appui
+   * devient un glisser, et se repose comme n'importe quel module.
+   *
+   * Le retrait attend le franchissement du seuil, et non l'appui : en deca,
+   * le geste est encore un clic, qui doit tourner le module sur place.
+   */
+  const enAttente = useRef<{ id: number; depuis: number } | null>(null);
+  const prochainId = useRef(1000);
+
+  const leverDeLaGrille = useCallback((id: number) => {
+    const pret = enAttente.current;
+    if (!pret || pret.id !== id) return;
+    enAttente.current = null;
+    setGrille((g) => {
+      const piece = g[pret.depuis];
+      if (!piece) return g;
+      setReserve((t) => [...t, { id, piece }]);
+      return g.map((p, n) => (n === pret.depuis ? null : p));
+    });
+  }, []);
+
+  const { glisse, survolee, commencer } = useDragModule({
+    onDepose: poser,
+    onActif: leverDeLaGrille,
+  });
+
+  /** Amorce la reprise : rien n'est retire tant que le doigt n'a pas bouge. */
+  const amorcerReprise = (i: number, e: React.PointerEvent) => {
+    if (!grille[i] || !MANIPULABLES.has(i)) return;
+    const id = ++prochainId.current;
+    enAttente.current = { id, depuis: i };
+    commencer(id, e);
+  };
 
   /** Pose le module choisi sur une case vide, ou tourne celui deja pose. */
   const toucherCase = (i: number) => {
@@ -146,8 +183,9 @@ export function Experience() {
                 le courant
               </h2>
               <p className={styles.text}>
-                Pose les modules qui manquent, tourne-les pour aligner les tuyaux, et amène le
-                courant jusqu’à chaque expérience. Les cartes se lisent sans jouer.
+                Pose les modules qui manquent, tourne-les d’un clic pour aligner les tuyaux, et
+                amène le courant jusqu’à chaque expérience. Un module mal placé se reprend en le
+                glissant ailleurs. Les cartes se lisent sans jouer.
               </p>
             </>
           )}
@@ -256,10 +294,11 @@ export function Experience() {
                           survolee === i ? styles.cellVisee : '',
                         ].join(' ')}
                         onClick={() => toucherCase(i)}
+                        onPointerDown={(e) => amorcerReprise(i, e)}
                         disabled={!libre}
                         aria-label={
                           piece
-                            ? `Colonne ${colonne + 1}, module ${piece.forme}, tourner`
+                            ? `Colonne ${colonne + 1}, module ${piece.forme}, tourner ou deplacer`
                             : `Colonne ${colonne + 1}, case vide`
                         }
                       >
