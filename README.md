@@ -3,7 +3,7 @@
 Portfolio personnel. Un parcours en **scroll horizontal** (hub, projets, experience, a propos,
 contact) double d'un **mode scan** qui revele une couche "profiler" sur tout le site.
 
-**En ligne :** _(a venir)_ &nbsp;·&nbsp; **Maquette-concept :** [docs/design](docs/design/)
+**En ligne :** <https://rayan-oughlis.vercel.app> &nbsp;·&nbsp; **Maquette-concept :** [docs/design](docs/design/)
 
 ![Apercu du hub](docs/design/screens/01-hub.jpg)
 
@@ -20,6 +20,7 @@ contact) double d'un **mode scan** qui revele une couche "profiler" sur tout le 
 | SFX       | Sons synthetises (Web Audio API)                     |                                                              |
 | SEO       | Meta + JSON-LD + repli `noscript`, sans prerender    | [ADR 0007](docs/adr/0007-seo-sans-prerender.md)              |
 | Deploy    | Vercel                                               |                                                              |
+| Qualite   | Budget Lighthouse en CI (`lighthouserc.json`)        |                                                              |
 
 L'URL publique se configure par la variable `VITE_SITE_URL` (voir [.env.example](.env.example)) :
 elle alimente les URL canoniques, la carte de partage, le `robots.txt` et le `sitemap.xml`,
@@ -63,6 +64,29 @@ src/
 docs/
   adr/            decisions d'architecture
   design/         maquettes (source .dc.html + reference)
+```
+
+## Qualite
+
+La CI mesure chaque PR avec Lighthouse, apres le job `verify`. Scores au moment
+de la mise en place du garde-fou :
+
+| Categorie        | Mesure | Seuil | Effet si sous le seuil |
+| ---------------- | ------ | ----- | ---------------------- |
+| Accessibilite    | 100    | 100   | echec                  |
+| SEO              | 100    | 100   | echec                  |
+| Bonnes pratiques | 100    | 95    | echec                  |
+| Performance      | 94     | 85    | avertissement          |
+
+La performance reste en avertissement : elle depend trop de la machine pour
+bloquer une PR. Le poids transfere, lui, est bloquant, parce qu'il ne depend que
+du code (script 200 ko, polices 120 ko ; mesure actuelle 150 et 82).
+
+Pour mesurer en local :
+
+```bash
+npm run build
+npx lighthouse http://localhost:4173 --view
 ```
 
 ## Contribuer

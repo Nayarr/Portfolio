@@ -30,6 +30,15 @@
   gap: 4px;
 }
 
+/* Cibles tactiles : le texte fait 13 px de haut, il en faut 24 minimum.
+   Le remplissage vertical agrandit la zone cliquable sans changer le rendu. */
+.links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 2px;
+}
+
 /**
  * En pile verticale, un pied de page fixe mangerait 108 px du bas de chacun
  * des cinq ecrans, et son encre claire passerait sur les panneaux sombres.

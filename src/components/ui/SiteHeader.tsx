@@ -13,7 +13,9 @@ export function SiteHeader() {
       <a className={styles.skip} href="#contact">
         Aller au contact
       </a>
-      <Link to="/" className={styles.wordmark} aria-label="Accueil">
+      {/* Le libelle doit contenir le texte visible : sinon la commande vocale
+          "clique RAYAN" ne trouve pas la cible (label-content-name-mismatch). */}
+      <Link to="/" className={styles.wordmark} aria-label="Rayan Oughlis, retour a l’accueil">
         RAYAN
       </Link>
       <div className={styles.controls}>
