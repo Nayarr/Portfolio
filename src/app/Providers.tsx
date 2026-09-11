@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 
 import { Cursor } from '@/components/ui/Cursor';
 
@@ -11,6 +12,7 @@ export function Providers({ children }: { children: ReactNode }) {
     <>
       <Cursor />
       {children}
+      <Analytics />
     </>
   );
 }
