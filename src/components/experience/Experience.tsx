@@ -193,7 +193,7 @@ export function Experience() {
                           onPointerDown={(e) => commencer(id, e)}
                           onClick={() => setChoisie(active ? null : id)}
                         >
-                          <Pipe piece={piece} alimente={false} />
+                          <Pipe piece={piece} alimente={false} raccorde={false} />
                         </button>
                         <button
                           type="button"
@@ -301,7 +301,7 @@ export function Experience() {
             style={{ left: glisse.x, top: glisse.y }}
             aria-hidden="true"
           >
-            <Pipe piece={moduleGlisse.piece} alimente={false} />
+            <Pipe piece={moduleGlisse.piece} alimente={false} raccorde={false} />
           </span>,
           document.body,
         )}

@@ -1,23 +1,51 @@
 import { ouvertures, type Piece, NORD, EST, SUD, OUEST } from './circuit';
 import styles from './Experience.module.css';
 
-/** Demi-segment allant du centre vers un cote, en coordonnees de 0 a 100. */
-const SEGMENTS: Record<number, string> = {
-  [NORD]: 'M50 50 L50 0',
-  [EST]: 'M50 50 L100 50',
-  [SUD]: 'M50 50 L50 100',
-  [OUEST]: 'M50 50 L0 50',
-};
+/**
+ * Demi-segment allant du centre vers un cote, en coordonnees de 0 a 100.
+ *
+ * Il deborde largement hors de la case, et le SVG le rogne a son bord. Arrete
+ * pile au bord, le trait y posait son bout arrondi, qui deborde d'une
+ * demi-epaisseur : chaque raccord se marquait d'un renflement, et le cable
+ * ressemblait a une suite de troncons mis bout a bout. Rogne, il arrive a
+ * plat exactement sur la limite, ou l'attend celui de la case voisine, qui
+ * arrive a plat lui aussi. Les cases se touchent sans ecart, la jointure est
+ * donc invisible.
+ *
+ * Le debord doit rester genereux : le trait garde une epaisseur constante en
+ * pixels alors que les coordonnees suivent la case, deux fois plus haute que
+ * large, donc une meme valeur ne couvre pas la meme distance selon l'axe.
+ */
+const DEBORD = 60;
+const segments = (debord: number): Record<number, string> => ({
+  [NORD]: `M50 50 L50 ${-debord}`,
+  [EST]: `M50 50 L${100 + debord} 50`,
+  [SUD]: `M50 50 L50 ${100 + debord}`,
+  [OUEST]: `M50 50 L${-debord} 50`,
+});
 
-type Props = { piece: Piece; alimente: boolean };
+type Props = {
+  piece: Piece;
+  alimente: boolean;
+  /**
+   * `false` pour un module de la reserve : il ne touche aucun voisin, donc il
+   * ne deborde pas et n'est pas rogne. Rogne, ses traits arrivaient a plat sur
+   * les quatre bords de sa vignette et le module ressemblait a un bloc plutot
+   * qu'a un bout de cable.
+   */
+  raccorde?: boolean;
+};
 
 /**
  * Un module de tuyauterie. Il est dessine a partir de ses ouvertures plutot
  * que d'un trace par forme : une seule regle couvre les trois formes et leurs
  * quatre rotations, et ajouter une forme ne demande que sa liste d'ouvertures.
  */
-export function Pipe({ piece, alimente }: Props) {
-  const cotes = ouvertures(piece);
+export function Pipe({ piece, alimente, raccorde = true }: Props) {
+  const dessin = segments(raccorde ? DEBORD : 0);
+  const trace = ouvertures(piece)
+    .map((cote) => dessin[cote])
+    .join(' ');
 
   return (
     /**
@@ -27,34 +55,27 @@ export function Pipe({ piece, alimente }: Props) {
      * constante, sinon les tuyaux verticaux paraitraient plus fins.
      */
     <svg
-      className={styles.pipe}
+      className={`${styles.pipe} ${raccorde ? '' : styles.pipeLibre}`}
       viewBox="0 0 100 100"
       preserveAspectRatio="none"
       aria-hidden="true"
     >
-      {/* Gaine sombre, puis conducteur : le tuyau garde une epaisseur lisible
-          meme eteint, et l'allumage ne joue que sur le conducteur. */}
-      {cotes.map((cote) => (
-        <path
-          key={`gaine-${cote}`}
-          className={styles.gaine}
-          vectorEffect="non-scaling-stroke"
-          d={SEGMENTS[cote]}
-        />
-      ))}
-      {cotes.map((cote) => (
-        <path
-          key={`fil-${cote}`}
-          className={`${styles.fil} ${alimente ? styles.filActif : ''}`}
-          vectorEffect="non-scaling-stroke"
-          d={SEGMENTS[cote]}
-        />
-      ))}
-      <circle
-        className={`${styles.noyau} ${alimente ? styles.noyauActif : ''}`}
-        cx="50"
-        cy="50"
-        r="9"
+      {/**
+       * Un seul trace par couche, et non un par ouverture : les demi-segments
+       * partagent le meme centre, donc le rendu les fond en un seul trait.
+       * Dessines separement, leurs bouts arrondis se superposaient au centre
+       * et marquaient la jonction.
+       *
+       * Il n'y a plus de noyau non plus. C'etait un cercle, mais
+       * `preserveAspectRatio="none"` l'etirait a la forme de la case, bien
+       * plus haute que large : il devenait une ellipse verticale, soit une
+       * barre en travers du cable sur chaque segment horizontal.
+       */}
+      <path className={styles.gaine} vectorEffect="non-scaling-stroke" d={trace} />
+      <path
+        className={`${styles.fil} ${alimente ? styles.filActif : ''}`}
+        vectorEffect="non-scaling-stroke"
+        d={trace}
       />
     </svg>
   );

@@ -78,7 +78,6 @@ export const PROJECTS: Project[] = [
     pitch:
       'Plateforme de dossier patient qui réunit deux mondes d’imagerie qui ne se parlent pas : la radiologie DICOM et la biopsie numérisée. Une lame pèse de 100 Mo à plusieurs gigaoctets, donc elle est tuilée en pyramide DZI et servie au zoom. S’y ajoutent une segmentation de noyaux par IA en aide au diagnostic, et un compte rendu que le serveur force à suivre son protocole en quatre étapes.',
     metrics: [
-      { value: '15 vers 1,7 Go', label: 'image du backend, en isolant PyTorch' },
       { value: '7', label: 'conteneurs orchestrés' },
       { value: '18', label: 'routes d’API' },
     ],
@@ -97,8 +96,8 @@ export const PROJECTS: Project[] = [
       'Ce site. Un diaporama de cinq écrans, sans défilement de page : un geste, un écran. Chaque fiche projet prend la direction artistique de son projet, et l’écran expérience est un circuit de tuyauterie à câbler. Pas de bibliothèque d’interface, pas de framework CSS : tout est écrit à la main.',
     metrics: [
       { value: '100 / 100', label: 'accessibilité et SEO, Lighthouse' },
-      { value: '128 ko', label: 'JavaScript transféré, compressé' },
-      { value: '9', label: 'décisions d’architecture consignées' },
+      /* Une branche et une revue par changement, sur un projet mene seul. */
+      { value: '43', label: 'pull requests, une par changement' },
     ],
     links: [
       { label: 'Visiter le site', href: 'https://rayan-oughlis.vercel.app' },
@@ -125,7 +124,8 @@ export const PROJECTS: Project[] = [
       { value: '90 / 85 %', label: 'fiabilité OCR carte grise / permis' },
       { value: 'x5', label: 'impressions du site après refonte SEO' },
     ],
-    links: [{ label: 'Repo GitHub', href: 'https://github.com/Nayarr' }],
+    /* Depot prive : un lien qui mene a une 404 vaut moins que pas de lien. */
+    links: [],
     media: {
       src: assurfastLogo,
       alt: 'Logo ASSURFAST : le nom en capitales bleu marine, suivi d’un eclair jaune dans un bouclier.',

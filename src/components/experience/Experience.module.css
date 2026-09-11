@@ -246,16 +246,36 @@
   cursor: default;
 }
 
+/**
+ * Le cadre deborde d'un pixel de chaque cote de la case, et rogne le trait a
+ * cette limite (voir Pipe.tsx pour le debord du trace).
+ *
+ * Le pixel de debord n'est pas un detail : rogne pile au bord, le cadre
+ * partageait sa ligne de coupe avec celui de la case voisine, et ce pixel-la
+ * se retrouvait a demi peint des deux cotes. Il en restait un lisere clair en
+ * travers du cable a chaque limite de case. En se recouvrant, les deux cadres
+ * le peignent en entier.
+ */
 .pipe {
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  margin: -1px;
+  display: block;
+  overflow: hidden;
+}
+
+/* Module de la reserve : rien a raccorder, donc ni debord ni rognage. */
+.pipeLibre {
   width: 100%;
   height: 100%;
-  display: block;
+  margin: 0;
   overflow: visible;
 }
 .gaine {
   stroke: var(--bg-2);
   stroke-width: 22;
   stroke-linecap: round;
+  stroke-linejoin: round;
   fill: none;
 }
 .fil {
@@ -270,13 +290,6 @@
 .filActif {
   stroke: var(--violet);
   filter: drop-shadow(0 0 4px rgba(154, 92, 255, 0.7));
-}
-.noyau {
-  fill: var(--violet-pale);
-  transition: fill 0.35s var(--ease-out);
-}
-.noyauActif {
-  fill: var(--violet-bright);
 }
 
 /* Carte d'experience, lisible qu'elle soit alimentee ou non. */
