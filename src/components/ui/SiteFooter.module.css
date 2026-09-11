@@ -1,7 +1,7 @@
 .footer {
   position: fixed;
   inset: auto 0 0 0;
-  z-index: var(--z-header);
+  z-index: var(--z-chrome);
   display: flex;
   justify-content: space-between;
   align-items: flex-end;

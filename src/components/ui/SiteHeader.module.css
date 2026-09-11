@@ -1,7 +1,7 @@
 .header {
   position: fixed;
   inset: 0 0 auto 0;
-  z-index: var(--z-header);
+  z-index: var(--z-chrome);
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
