@@ -46,7 +46,10 @@
 }
 
 .title {
-  margin: 12px 0 0;
+  /* La colonne de gauche se termine bien avant le bas du panneau. La
+     descendre d'un cran repartit le vide au lieu de le laisser s'accumuler
+     sous la derniere ligne. En vh, pour que l'ecart suive la hauteur reelle. */
+  margin: clamp(28px, 6vh, 64px) 0 0;
   font-family: var(--font-display);
   font-weight: 400;
   font-size: clamp(44px, 6.5vw, 104px);
