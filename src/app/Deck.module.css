@@ -2,10 +2,18 @@
  * Piste horizontale de diapos. Il n'y a plus de defilement de page : c'est
  * GSAP qui translate la piste, un ecran a la fois.
  */
+/**
+ * `clip` et non `hidden` : un conteneur `hidden` reste defilable par
+ * programme, et le navigateur s'en sert pour amener un element focalise a
+ * l'ecran. Une tuile de projet loin du centre faisait ainsi defiler la
+ * fenetre entiere de 469 px, emportant l'ecran hors champ alors que c'est
+ * GSAP qui doit decider ou se trouve la piste. `clip` ne cree aucune zone
+ * defilable.
+ */
 .viewport {
   position: fixed;
   inset: 0;
-  overflow: hidden;
+  overflow: clip;
 }
 
 .track {
@@ -23,5 +31,7 @@
   /* Une diapo trop haute pour l'ecran defile pour elle-meme. Indispensable au
      telephone, ou le contenu ne tient pas toujours. */
   overflow-y: auto;
+  /* Meme raison horizontalement : rien ne doit pouvoir decaler un panneau. */
+  overflow-x: clip;
   overscroll-behavior: contain;
 }

@@ -242,10 +242,30 @@
   .visual {
     grid-column: 1;
   }
+  /**
+   * `min-height: auto` annule le `min-height: 0` du montage deux colonnes.
+   * Sans lui, la rangee restait calee sur la hauteur disponible, ici 296 px
+   * pour 344 px de contenu : les metriques debordaient hors du cadre sans
+   * agrandir la zone defilable, donc elles etaient inatteignables, sur les
+   * six fiches. La fiche entiere defile a nouveau.
+   */
+  /**
+   * A droite, et non a gauche comme sur grand ecran : la fiche defile au
+   * telephone, donc le bouton remonte sous l'en-tete fixe, et il venait
+   * heurter le logotype. Le cote droit est libre.
+   */
+  .close {
+    justify-self: end;
+  }
   .bento {
     grid-row: 4;
     grid-column: 1;
     overflow-y: visible;
     align-self: auto;
+    min-height: auto;
+  }
+  /* Le dernier bloc arrivait pile sur la barre d'index. */
+  .root {
+    padding-bottom: calc(var(--chrome-bottom) + 24px);
   }
 }

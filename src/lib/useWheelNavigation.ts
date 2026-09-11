@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 /** Distance de molette cumulee avant de changer de diapo. */
 const SEUIL_MOLETTE = 42;
-/** Distance de doigt avant de changer de diapo. */
+/** Distance de doigt, horizontale, avant de changer de diapo. */
 const SEUIL_TACTILE = 50;
 
 /**
@@ -43,8 +43,7 @@ type Options = {
  */
 export function useWheelNavigation({ cible, onDeplacer, verrouille }: Options) {
   const cumul = useRef(0);
-  const departTactile = useRef<number | null>(null);
-  const departTactileX = useRef<number | null>(null);
+  const departTactile = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     const zone = cible.current;
@@ -65,27 +64,31 @@ export function useWheelNavigation({ cible, onDeplacer, verrouille }: Options) {
     };
 
     const onTouchStart = (e: TouchEvent) => {
-      departTactile.current = e.touches[0]?.clientY ?? null;
-      departTactileX.current = e.touches[0]?.clientX ?? null;
+      const t = e.touches[0];
+      departTactile.current = t ? { x: t.clientX, y: t.clientY } : null;
     };
 
+    /**
+     * Le doigt change de diapo horizontalement, jamais verticalement.
+     *
+     * Avant, un glissement vertical faisait les deux : il tentait de faire
+     * defiler le contenu, et s'il n'y avait rien a defiler il sautait a
+     * l'ecran suivant. Sur une fiche projet, lire la suite d'un texte
+     * emportait donc parfois vers un autre ecran. Le haut et le bas
+     * appartiennent maintenant au contenu, et seul le geste lateral navigue,
+     * ce qui correspond d'ailleurs a la facon dont la piste se deplace.
+     */
     const onTouchEnd = (e: TouchEvent) => {
-      const depart = departTactile.current;
+      const debut = departTactile.current;
       departTactile.current = null;
-      if (depart === null || verrouille()) return;
+      const fin = e.changedTouches[0];
+      if (!debut || !fin || verrouille()) return;
 
-      const arrivee = e.changedTouches[0]?.clientY ?? depart;
-      const delta = depart - arrivee;
-      if (Math.abs(delta) < SEUIL_TACTILE) return;
-      // Un glissement doit etre franchement vertical. Sans ca, un geste en
-      // diagonale sur la pellicule des projets changeait la tuile et l'ecran
-      // du meme coup : l'ecran defilait sous le doigt alors qu'on parcourait
-      // les projets.
-      const departX = departTactileX.current;
-      const arriveeX = e.changedTouches[0]?.clientX ?? departX ?? 0;
-      if (departX !== null && Math.abs(departX - arriveeX) >= Math.abs(delta)) return;
-      if (peutDefilerDedans(e.target, Math.sign(delta), zone)) return;
-      onDeplacer(Math.sign(delta));
+      const dx = debut.x - fin.clientX;
+      const dy = debut.y - fin.clientY;
+      if (Math.abs(dx) < SEUIL_TACTILE || Math.abs(dx) <= Math.abs(dy)) return;
+
+      onDeplacer(Math.sign(dx));
     };
 
     const onKeyDown = (e: KeyboardEvent) => {

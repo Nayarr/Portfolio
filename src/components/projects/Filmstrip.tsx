@@ -1,4 +1,4 @@
-import { useRef, type KeyboardEvent, type TouchEvent } from 'react';
+import { useEffect, useRef, type KeyboardEvent } from 'react';
 
 import { PROJECTS } from './projects.data';
 import styles from './Filmstrip.module.css';
@@ -45,38 +45,58 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
   };
 
   /**
-   * Glissement horizontal. Au doigt, la pellicule ne repondait qu'a la touche
-   * d'une tuile : le geste qu'on attend d'un carrousel ne faisait rien, et
-   * les tuiles lointaines, a demi sorties de l'ecran, etaient hors d'atteinte.
+   * Glissement horizontal sur la pellicule : il change de projet, pas d'ecran.
+   *
+   * Ecouteurs natifs et non props React : React delegue les siens a la racine
+   * du document, donc ils s'executent apres l'ecouteur natif du diaporama,
+   * pose sur la fenetre. Un `stopPropagation` depuis une prop React arriverait
+   * trop tard. Poses directement sur la pellicule, ils remontent avant lui et
+   * peuvent l'arreter, sinon un meme geste changerait la tuile et l'ecran.
    *
    * La selection change sans emmener le focus : un glissement n'est pas une
    * navigation au clavier, et deplacer le focus ferait apparaitre l'anneau de
    * mise au point sur un ecran tactile.
    */
   const depart = useRef<{ x: number; y: number } | null>(null);
+  /* Ecrit dans un effet et non pendant le rendu : une ecriture pendant le
+     rendu laisserait la ref sur les valeurs d'un rendu abandonne, React
+     pouvant rendre deux fois avant de valider. Le geste arrive apres. */
+  const etat = useRef({ active, onActivate });
+  useEffect(() => {
+    etat.current = { active, onActivate };
+  }, [active, onActivate]);
 
-  const onTouchStart = (e: TouchEvent<HTMLDivElement>) => {
-    const t = e.touches[0];
-    depart.current = t ? { x: t.clientX, y: t.clientY } : null;
-  };
+  useEffect(() => {
+    const zone = stripRef.current;
+    if (!zone) return;
 
-  const onTouchEnd = (e: TouchEvent<HTMLDivElement>) => {
-    const debut = depart.current;
-    depart.current = null;
-    const fin = e.changedTouches[0];
-    if (!debut || !fin) return;
+    const onStart = (e: globalThis.TouchEvent) => {
+      const t = e.touches[0];
+      depart.current = t ? { x: t.clientX, y: t.clientY } : null;
+    };
 
-    const dx = debut.x - fin.clientX;
-    const dy = debut.y - fin.clientY;
-    // Un glissement plus vertical qu'horizontal appartient au diaporama.
-    if (Math.abs(dx) < SEUIL_TACTILE || Math.abs(dx) <= Math.abs(dy)) return;
+    const onEnd = (e: globalThis.TouchEvent) => {
+      const debut = depart.current;
+      depart.current = null;
+      const fin = e.changedTouches[0];
+      if (!debut || !fin) return;
 
-    // Pas de stopPropagation ici : React delegue ses ecouteurs a la racine,
-    // donc celui-ci s'execute apres l'ecouteur natif du diaporama. C'est le
-    // diaporama qui arbitre, en n'acceptant qu'un glissement franchement
-    // vertical (voir useWheelNavigation).
-    onActivate(Math.min(Math.max(active + Math.sign(dx), 0), PROJECTS.length - 1));
-  };
+      const dx = debut.x - fin.clientX;
+      const dy = debut.y - fin.clientY;
+      if (Math.abs(dx) < SEUIL_TACTILE || Math.abs(dx) <= Math.abs(dy)) return;
+
+      e.stopPropagation();
+      const { active: courant, onActivate: choisir } = etat.current;
+      choisir(Math.min(Math.max(courant + Math.sign(dx), 0), PROJECTS.length - 1));
+    };
+
+    zone.addEventListener('touchstart', onStart, { passive: true });
+    zone.addEventListener('touchend', onEnd, { passive: true });
+    return () => {
+      zone.removeEventListener('touchstart', onStart);
+      zone.removeEventListener('touchend', onEnd);
+    };
+  }, []);
 
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     switch (e.key) {
@@ -115,8 +135,6 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
         aria-label="Projets"
         aria-orientation="horizontal"
         onKeyDown={onKeyDown}
-        onTouchStart={onTouchStart}
-        onTouchEnd={onTouchEnd}
       >
         {PROJECTS.map((project, i) => {
           const offset = i - active;
