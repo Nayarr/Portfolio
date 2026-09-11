@@ -3,6 +3,10 @@ import styles from './About.module.css';
 
 const INTERESTS = ['UI / UX design', 'création de jeux vidéo', 'e-sport', 'musculation'];
 
+/** Les langues aussi sont des etiquettes : rien ne justifiait qu'elles seules
+    restent une phrase, juste sous une liste de pastilles. */
+const LANGUES = ['Français natif', 'Anglais B2', 'Espagnol B1'];
+
 /** Ecran 04, A propos. Photo, recit, formation, centres d'interet, hors-code. */
 export function About() {
   return (
@@ -58,7 +62,11 @@ export function About() {
                 ))}
               </ul>
               <h3 className={styles.label}>Langues</h3>
-              <p className={styles.block}>Français natif, Anglais B2, Espagnol B1</p>
+              <ul className={styles.chips}>
+                {LANGUES.map((langue) => (
+                  <li key={langue}>{langue}</li>
+                ))}
+              </ul>
             </div>
           </div>
 

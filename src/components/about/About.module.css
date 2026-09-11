@@ -132,14 +132,17 @@
   flex-wrap: wrap;
   gap: 8px;
 }
+/* Meme forme que les pastilles du hub, reprises du CV. */
 .chips li {
   font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--ink-muted);
-  border: 1px solid var(--line);
-  border-radius: 7px;
-  padding: 6px 11px;
-  background: var(--surface);
+  font-size: 10.5px;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  border: 1px solid var(--pill-bord);
+  border-radius: 4px;
+  padding: 5px 9px;
+  background: var(--bg-2);
+  white-space: nowrap;
 }
 
 .offcode {
