@@ -16,6 +16,13 @@ export type Glisse = {
 type Options = {
   /** Appele quand un module est lache sur une case. */
   onDepose: (id: number, cible: number) => void;
+  /**
+   * Appele une seule fois, au moment ou l'appui devient un glisser. C'est la
+   * que se decide la reprise d'un module deja pose : avant le seuil, l'appui
+   * peut encore n'etre qu'un clic, qui doit tourner le module et non le
+   * retirer de la grille.
+   */
+  onActif?: (id: number) => void;
 };
 
 /**
@@ -29,7 +36,7 @@ type Options = {
  * passe normalement : selectionner un module d'un clic reste possible, et
  * chaque module garde son bouton de rotation.
  */
-export function useDragModule({ onDepose }: Options) {
+export function useDragModule({ onDepose, onActif }: Options) {
   const [glisse, setGlisse] = useState<Glisse | null>(null);
   const depart = useRef<{ x: number; y: number } | null>(null);
   /** Case survolee, pour la mettre en evidence pendant le deplacement. */
@@ -56,6 +63,7 @@ export function useDragModule({ onDepose }: Options) {
     const onMove = (e: PointerEvent) => {
       const d = depart.current;
       const actif = !!d && Math.hypot(e.clientX - d.x, e.clientY - d.y) > SEUIL;
+      if (actif && !glisse.actif) onActif?.(glisse.id);
       setGlisse((g) => (g ? { ...g, x: e.clientX, y: e.clientY, actif: g.actif || actif } : g));
       if (actif) setSurvolee(caseSous(e.clientX, e.clientY));
     };
@@ -77,7 +85,7 @@ export function useDragModule({ onDepose }: Options) {
       window.removeEventListener('pointerup', onUp);
       window.removeEventListener('pointercancel', onUp);
     };
-  }, [glisse, onDepose]);
+  }, [glisse, onDepose, onActif]);
 
   return { glisse, survolee, commencer };
 }
