@@ -67,7 +67,7 @@
     gap: calc(var(--space) * 1.5);
   }
   .wordmark {
-    font-size: 22px;
+    font-size: 17px;
   }
   .controls {
     gap: var(--space);
@@ -79,12 +79,38 @@
   }
 }
 
-/* L'en-tete reste fixe au telephone et survole des panneaux clairs comme
-   sombres : il lui faut son propre fond pour rester lisible. */
+/**
+ * Pas de bandeau au telephone. Il etait la pour garder le logotype lisible
+ * au-dessus de panneaux clairs comme sombres, mais un aplat opaque en travers
+ * du haut d'un ecran de 390 px mange une bande entiere, et il tranchait sur
+ * une fiche projet sombre.
+ *
+ * Pas d'ombre portee non plus, essayee puis retiree : claire, elle faisait une
+ * aureole sur les ecrans sombres ; sombre, sur les clairs. Le logotype se
+ * defend seul, comme sur grand ecran, ou il n'a jamais eu ni fond ni ombre.
+ */
 @media (max-width: 767px) {
   .header {
-    background: color-mix(in srgb, var(--bg) 88%, transparent);
-    backdrop-filter: blur(10px);
+    padding: calc(var(--space) * 1.5) calc(var(--space) * 2);
+  }
+  /**
+   * Un degrade et non un aplat : il s'eteint avant la fin de la bande, donc
+   * il ne se lit pas comme un bandeau pose en travers de l'ecran, tout en
+   * detachant le logotype du texte qui defile dessous. Sa teinte suit celle
+   * de l'ecran affiche, publiee sur la racine par le diaporama.
+   */
+  .header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(to bottom, var(--bg) 35%, transparent);
+    transition: background 0.4s var(--ease-out);
+  }
+  :global(html[data-ton='sombre']) .header::after,
+  :global(html[data-takeover='on']) .header::after {
+    background: linear-gradient(to bottom, rgb(8 6 20 / 0.92) 35%, transparent);
   }
 }
 

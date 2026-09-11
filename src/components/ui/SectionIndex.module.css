@@ -9,13 +9,29 @@
   padding: calc(var(--space) * 2) clamp(24px, 6vw, 96px) calc(var(--space) * 3);
   pointer-events: none;
   /**
-   * Une diapo trop haute pour l'ecran defile sous la barre, et le texte y
-   * passait en clair. Un simple flou suffit a l'en detacher, et reste neutre :
-   * la barre survole aussi bien le hub clair que le panneau projets sombre,
-   * ou un fond teinte jurerait d'un cote ou de l'autre.
+   * Une diapo trop haute pour l'ecran defile sous la barre. Le flou seul ne
+   * suffisait pas : au telephone, le texte d'un ecran clair charge de
+   * pastilles passait au travers et les numeros devenaient illisibles.
+   *
+   * La teinte suit donc le fond de l'ecran affiche, que le diaporama publie
+   * sur la racine (voir Deck.tsx). Un aplat fixe etait impossible : la barre
+   * survole aussi bien le hub clair que le panneau projets sombre.
    */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: background 0.4s var(--ease-out);
+}
+
+/* La teinte ne sert qu'au telephone : sur grand ecran les diapos defilent
+   rarement, et la barre a ete dessinee sans fond. */
+@media (max-width: 767px) {
+  .index {
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+  }
+  :global(html[data-ton='sombre']) .index,
+  :global(html[data-takeover='on']) .index {
+    background: rgb(8 6 20 / 0.62);
+  }
 }
 .index > * {
   pointer-events: auto;

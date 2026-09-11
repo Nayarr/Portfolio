@@ -59,7 +59,9 @@
 /* Au telephone, l'index se resserre et n'affiche que les numeros. */
 @media (max-width: 767px) {
   :root {
-    --chrome-top: 76px;
+    /* L'en-tete a perdu son bandeau et son logotype a fondu : la reserve
+       peut suivre, ce qui rend une bande de 20 px au contenu. */
+    --chrome-top: 56px;
     --chrome-bottom: 58px;
   }
 }

@@ -16,6 +16,14 @@ import styles from './Deck.module.css';
 
 const ECRANS = [Hub, Projects, Experience, About, Contact];
 
+/**
+ * Fond de chaque ecran, clair ou sombre. Le chrome en a besoin : la barre
+ * d'index survole les cinq, et sans teinte le texte des diapos qui defilent
+ * passait au travers, illisible au telephone. Un simple flou ne suffisait pas
+ * sur un fond clair charge de pastilles.
+ */
+const TONS = ['clair', 'sombre', 'clair', 'clair', 'sombre'] as const;
+
 /** Duree d'une transition, et temps pendant lequel les gestes sont ignores. */
 const DUREE = 0.75;
 
@@ -47,6 +55,11 @@ export function Deck() {
   const indexRef = useRef(0);
   useEffect(() => {
     indexRef.current = index;
+  }, [index]);
+
+  /* Le chrome est rendu hors de la piste : il lit le ton sur la racine. */
+  useEffect(() => {
+    document.documentElement.dataset.ton = TONS[index];
   }, [index]);
 
   const goTo = useCallback((cible: number) => {

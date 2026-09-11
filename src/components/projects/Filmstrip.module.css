@@ -11,7 +11,14 @@
   justify-content: center;
   padding: var(--chrome-top) clamp(24px, 6vw, 60px) var(--chrome-bottom);
   position: relative;
-  overflow: hidden;
+  /**
+   * `clip` et non `hidden`. Les deux masquent les tuiles qui sortent du cadre,
+   * mais `hidden` laisse un conteneur defilable : quand une tuile lointaine
+   * recevait le focus, le navigateur faisait defiler la pellicule pour
+   * l'amener a l'ecran, de 64 px au telephone, et tout le panneau partait de
+   * travers, titre compris. `clip` ne cree pas de zone defilable du tout.
+   */
+  overflow: clip;
 }
 .wrap::before {
   content: '';
@@ -72,26 +79,38 @@
   white-space: nowrap;
 }
 
+/**
+ * Toutes les tuiles font la meme largeur ; c'est l'echelle qui distingue
+ * l'active. Auparavant la largeur elle-meme s'animait, de 82 a 120 px : une
+ * propriete de mise en page, donc une disposition recalculee a chaque image
+ * pour six tuiles, d'ou les a-coups au telephone.
+ *
+ * Elle produisait aussi le chevauchement. Les positions sont calculees en
+ * JavaScript a partir des largeurs finales et appliquees d'un coup, tandis que
+ * la largeur, elle, mettait 350 ms a suivre, et le `translateX(-50%)` se
+ * recalculait a partir de la largeur courante : position et largeur n'etaient
+ * jamais d'accord pendant la transition. Avec une largeur fixe, ce decalage
+ * n'existe plus, et il ne reste qu'une propriete animee, composee par le GPU.
+ */
 .tile {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 82px;
+  width: 120px;
   height: 300px;
   border: 0;
   border-radius: 2px;
   padding: 0;
   cursor: pointer;
   opacity: calc(1 - var(--dim, 0) * 0.14);
-  transform: translate(calc(-50% + var(--pos, 0) * 1px), -50%);
+  transform: translate(calc(-50% + var(--pos, 0) * 1px), -50%) scaleX(var(--ech, 0.6833));
   transition:
     transform 0.45s var(--ease-out),
-    width 0.35s var(--ease-out),
-    opacity 0.35s var(--ease-out);
+    opacity 0.45s var(--ease-out);
   will-change: transform;
 }
 .tile.current {
-  width: 120px;
+  --ech: 1;
   opacity: 1;
   /* Les tuiles sont positionnees sans z-index : sans ca, celles qui suivent
      dans le DOM, donc celles de droite, recouvrent l'anneau et le halo de la
@@ -114,7 +133,10 @@
   align-items: center;
   justify-content: center;
   writing-mode: vertical-rl;
-  transform: rotate(180deg);
+  /* Contre-echelle : la tuile est reduite horizontalement, le nom doit garder
+     ses proportions, sinon les capitales d'Anton, deja etroites, se tassent. */
+  transform: rotate(180deg) scaleX(calc(1 / var(--ech, 0.6833)));
+  transition: transform 0.45s var(--ease-out);
   font-family: var(--font-display);
   /* Le nom doit remplir la tuile : c'est lui qui identifie le projet, pas la
      vignette. Borne haute calee sur la largeur de tuile, 82 px, pour que les

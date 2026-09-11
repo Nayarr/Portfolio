@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 
+import { useMediaQuery } from '@/lib/useMediaQuery';
 import { Pipe } from './Pipe';
 import { useDragModule } from './useDragModule';
 import {
@@ -59,6 +60,14 @@ const MANIPULABLES = new Set(A_PLACER);
  * envie de s'attarder, et le bouton donne la reponse a qui n'a pas le temps.
  */
 export function Experience() {
+  /**
+   * Au telephone, le circuit disparait. Poser un module de la reserve sur une
+   * case de grille demande une precision que le doigt n'a pas a cette taille :
+   * le jeu devenait un obstacle devant la section la plus importante du site.
+   * Le parcours se lit alors directement, ce qui est de toute facon ce qu'on
+   * vient chercher.
+   */
+  const compact = useMediaQuery('(max-width: 900px)');
   const [grille, setGrille] = useState<(Piece | null)[]>(grilleInitiale);
   const [reserve, setReserve] = useState(piecesDuPlateau);
   const [choisie, setChoisie] = useState<number | null>(null);
@@ -121,70 +130,86 @@ export function Experience() {
     <section className={styles.experience} id="experience" aria-label="Expérience">
       <div className={styles.inner}>
         <header className={styles.intro}>
-          <h2 className={styles.title}>
-            Rétablis
-            <br />
-            le courant
-          </h2>
-          <p className={styles.text}>
-            Pose les modules qui manquent, tourne-les pour aligner les tuyaux, et amène le courant
-            jusqu’à chaque expérience. Les cartes se lisent sans jouer.
-          </p>
+          {compact ? (
+            <>
+              <h2 className={styles.title}>Parcours</h2>
+              <p className={styles.text}>
+                Un stage comme seul profil technique, un BUT en cours, un bac STI2D. De la plus
+                récente à la plus ancienne.
+              </p>
+            </>
+          ) : (
+            <>
+              <h2 className={styles.title}>
+                Rétablis
+                <br />
+                le courant
+              </h2>
+              <p className={styles.text}>
+                Pose les modules qui manquent, tourne-les pour aligner les tuyaux, et amène le
+                courant jusqu’à chaque expérience. Les cartes se lisent sans jouer.
+              </p>
+            </>
+          )}
 
-          <div className={styles.controls}>
-            <button
-              type="button"
-              className={styles.revealAll}
-              onClick={donnerLaReponse}
-              disabled={resolu}
-            >
-              Donne moi la réponse !
-            </button>
-            {/* Bouton distinct et toujours present : on doit pouvoir tout
+          {!compact && (
+            <>
+              <div className={styles.controls}>
+                <button
+                  type="button"
+                  className={styles.revealAll}
+                  onClick={donnerLaReponse}
+                  disabled={resolu}
+                >
+                  Donne moi la réponse !
+                </button>
+                {/* Bouton distinct et toujours present : on doit pouvoir tout
                 remettre a plat sans avoir a resoudre d'abord. */}
-            <button type="button" className={styles.reset} onClick={rejouer} disabled={vierge}>
-              Réinitialiser
-            </button>
-            <span className={styles.count} role="status">
-              {total} / {LIGNES} alimentées
-            </span>
-          </div>
+                <button type="button" className={styles.reset} onClick={rejouer} disabled={vierge}>
+                  Réinitialiser
+                </button>
+                <span className={styles.count} role="status">
+                  {total} / {LIGNES} alimentées
+                </span>
+              </div>
 
-          <div className={styles.tray} role="group" aria-label="Modules en réserve">
-            {reserve.length === 0 ? (
-              <p className={styles.trayEmpty}>Plus de module en réserve.</p>
-            ) : (
-              reserve.map(({ id, piece }) => {
-                const active = choisie === id;
-                return (
-                  <span key={id} className={styles.trayItem}>
-                    <button
-                      type="button"
-                      className={[
-                        styles.trayPiece,
-                        active ? styles.trayPieceOn : '',
-                        glisse?.id === id && glisse.actif ? styles.trayPiecePrise : '',
-                      ].join(' ')}
-                      aria-pressed={active}
-                      aria-label={`Module ${piece.forme}${active ? ', sélectionné' : ''}`}
-                      onPointerDown={(e) => commencer(id, e)}
-                      onClick={() => setChoisie(active ? null : id)}
-                    >
-                      <Pipe piece={piece} alimente={false} />
-                    </button>
-                    <button
-                      type="button"
-                      className={styles.trayTurn}
-                      aria-label={`Tourner le module ${piece.forme}`}
-                      onClick={() => tournerEnReserve(id)}
-                    >
-                      &#8635;
-                    </button>
-                  </span>
-                );
-              })
-            )}
-          </div>
+              <div className={styles.tray} role="group" aria-label="Modules en réserve">
+                {reserve.length === 0 ? (
+                  <p className={styles.trayEmpty}>Plus de module en réserve.</p>
+                ) : (
+                  reserve.map(({ id, piece }) => {
+                    const active = choisie === id;
+                    return (
+                      <span key={id} className={styles.trayItem}>
+                        <button
+                          type="button"
+                          className={[
+                            styles.trayPiece,
+                            active ? styles.trayPieceOn : '',
+                            glisse?.id === id && glisse.actif ? styles.trayPiecePrise : '',
+                          ].join(' ')}
+                          aria-pressed={active}
+                          aria-label={`Module ${piece.forme}${active ? ', sélectionné' : ''}`}
+                          onPointerDown={(e) => commencer(id, e)}
+                          onClick={() => setChoisie(active ? null : id)}
+                        >
+                          <Pipe piece={piece} alimente={false} />
+                        </button>
+                        <button
+                          type="button"
+                          className={styles.trayTurn}
+                          aria-label={`Tourner le module ${piece.forme}`}
+                          onClick={() => tournerEnReserve(id)}
+                        >
+                          &#8635;
+                        </button>
+                      </span>
+                    );
+                  })
+                )}
+              </div>
+            </>
+          )}
         </header>
 
         <div className={styles.board}>
@@ -196,52 +221,54 @@ export function Experience() {
                  grille d'abord, puis toutes les cartes. */
               style={{ ['--ligne' as string]: ligne }}
             >
-              <div className={styles.cells}>
-                {/* Une seule ligne recoit le courant : ailleurs le gabarit
+              {!compact && (
+                <div className={styles.cells}>
+                  {/* Une seule ligne recoit le courant : ailleurs le gabarit
                     garde la place pour que les grilles restent alignees. */}
-                {ligne === LIGNE_SOURCE ? (
-                  <span className={styles.source} aria-hidden="true" />
-                ) : (
-                  <span className={styles.sourceVide} aria-hidden="true" />
-                )}
-                {Array.from({ length: COLONNES }, (_, colonne) => {
-                  const i = index(colonne, ligne);
-                  const piece = grille[i];
-                  const libre = MANIPULABLES.has(i);
+                  {ligne === LIGNE_SOURCE ? (
+                    <span className={styles.source} aria-hidden="true" />
+                  ) : (
+                    <span className={styles.sourceVide} aria-hidden="true" />
+                  )}
+                  {Array.from({ length: COLONNES }, (_, colonne) => {
+                    const i = index(colonne, ligne);
+                    const piece = grille[i];
+                    const libre = MANIPULABLES.has(i);
 
-                  // Une case hors trace n'accueille jamais rien : c'est du
-                  // decor, pas un bouton desactive de plus dans l'ordre de
-                  // lecture d'un lecteur d'ecran.
-                  if (!SOLUTION[i]) {
-                    return <span key={i} className={styles.cellVide} aria-hidden="true" />;
-                  }
+                    // Une case hors trace n'accueille jamais rien : c'est du
+                    // decor, pas un bouton desactive de plus dans l'ordre de
+                    // lecture d'un lecteur d'ecran.
+                    if (!SOLUTION[i]) {
+                      return <span key={i} className={styles.cellVide} aria-hidden="true" />;
+                    }
 
-                  return (
-                    <button
-                      key={i}
-                      type="button"
-                      data-case={i}
-                      data-accepte={libre && !piece ? 'oui' : 'non'}
-                      className={[
-                        styles.cell,
-                        piece ? styles.cellPleine : '',
-                        libre ? '' : styles.cellFixe,
-                        glisse?.actif && libre && !piece ? styles.cellCandidate : '',
-                        survolee === i ? styles.cellVisee : '',
-                      ].join(' ')}
-                      onClick={() => toucherCase(i)}
-                      disabled={!libre}
-                      aria-label={
-                        piece
-                          ? `Colonne ${colonne + 1}, module ${piece.forme}, tourner`
-                          : `Colonne ${colonne + 1}, case vide`
-                      }
-                    >
-                      {piece && <Pipe piece={piece} alimente={allumees[ligne] ?? false} />}
-                    </button>
-                  );
-                })}
-              </div>
+                    return (
+                      <button
+                        key={i}
+                        type="button"
+                        data-case={i}
+                        data-accepte={libre && !piece ? 'oui' : 'non'}
+                        className={[
+                          styles.cell,
+                          piece ? styles.cellPleine : '',
+                          libre ? '' : styles.cellFixe,
+                          glisse?.actif && libre && !piece ? styles.cellCandidate : '',
+                          survolee === i ? styles.cellVisee : '',
+                        ].join(' ')}
+                        onClick={() => toucherCase(i)}
+                        disabled={!libre}
+                        aria-label={
+                          piece
+                            ? `Colonne ${colonne + 1}, module ${piece.forme}, tourner`
+                            : `Colonne ${colonne + 1}, case vide`
+                        }
+                      >
+                        {piece && <Pipe piece={piece} alimente={allumees[ligne] ?? false} />}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
 
               <article className={`${styles.card} ${allumees[ligne] ? styles.cardOn : ''}`}>
                 <h3>{step.title}</h3>
