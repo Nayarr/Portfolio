@@ -35,28 +35,19 @@ export type Project = {
   };
 };
 
+/**
+ * Du plus recent au plus vieux : un recruteur lit les premieres tuiles, elles
+ * doivent porter le travail le plus frais. `index` suit l'ordre du tableau, il
+ * est affiche tel quel sur la tuile et dans le compteur de la pellicule.
+ *
+ * En ajoutant un projet, l'inserer a sa place chronologique et renumeroter.
+ * Chiron. passe devant ASSURFAST bien que tous deux soient de 2026 : le stage
+ * s'est termine en juin, la SAE est de septembre.
+ */
 export const PROJECTS: Project[] = [
   {
-    id: 'assurfast',
-    index: '01',
-    name: 'ASSURFAST',
-    year: '2026',
-    kind: 'Stage S4, seul profil technique',
-    role: 'Conception vers mise en production',
-    stack: ['Extension Chrome', 'PaddleOCR', 'OpenCV', 'Flask', 'CI GitHub'],
-    pitch:
-      'AssurFill : l’extension qui fait l’OCR d’un permis et d’une carte grise puis pré-remplit le devis chez les partenaires du courtier. OCR 100 % local (RGPD). Plus une refonte SEO et un proto de chatbot.',
-    metrics: [
-      { value: '5 vers 1 min', label: 'temps de saisie par devis' },
-      { value: '90 / 85 %', label: 'fiabilité OCR carte grise / permis' },
-      { value: 'x5', label: 'impressions du site après refonte SEO' },
-    ],
-    links: [{ label: 'Repo GitHub', href: 'https://github.com/Nayarr' }],
-    palette: { from: '#0b63f6', to: '#7fb2ff', ink: '#ffd60a' },
-  },
-  {
     id: 'chiron',
-    index: '02',
+    index: '01',
     name: 'Chiron.',
     year: '2026',
     kind: 'Projet universitaire, SAE BUT3, en equipe',
@@ -71,6 +62,24 @@ export const PROJECTS: Project[] = [
     ],
     links: [],
     palette: { from: '#1e2a3a', to: '#46586f', ink: '#10b981' },
+  },
+  {
+    id: 'assurfast',
+    index: '02',
+    name: 'ASSURFAST',
+    year: '2026',
+    kind: 'Stage S4, seul profil technique',
+    role: 'Conception vers mise en production',
+    stack: ['Extension Chrome', 'PaddleOCR', 'OpenCV', 'Flask', 'CI GitHub'],
+    pitch:
+      'AssurFill : l’extension qui fait l’OCR d’un permis et d’une carte grise puis pré-remplit le devis chez les partenaires du courtier. OCR 100 % local (RGPD). Plus une refonte SEO et un proto de chatbot.',
+    metrics: [
+      { value: '5 vers 1 min', label: 'temps de saisie par devis' },
+      { value: '90 / 85 %', label: 'fiabilité OCR carte grise / permis' },
+      { value: 'x5', label: 'impressions du site après refonte SEO' },
+    ],
+    links: [{ label: 'Repo GitHub', href: 'https://github.com/Nayarr' }],
+    palette: { from: '#0b63f6', to: '#7fb2ff', ink: '#ffd60a' },
   },
   {
     id: 'papyrus',
