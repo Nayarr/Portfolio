@@ -80,9 +80,35 @@
     background 0.2s var(--ease-out),
     color 0.2s var(--ease-out);
 }
-.revealAll:hover {
+.revealAll:hover:not(:disabled) {
   background: var(--violet);
   color: var(--surface);
+}
+.revealAll:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* Remise a zero : action secondaire, donc simple lien souligne. */
+.reset {
+  border: 0;
+  background: none;
+  padding: 9px 2px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s var(--ease-out);
+}
+.reset:hover:not(:disabled) {
+  color: var(--ink);
+  border-bottom-color: var(--violet-pale);
+}
+.reset:disabled {
+  opacity: 0.4;
+  cursor: default;
 }
 .count {
   font-family: var(--font-mono);
@@ -315,28 +341,57 @@
 .cellVisee {
   border-color: var(--violet);
   border-style: solid;
-  background: rgba(124, 58, 237, 0.14);
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.16);
+  background: rgba(124, 58, 237, 0.18);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
 }
 
-/* Le module reste en place, attenue, pendant qu'on deplace sa copie. */
+/* Pendant un glisser, les cases qui peuvent accueillir le module se signalent
+   toutes : on voit ou l'on a le droit de le poser avant de chercher. */
+.cellCandidate {
+  border-color: var(--violet-pale);
+  background: rgba(124, 58, 237, 0.05);
+}
+
+/**
+ * La place laissee par le module qu'on emporte : elle reste visible, videe,
+ * pour qu'on comprenne d'ou vient ce qu'on tient.
+ */
 .trayPiecePrise {
-  opacity: 0.35;
+  opacity: 1;
+  border-style: dashed;
+  border-color: var(--violet-pale);
+  background: transparent;
+}
+.trayPiecePrise svg {
+  opacity: 0.12;
 }
 
-/* Le module sous le pointeur. Il ne doit rien intercepter, sinon
-   `elementFromPoint` le trouverait lui au lieu de la case visee. */
+/* Le curseur dit ce qu'on peut faire avant meme d'essayer. */
+.trayPiece {
+  cursor: grab;
+}
+.trayPiece:active {
+  cursor: grabbing;
+}
+
+/**
+ * Le module sous le pointeur. Legerement agrandi et incline, avec une ombre
+ * portee : il doit se lire comme souleve du plateau, pas comme colle a
+ * l'ecran. Il n'intercepte rien, sinon `elementFromPoint` le trouverait lui
+ * au lieu de la case visee.
+ */
 .fantome {
   position: fixed;
   z-index: var(--z-cursor);
-  width: 46px;
-  height: 46px;
-  margin: -23px 0 0 -23px;
-  padding: 4px;
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  padding: 5px;
   border: 1px solid var(--violet);
   border-radius: 10px;
   background: var(--surface);
-  box-shadow: 0 12px 28px -12px rgba(124, 58, 237, 0.6);
+  box-shadow: 0 18px 34px -14px rgba(124, 58, 237, 0.75);
+  transform: rotate(-4deg);
   pointer-events: none;
 }
 
