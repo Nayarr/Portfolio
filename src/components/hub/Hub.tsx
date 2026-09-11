@@ -44,7 +44,7 @@ export function Hub() {
 
       <div className={styles.content}>
         <p className={styles.kicker} data-rise>
-          Développeur full-stack, freelance (EI), Vitry-sur-Seine 94
+          Développeur Full stack | Automatisation &amp; IA | Paris
         </p>
 
         <h1 className={styles.title}>
