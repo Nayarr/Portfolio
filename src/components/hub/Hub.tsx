@@ -128,9 +128,6 @@ export function Hub() {
         <li>03, Expérience</li>
         <li>04, À propos</li>
         <li>05, Contact</li>
-        <li className={styles.arrow} aria-hidden="true">
-          &rarr;
-        </li>
       </ol>
     </section>
   );

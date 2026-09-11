@@ -32,6 +32,8 @@
 /* Lien d'evitement : hors ecran, il revient au premier Tab. */
 .skip {
   position: absolute;
+  border: 0;
+  font: inherit;
   top: 12px;
   left: 12px;
   transform: translateY(-200%);
