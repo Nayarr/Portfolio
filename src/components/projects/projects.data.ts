@@ -55,8 +55,26 @@ export const PROJECTS: Project[] = [
     palette: { from: '#0b63f6', to: '#7fb2ff', ink: '#ffd60a' },
   },
   {
-    id: 'papyrus',
+    id: 'chiron',
     index: '02',
+    name: 'Chiron.',
+    year: '2026',
+    kind: 'Projet universitaire, SAE BUT3, en equipe',
+    role: 'Conception et developpement',
+    stack: ['React 19', 'TypeScript', 'FastAPI', 'PostgreSQL', 'Docker', 'PyTorch'],
+    pitch:
+      'Plateforme de dossier patient qui réunit deux mondes d’imagerie qui ne se parlent pas : la radiologie DICOM et la biopsie numérisée. Une lame pèse de 100 Mo à plusieurs gigaoctets, donc elle est tuilée en pyramide DZI et servie au zoom. S’y ajoutent une segmentation de noyaux par IA en aide au diagnostic, et un compte rendu que le serveur force à suivre son protocole en quatre étapes.',
+    metrics: [
+      { value: '15 vers 1,7 Go', label: 'image du backend, en isolant PyTorch' },
+      { value: '7', label: 'conteneurs orchestrés' },
+      { value: '18', label: 'routes d’API' },
+    ],
+    links: [],
+    palette: { from: '#1e2a3a', to: '#46586f', ink: '#10b981' },
+  },
+  {
+    id: 'papyrus',
+    index: '03',
     name: 'Papyrus',
     year: '2025',
     kind: 'Projet universitaire, collaboratif',
@@ -77,7 +95,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'echocean',
-    index: '03',
+    index: '04',
     name: 'ECHOcean',
     year: '2025',
     kind: 'Projet universitaire',
@@ -95,7 +113,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'hubleau',
-    index: '04',
+    index: '05',
     name: 'Hubleau',
     year: '2025',
     kind: 'Projet universitaire',
