@@ -1,8 +1,12 @@
 .projects {
   position: relative;
   /* `min-height` et non `height` : une diapo dont le contenu ne tient pas
-     dans la hauteur disponible doit grandir et laisser le panneau
-     defiler, sinon le centrage flex la fait deborder par le haut. */
+     dans la hauteur disponible doit grandir et laisser le panneau defiler,
+     sinon le centrage flex la fait deborder par le haut.
+     Mais un parent sans hauteur definie ne resout pas le `min-height: 100%`
+     d'un enfant : la pellicule s'arretait a son contenu et laissait voir le
+     fond clair du document sous elle. D'ou le flex, qui l'etire. */
+  display: flex;
   min-height: 100%;
   width: 100%;
   overflow: hidden;

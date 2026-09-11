@@ -310,3 +310,40 @@
     padding-bottom: 4px;
   }
 }
+
+/* Case visee pendant un glisser : elle doit se distinguer du simple survol. */
+.cellVisee {
+  border-color: var(--violet);
+  border-style: solid;
+  background: rgba(124, 58, 237, 0.14);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.16);
+}
+
+/* Le module reste en place, attenue, pendant qu'on deplace sa copie. */
+.trayPiecePrise {
+  opacity: 0.35;
+}
+
+/* Le module sous le pointeur. Il ne doit rien intercepter, sinon
+   `elementFromPoint` le trouverait lui au lieu de la case visee. */
+.fantome {
+  position: fixed;
+  z-index: var(--z-cursor);
+  width: 46px;
+  height: 46px;
+  margin: -23px 0 0 -23px;
+  padding: 4px;
+  border: 1px solid var(--violet);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: 0 12px 28px -12px rgba(124, 58, 237, 0.6);
+  pointer-events: none;
+}
+
+/* Un glisser ne doit pas declencher la selection de texte ni le geste de
+   navigation du diaporama sous la grille. */
+.trayPiece,
+.cell {
+  touch-action: none;
+  user-select: none;
+}
