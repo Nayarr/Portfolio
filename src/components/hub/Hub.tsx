@@ -1,18 +1,8 @@
 import { useRef } from 'react';
 
 import { gsap, useGSAP } from '@/lib/gsap';
+import { STACK } from './stack.data';
 import styles from './Hub.module.css';
-
-/**
- * La stack, groupee par famille plutot qu'en liste a plat.
- * Un recruteur cherche une competence precise : rangee, elle se trouve d'un
- * coup d'oeil, et le classement dit aussi comment Rayan se situe.
- */
-const STACK = [
-  { famille: 'Langages', outils: ['JavaScript', 'TypeScript', 'Python', 'PHP'] },
-  { famille: 'Frameworks', outils: ['React', 'Flask'] },
-  { famille: 'Données', outils: ['SQL', 'Supabase'] },
-];
 
 const SOCIALS = [
   {
@@ -105,13 +95,15 @@ export function Hub() {
       <aside className={styles.stack} data-rise aria-label="Stack">
         <p className={styles.stackTag}>Ce avec quoi je travaille</p>
         <dl className={styles.stackList}>
-          {STACK.map(({ famille, outils }) => (
-            <div key={famille} className={styles.stackGroup}>
-              <dt>{famille}</dt>
+          {STACK.map(({ titre, outils }) => (
+            <div key={titre} className={styles.stackGroup}>
+              <dt>{titre}</dt>
               <dd>
                 <ul>
-                  {outils.map((outil) => (
-                    <li key={outil}>{outil}</li>
+                  {outils.map(({ nom, ton }) => (
+                    <li key={nom} className={styles[`ton${ton}`]}>
+                      {nom}
+                    </li>
                   ))}
                 </ul>
               </dd>

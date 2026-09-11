@@ -19,6 +19,9 @@
   --violet: #7c3aed;
   --violet-bright: #9a5cff;
   --violet-pale: #cdbcf3;
+  /* Pastilles de competences, reprises du CV (voir hub/stack.data.ts). */
+  --violet-sub: #7753b6;
+  --pill-bord: #ccc3d9;
 
   /* fonds sombres (panneau projets, fiches) */
   --dark-bg: #140f2b;

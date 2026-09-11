@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import { Pipe } from './Pipe';
 import { useDragModule } from './useDragModule';
@@ -73,6 +74,8 @@ export function Experience() {
   const allumees = useMemo(() => lignesAlimentees(grille), [grille]);
   const total = allumees.filter(Boolean).length;
   const resolu = total === LIGNES;
+  /** Rien n'a ete pose ni tourne : reinitialiser n'aurait aucun effet. */
+  const vierge = reserve.length === A_PLACER.length && total === 0;
 
   /** Sort un module de la reserve et le pose sur une case libre. */
   const poser = useCallback((id: number, cible: number) => {
@@ -140,9 +143,15 @@ export function Experience() {
             <button
               type="button"
               className={styles.revealAll}
-              onClick={resolu ? rejouer : donnerLaReponse}
+              onClick={donnerLaReponse}
+              disabled={resolu}
             >
-              {resolu ? 'Rejouer' : 'Donne moi la réponse !'}
+              Donne moi la réponse !
+            </button>
+            {/* Bouton distinct et toujours present : on doit pouvoir tout
+                remettre a plat sans avoir a resoudre d'abord. */}
+            <button type="button" className={styles.reset} onClick={rejouer} disabled={vierge}>
+              Réinitialiser
             </button>
             <span className={styles.count} role="status">
               {total} / {LIGNES} alimentées
@@ -219,6 +228,7 @@ export function Experience() {
                         styles.cell,
                         piece ? styles.cellPleine : '',
                         libre ? '' : styles.cellFixe,
+                        glisse?.actif && libre && !piece ? styles.cellCandidate : '',
                         survolee === i ? styles.cellVisee : '',
                       ].join(' ')}
                       onClick={() => toucherCase(i)}
@@ -249,17 +259,27 @@ export function Experience() {
         </div>
       </div>
 
-      {/* Le module suit le pointeur pendant le deplacement. Hors flux et sans
-          interception, pour ne pas masquer la case visee sous le curseur. */}
-      {glisse?.actif && moduleGlisse && (
-        <span
-          className={styles.fantome}
-          style={{ left: glisse.x, top: glisse.y }}
-          aria-hidden="true"
-        >
-          <Pipe piece={moduleGlisse.piece} alimente={false} />
-        </span>
-      )}
+      {/**
+       * Le module suit le pointeur pendant le deplacement.
+       *
+       * Sorti du document par un portail, et non pose ici : la piste du
+       * diaporama porte une transformation, et un ancetre transforme fait
+       * qu'un `position: fixed` se cale sur lui au lieu de la fenetre. Le
+       * module se retrouvait alors a plusieurs milliers de pixels hors ecran,
+       * donc invisible, des qu'on n'etait plus sur la premiere diapo.
+       */}
+      {glisse?.actif &&
+        moduleGlisse &&
+        createPortal(
+          <span
+            className={styles.fantome}
+            style={{ left: glisse.x, top: glisse.y }}
+            aria-hidden="true"
+          >
+            <Pipe piece={moduleGlisse.piece} alimente={false} />
+          </span>,
+          document.body,
+        )}
     </section>
   );
 }
