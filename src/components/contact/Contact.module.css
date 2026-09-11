@@ -124,27 +124,6 @@
 .links a:hover {
   color: #fff;
 }
-/**
- * Selecteur `.links a.cv` et non `.cv` seul : a specificite egale a `.links a`
- * (0,1,1), c'est la regle generale qui gagnait. Son `padding-bottom: 4px`
- * ecrasait le `padding: 12px 22px` du bouton, qui se retrouvait avec 12 px en
- * haut et 4 en bas : le libelle paraissait colle au bord haut. Les `!important`
- * qui compensaient le meme probleme sur la bordure et la couleur tombent avec.
- */
-.links a.cv {
-  margin-top: 8px;
-  border: 0;
-  color: var(--dark-bg);
-  background: var(--neon);
-  border-radius: 999px;
-  padding: 12px 22px;
-  justify-content: center;
-  box-shadow: 0 0 30px 2px rgba(185, 140, 255, 0.4);
-}
-.links a.cv:hover {
-  color: var(--dark-bg);
-  filter: brightness(1.08);
-}
 
 @media (max-width: 767px) {
   .contact {
