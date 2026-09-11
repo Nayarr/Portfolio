@@ -9,6 +9,7 @@ Chaque ligne devient une issue GitHub, prise une par une sur une branche `feat/.
 - [x] `feat/projects` : pellicule (tuiles identiques, actif centre) + prise de vue plein panneau avec FLIP
 - [x] `feat/experience-circuit` : circuit a alimenter, revelation des etapes
 - [x] `feat/experience-grid` : grille de modules a poser et a tourner
+- [x] `feat/hub-and-nav` : index des ecrans transverse, hub rebati sans le panneau
 - [x] `feat/about` : photo, recit, formation, hors-code
 - [x] `feat/contact` : coordonnees, liens, telechargement du CV
 - [x] `feat/cursor` : halo violet qui suit le pointeur

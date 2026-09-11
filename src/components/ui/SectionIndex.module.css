@@ -1,0 +1,110 @@
+/**
+ * Bande fixe en bas de tous les ecrans. Elle remplace le pied de page, dont
+ * les coordonnees faisaient doublon avec le hub et l'ecran contact.
+ */
+.index {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: var(--z-chrome);
+  padding: 0 clamp(24px, 6vw, 96px) calc(var(--space) * 3);
+  pointer-events: none;
+}
+.index > * {
+  pointer-events: auto;
+}
+
+/* Le rail porte l'avancement : une barre qui se remplit d'un ecran a l'autre. */
+.rail {
+  display: block;
+  height: 1px;
+  background: var(--line);
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+.progress {
+  display: block;
+  height: 100%;
+  background: var(--violet);
+  transform-origin: left center;
+  transition: transform 0.6s var(--ease-out);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 28px;
+}
+
+.item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 4px 2px;
+  border: 0;
+  background: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  transition: color 0.25s var(--ease-out);
+}
+.item:hover {
+  color: var(--ink);
+}
+
+/* L'ecran courant : violet, et son numero en display pour le detacher. */
+.itemOn {
+  color: var(--violet);
+}
+.itemOn .num {
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+/**
+ * Au-dessus d'une fiche projet, qui impose son propre fond sature :
+ * le violet du site n'y tient pas le contraste.
+ */
+:global(html[data-takeover='on']) .item {
+  color: rgb(255 255 255 / 0.55);
+}
+:global(html[data-takeover='on']) .item:hover,
+:global(html[data-takeover='on']) .itemOn {
+  color: rgb(255 255 255 / 0.95);
+}
+:global(html[data-takeover='on']) .rail {
+  background: rgb(255 255 255 / 0.22);
+}
+:global(html[data-takeover='on']) .progress {
+  background: rgb(255 255 255 / 0.8);
+}
+
+@media (max-width: 767px) {
+  .index {
+    padding: 0 16px 12px;
+  }
+  .list {
+    gap: 4px 16px;
+  }
+  .item {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    gap: 5px;
+  }
+  /* Au telephone, seuls les numeros tiennent : le nom de l'ecran courant
+     suffit a se reperer. */
+  .nom {
+    display: none;
+  }
+  .itemOn .nom {
+    display: inline;
+  }
+}

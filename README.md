@@ -51,7 +51,7 @@ npm run dev
 src/
   app/            points d'entree : Providers, Deck
   components/
-    ui/           curseur, en-tete, toggles
+    ui/           curseur, en-tete, index des ecrans, fleche suivante
     hub/          hero, stack, panneau iso, index des sections
     projects/     pellicule, ecran deploye, fiche
     experience/   circuit electrique

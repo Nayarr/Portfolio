@@ -3,7 +3,16 @@ import { useRef } from 'react';
 import { gsap, useGSAP } from '@/lib/gsap';
 import styles from './Hub.module.css';
 
-const STACK = ['JavaScript', 'TypeScript', 'Python', 'PHP', 'React', 'Flask', 'SQL', 'Supabase'];
+/**
+ * La stack, groupee par famille plutot qu'en liste a plat.
+ * Un recruteur cherche une competence precise : rangee, elle se trouve d'un
+ * coup d'oeil, et le classement dit aussi comment Rayan se situe.
+ */
+const STACK = [
+  { famille: 'Langages', outils: ['JavaScript', 'TypeScript', 'Python', 'PHP'] },
+  { famille: 'Frameworks', outils: ['React', 'Flask'] },
+  { famille: 'Données', outils: ['SQL', 'Supabase'] },
+];
 
 const SOCIALS = [
   {
@@ -18,7 +27,7 @@ const SOCIALS = [
   },
 ];
 
-/** Ecran 01, Hub. Hero editorial : nom, accroche, stack, liens, panneau isometrique. */
+/** Ecran 01, Hub. Hero editorial : nom, accroche, stack rangee, liens. */
 export function Hub() {
   const rootRef = useRef<HTMLElement>(null);
 
@@ -60,22 +69,21 @@ export function Hub() {
           sorte qu’on les <em>ressente</em> au fil de la navigation.
         </p>
 
-        <ul className={styles.stack} data-rise>
-          {STACK.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-
         <div className={styles.foot} data-rise>
           <nav className={styles.socials} aria-label="Liens">
             {SOCIALS.map((s) => (
-              <a key={s.label} href={s.href} aria-label={s.label}>
+              <a key={s.label} href={s.href} target="_blank" rel="noreferrer" aria-label={s.label}>
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d={s.path} />
                 </svg>
               </a>
             ))}
-            <a href="https://instagram.com/rayan.ough" aria-label="Instagram">
+            <a
+              href="https://instagram.com/rayan.ough"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Instagram"
+            >
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -89,46 +97,32 @@ export function Hub() {
               </svg>
             </a>
           </nav>
-          <span className={styles.avail}>Dispo alternance, sept. 2026</span>
         </div>
       </div>
 
-      <div className={styles.panel} data-rise aria-hidden="true">
-        <svg viewBox="0 0 426 330">
-          <path d="M213 40 396 150 213 260 30 150Z" fill="var(--bg)" stroke="var(--line)" />
-          <path
-            d="M213 96 320 158 213 220 106 158Z"
-            fill="rgba(124,58,237,.06)"
-            stroke="rgba(124,58,237,.28)"
-          />
-          <path d="M150 150 150 176 250 234 250 208Z" fill="var(--bg-2)" stroke="var(--violet)" />
-          <path d="M250 208 250 234 320 194 320 168Z" fill="#e7dffa" stroke="var(--violet)" />
-          <path d="M150 150 250 208 320 168 220 110Z" fill="#f1ecfc" stroke="var(--violet)" />
-          <path
-            d="M176 120 176 92 214 114 214 142Z"
-            fill="var(--bg)"
-            stroke="var(--violet-bright)"
-          />
-          <path d="M180 118 180 100 210 118 210 136Z" fill="rgba(154,92,255,.18)" />
-          <path
-            d="M226 150 226 120 268 144 268 174Z"
-            fill="var(--bg)"
-            stroke="var(--violet-bright)"
-          />
-          <path d="M231 148 231 128 263 146 263 166Z" fill="rgba(154,92,255,.18)" />
-          <path d="M150 210 150 250 176 264 176 224Z" fill="#e7dffa" stroke="var(--violet)" />
-          <path d="M150 178 150 210 176 224 176 192Z" fill="#e7dffa" stroke="var(--violet)" />
-        </svg>
-        <span className={styles.panelCaption}>mon poste de travail</span>
-      </div>
-
-      <ol className={styles.index} data-rise>
-        <li className={styles.here}>01, Hub</li>
-        <li>02, Projets</li>
-        <li>03, Expérience</li>
-        <li>04, À propos</li>
-        <li>05, Contact</li>
-      </ol>
+      {/* Colonne de droite : la stack rangee par famille. Elle remplace le
+          panneau isometrique, qui occupait la place sans rien apprendre. */}
+      <aside className={styles.stack} data-rise aria-label="Stack">
+        <p className={styles.stackTag}>Ce avec quoi je travaille</p>
+        <dl className={styles.stackList}>
+          {STACK.map(({ famille, outils }) => (
+            <div key={famille} className={styles.stackGroup}>
+              <dt>{famille}</dt>
+              <dd>
+                <ul>
+                  {outils.map((outil) => (
+                    <li key={outil}>{outil}</li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+          ))}
+        </dl>
+        <p className={styles.avail}>
+          <span className={styles.availDot} aria-hidden="true" />
+          Dispo en alternance, 1 an, sept. 2026
+        </p>
+      </aside>
     </section>
   );
 }

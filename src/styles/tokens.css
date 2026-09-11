@@ -36,10 +36,12 @@
   --space: 8px;
   --radius: 12px;
 
-  /* bandes du chrome fixe (SiteHeader / SiteFooter). Les ecrans reservent
-     cette place pour ne pas passer dessous. */
+  /* Bandes du chrome fixe : l'en-tete en haut, l'index des ecrans en bas.
+     Les ecrans reservent cette place pour ne pas passer dessous. La reserve
+     basse a maigri avec le retrait du pied de page, l'index mesurant 65 px
+     la ou le pied en faisait 108. */
   --chrome-top: 104px;
-  --chrome-bottom: 112px;
+  --chrome-bottom: 88px;
   /* Empilement, du fond vers l'avant. */
   --z-content: 1;
   --z-takeover: 50;
@@ -51,13 +53,10 @@
   --dur: 0.6s;
 }
 
-/**
- * Au telephone, le pied de page n'est plus fixe (voir SiteFooter.module.css) :
- * les ecrans n'ont plus a lui reserver sa bande. Seul l'en-tete reste au-dessus.
- */
+/* Au telephone, l'index se resserre et n'affiche que les numeros. */
 @media (max-width: 767px) {
   :root {
     --chrome-top: 76px;
-    --chrome-bottom: 40px;
+    --chrome-bottom: 58px;
   }
 }
