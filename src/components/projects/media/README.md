@@ -29,6 +29,9 @@ aplat assume vaut mieux qu'une image bouche-trou.
 le cadre en `cover`, ancree en haut.
 
 `kind: 'logo'` affiche la marque seule, contenue et centree, jamais recadree.
+Le fichier doit etre **detoure**, fond transparent : l'ecran pose derriere un
+lavis pale de la couleur du projet, pour que la marque garde ses propres
+couleurs sans se noyer dans la palette.
 A utiliser quand le produit lui-meme n'est pas montrable. Dans ce cas, remplir
 aussi `mediaNote` pour dire pourquoi : un projet sous confidentialite vaut
 mieux d'etre explique que laisse sans raison apparente. L'etiquette "media a

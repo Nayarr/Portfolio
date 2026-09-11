@@ -53,6 +53,8 @@ export function ProjectView({ project, originRect, onClose }: Props) {
     { scope: rootRef, dependencies: [project.id] },
   );
 
+  const isLogo = project.media?.kind === 'logo';
+
   return (
     <div ref={rootRef} className={styles.root}>
       <button type="button" className={styles.close} onClick={onClose}>
@@ -66,12 +68,21 @@ export function ProjectView({ project, originRect, onClose }: Props) {
           ref={heroRef}
           className={styles.hero}
           style={{
-            background: `linear-gradient(150deg, ${project.palette.from}, ${project.palette.to})`,
+            /**
+             * Un logo garde ses propres couleurs. Celui d'ASSURFAST est bleu
+             * marine : pose sur le bleu vif de sa palette il deviendrait
+             * illisible. Le fond passe donc en lavis de cette meme couleur,
+             * assez pale pour que la marque ressorte, assez teinte pour que le
+             * projet reste reconnaissable.
+             */
+            background: isLogo
+              ? `linear-gradient(150deg, color-mix(in srgb, ${project.palette.from} 12%, #fff), color-mix(in srgb, ${project.palette.to} 22%, #fff))`
+              : `linear-gradient(150deg, ${project.palette.from}, ${project.palette.to})`,
           }}
         >
           {project.media ? (
             <img
-              className={project.media.kind === 'logo' ? styles.heroLogo : styles.heroImage}
+              className={isLogo ? styles.heroLogo : styles.heroImage}
               src={project.media.src}
               alt={project.media.alt}
               loading="lazy"
