@@ -110,8 +110,28 @@ export const PROJECTS: Project[] = [
     palette: { from: '#7c3aed', to: '#cdbcf3', ink: '#ffffff' },
   },
   {
-    id: 'assurfast',
+    id: 'dashboard',
     index: '03',
+    name: 'DASHBOARD',
+    year: '2026',
+    kind: 'Perso, outil interne',
+    role: 'Conception et développement, seul',
+    stack: ['Python', 'Flask', 'SQLite', 'JavaScript natif', 'Playwright', 'Claude Code'],
+    pitch:
+      'L’outil que j’ai écrit pour trouver cette alternance. Il collecte les offres chez La Bonne Alternance et Welcome to the Jungle, dont il interroge l’index de recherche plutôt que d’analyser une page rendue côté client, puis note chaque annonce face au CV sur cinq axes : technique, poste, distance, structure, conditions. Un filtre écarte les écoles qui vendent une formation au lieu d’un poste, et tout doute part dans une file d’arbitrage plutôt qu’à la corbeille. Au-dessus du seuil, Claude Code rédige la lettre depuis le texte de l’annonce, et Playwright dépose la candidature sur les formulaires qui s’y prêtent.',
+    metrics: [
+      { value: '368 vers 42', label: 'offres collectées, puis retenues' },
+      { value: '5', label: 'axes de notation face au CV' },
+      { value: '135', label: 'offres écartées par les filtres' },
+    ],
+    links: [],
+    /* Les trois couleurs de l'outil, reprises de sa propre feuille de style :
+       encre, encre-2 et papier. Voir la PR pour le sens du degrade. */
+    palette: { from: '#16181d', to: '#4a4f5a', ink: '#faf9f6' },
+  },
+  {
+    id: 'assurfast',
+    index: '04',
     name: 'ASSURFAST',
     year: '2026',
     kind: 'Stage S4, seul profil technique',
@@ -137,7 +157,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'papyrus',
-    index: '04',
+    index: '05',
     name: 'Papyrus',
     year: '2025',
     kind: 'Projet universitaire, collaboratif',
@@ -158,7 +178,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'echocean',
-    index: '05',
+    index: '06',
     name: 'ECHOcean',
     year: '2025',
     kind: 'Projet universitaire',
@@ -176,7 +196,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'hubleau',
-    index: '06',
+    index: '07',
     name: 'Hubleau',
     year: '2025',
     kind: 'Projet universitaire',
