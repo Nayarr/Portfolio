@@ -110,8 +110,27 @@ export const PROJECTS: Project[] = [
     palette: { from: '#7c3aed', to: '#cdbcf3', ink: '#ffffff' },
   },
   {
-    id: 'assurfast',
+    id: 'alternance',
     index: '03',
+    name: 'ALTERNANCE',
+    year: '2026',
+    kind: 'Perso, outil interne',
+    role: 'Conception et développement, seul',
+    stack: ['Python', 'React', 'Scraping', 'API Recherche d’entreprises', 'LLM'],
+    pitch:
+      'L’outil que j’ai écrit pour trouver cette alternance. Il agrège les offres publiées et les entreprises du registre des sociétés, ne garde que celles dans un rayon donné autour du domicile, puis note chacune face au CV sur cinq axes. Au-dessus du seuil, il rédige la lettre de motivation à partir du texte de l’annonce ; en dessous, il écarte sans que j’aie à lire. Le reste est un suivi de candidature, de la lettre prête à la signature.',
+    metrics: [
+      { value: '128 vers 42', label: 'offres analysées, puis retenues au seuil' },
+      { value: '5', label: 'axes de notation face au CV' },
+      { value: '86', label: 'offres écartées sans lecture' },
+    ],
+    links: [],
+    /* Blanc, noir, anthracite : l'outil n'a pas d'autre couleur. */
+    palette: { from: '#1b1b1b', to: '#565656', ink: '#ffffff' },
+  },
+  {
+    id: 'assurfast',
+    index: '04',
     name: 'ASSURFAST',
     year: '2026',
     kind: 'Stage S4, seul profil technique',
@@ -137,7 +156,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'papyrus',
-    index: '04',
+    index: '05',
     name: 'Papyrus',
     year: '2025',
     kind: 'Projet universitaire, collaboratif',
@@ -158,7 +177,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'echocean',
-    index: '05',
+    index: '06',
     name: 'ECHOcean',
     year: '2025',
     kind: 'Projet universitaire',
@@ -176,7 +195,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'hubleau',
-    index: '06',
+    index: '07',
     name: 'Hubleau',
     year: '2025',
     kind: 'Projet universitaire',
