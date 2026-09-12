@@ -110,9 +110,9 @@ export const PROJECTS: Project[] = [
     palette: { from: '#7c3aed', to: '#cdbcf3', ink: '#ffffff' },
   },
   {
-    id: 'alternance',
+    id: 'dashboard',
     index: '03',
-    name: 'ALTERNANCE',
+    name: 'DASHBOARD',
     year: '2026',
     kind: 'Perso, outil interne',
     role: 'Conception et développement, seul',
