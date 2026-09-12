@@ -116,17 +116,18 @@ export const PROJECTS: Project[] = [
     year: '2026',
     kind: 'Perso, outil interne',
     role: 'Conception et développement, seul',
-    stack: ['Python', 'React', 'Scraping', 'API Recherche d’entreprises', 'LLM'],
+    stack: ['Python', 'Flask', 'SQLite', 'JavaScript natif', 'Playwright', 'Claude Code'],
     pitch:
-      'L’outil que j’ai écrit pour trouver cette alternance. Il agrège les offres publiées et les entreprises du registre des sociétés, ne garde que celles dans un rayon donné autour du domicile, puis note chacune face au CV sur cinq axes. Au-dessus du seuil, il rédige la lettre de motivation à partir du texte de l’annonce ; en dessous, il écarte sans que j’aie à lire. Le reste est un suivi de candidature, de la lettre prête à la signature.',
+      'L’outil que j’ai écrit pour trouver cette alternance. Il collecte les offres chez La Bonne Alternance et Welcome to the Jungle, dont il interroge l’index de recherche plutôt que d’analyser une page rendue côté client, puis note chaque annonce face au CV sur cinq axes : technique, poste, distance, structure, conditions. Un filtre écarte les écoles qui vendent une formation au lieu d’un poste, et tout doute part dans une file d’arbitrage plutôt qu’à la corbeille. Au-dessus du seuil, Claude Code rédige la lettre depuis le texte de l’annonce, et Playwright dépose la candidature sur les formulaires qui s’y prêtent.',
     metrics: [
-      { value: '128 vers 42', label: 'offres analysées, puis retenues au seuil' },
+      { value: '368 vers 42', label: 'offres collectées, puis retenues' },
       { value: '5', label: 'axes de notation face au CV' },
-      { value: '86', label: 'offres écartées sans lecture' },
+      { value: '135', label: 'offres écartées par les filtres' },
     ],
     links: [],
-    /* Blanc, noir, anthracite : l'outil n'a pas d'autre couleur. */
-    palette: { from: '#1b1b1b', to: '#565656', ink: '#ffffff' },
+    /* Les trois couleurs de l'outil, reprises de sa propre feuille de style :
+       encre, encre-2 et papier. Voir la PR pour le sens du degrade. */
+    palette: { from: '#16181d', to: '#4a4f5a', ink: '#faf9f6' },
   },
   {
     id: 'assurfast',
