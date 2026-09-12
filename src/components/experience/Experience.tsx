@@ -27,7 +27,7 @@ type Step = {
 /** Une etape par ligne de la grille, de la plus recente a la plus ancienne. */
 const STEPS: Step[] = [
   {
-    title: 'ASSURFAST, lead technique projets (stage S4)',
+    title: 'ASSURFAST, Développeur Fullstack & Automatisation (stage)',
     period: 'Avr. vers juin 2026, 8 semaines, Alfortville',
     lines: [
       'Seul profil technique du cabinet, du besoin à la mise en production.',
