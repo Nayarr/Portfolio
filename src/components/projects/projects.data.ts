@@ -1,4 +1,5 @@
 import assurfastLogo from './media/assurfast.png';
+import dashboardMedia from './media/dashboard.jpg';
 import portfolioMedia from './media/portfolio.jpg';
 import echoceanMedia from './media/echocean.jpg';
 import hubleauMedia from './media/hubleau.jpg';
@@ -120,11 +121,15 @@ export const PROJECTS: Project[] = [
     pitch:
       'L’outil que j’ai écrit pour trouver cette alternance. Il collecte les offres chez La Bonne Alternance et Welcome to the Jungle, dont il interroge l’index de recherche plutôt que d’analyser une page rendue côté client, puis note chaque annonce face au CV sur cinq axes : technique, poste, distance, structure, conditions. Un filtre écarte les écoles qui vendent une formation au lieu d’un poste, et tout doute part dans une file d’arbitrage plutôt qu’à la corbeille. Au-dessus du seuil, Claude Code rédige la lettre depuis le texte de l’annonce, et Playwright dépose la candidature sur les formulaires qui s’y prêtent.',
     metrics: [
-      { value: '368 vers 42', label: 'offres collectées, puis retenues' },
+      { value: '368 vers 40', label: 'offres collectées, puis retenues' },
       { value: '5', label: 'axes de notation face au CV' },
-      { value: '135', label: 'offres écartées par les filtres' },
+      { value: '137', label: 'offres écartées par les filtres' },
     ],
     links: [],
+    media: {
+      src: dashboardMedia,
+      alt: 'Vue « Validé » du tableau de bord : la liste des offres retenues avec leur score d’adéquation et les mots-clés relevés, et à droite le détail d’une offre, sa notation sur cinq axes et ses correspondances avec le CV.',
+    },
     /* Les trois couleurs de l'outil, reprises de sa propre feuille de style :
        encre, encre-2 et papier. Voir la PR pour le sens du degrade. */
     palette: { from: '#16181d', to: '#4a4f5a', ink: '#faf9f6' },

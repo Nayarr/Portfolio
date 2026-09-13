@@ -21,6 +21,7 @@ aplat assume vaut mieux qu'une image bouche-trou.
 | `papyrus`   | oui     | 79 ko  | Accueil de la plateforme                                    |
 | `echocean`  | oui     | 82 ko  | Accueil, le hero avec la carte                              |
 | `hubleau`   | oui     | 193 ko | La carte des stations hydrometriques                        |
+| `dashboard` | oui     | 145 ko | Vue Valide, tiroir ouvert, adresse masquee                  |
 | `assurfast` | non     | --     | Extension Chrome, a capturer en local (un devis pre-rempli) |
 | `chiron`    | non     | --     | A fournir                                                   |
 
