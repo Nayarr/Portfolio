@@ -5,8 +5,28 @@ export function Contact() {
   return (
     <section className={styles.contact} id="contact" aria-label="Contact">
       <div className={styles.inner}>
+        {/* Quatre informations separees par des barres et non par des
+            virgules : la ligne contient deja « 1 sem. / 1 sem. », dont la
+            barre oblique se confondait avec la ponctuation, et on ne voyait
+            plus ou finissait un element. Les barres sont plus pales que le
+            texte, elles separent sans se lire, et masquees aux lecteurs
+            d'ecran, qui annonceraient « barre verticale ». */}
         <p className={styles.status}>
-          En recherche d’alternance, 1 an, rythme 1 sem. / 1 sem., dispo sept. 2026
+          <span className={styles.statusTexte}>
+            En recherche d’alternance
+            <span className={styles.sep} aria-hidden="true">
+              |
+            </span>
+            1 an
+            <span className={styles.sep} aria-hidden="true">
+              |
+            </span>
+            rythme 1 sem. / 1 sem.
+            <span className={styles.sep} aria-hidden="true">
+              |
+            </span>
+            dispo sept. 2026
+          </span>
         </p>
 
         <h2 className={styles.title}>

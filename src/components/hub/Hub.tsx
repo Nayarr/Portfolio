@@ -92,9 +92,15 @@ export function Hub() {
             </div>
           ))}
         </dl>
+        {/* Deux lignes explicites. Sur une seule, les trois informations se
+            suivaient separees par des virgules et la ligne se coupait la ou la
+            largeur tombait, pas la ou le sens change : on lisait un bloc
+            fouillis. Le quoi est maintenant au-dessus, le quand en dessous. */}
         <p className={styles.avail}>
           <span className={styles.availDot} aria-hidden="true" />
-          Dispo en alternance, 1 an, sept. 2026
+          <span className={styles.availTexte}>
+            <strong>Dispo en alternance</strong>1 an, à partir de sept. 2026
+          </span>
         </p>
       </aside>
     </section>

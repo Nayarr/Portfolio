@@ -74,6 +74,11 @@
   padding: 9px 18px;
 }
 
+.sep {
+  margin: 0 0.75em;
+  opacity: 0.42;
+}
+
 .title {
   /* Le titre descend : le mail et le telephone ne sont plus sous lui, et sans
      cette respiration il restait colle a la pastille d'etat, tout en haut
