@@ -173,6 +173,12 @@
   position: relative;
   margin: 22px 0 0;
   text-align: center;
+  /* Le point de depart de l'animation est le pied de la tuile, au-dessus :
+     l'echelle part de la, donc l'origine doit y etre aussi. */
+  transform-origin: 50% 0;
+}
+.legendeNom {
+  display: block;
   font-family: var(--font-display);
   font-weight: 400;
   font-size: clamp(34px, 4.6vw, 56px);
@@ -180,9 +186,22 @@
   letter-spacing: 0.01em;
   text-transform: uppercase;
   color: var(--ink-actif, #ffffff);
-  /* Le point de depart de l'animation est le pied de la tuile, au-dessus :
-     l'echelle part de la, donc l'origine doit y etre aussi. */
-  transform-origin: 50% 0;
+}
+/* Le rang, la nature et l'annee : de quoi situer le projet avant de
+   l'ouvrir. En chasse fixe et en gris, pour ne pas disputer le nom. */
+.legendeMeta {
+  display: block;
+  margin-top: 9px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8b80b8;
+}
+.legendeMeta i {
+  font-style: normal;
+  margin: 0 0.85em;
+  opacity: 0.55;
 }
 
 .idx {
@@ -216,8 +235,13 @@
  */
 @media (max-height: 760px) {
   .legende {
-    margin-top: 16px;
+    margin-top: 14px;
+  }
+  .legendeNom {
     font-size: clamp(30px, 4.4vh, 44px);
+  }
+  .legendeMeta {
+    margin-top: 7px;
   }
   .hint {
     margin-top: 18px;

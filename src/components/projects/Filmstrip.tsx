@@ -37,6 +37,7 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
   const stripRef = useRef<HTMLDivElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const legendeRef = useRef<HTMLParagraphElement>(null);
+  const nomLegendeRef = useRef<HTMLSpanElement>(null);
 
   /**
    * Le nom de la tuile choisie descend en pied de pellicule.
@@ -54,26 +55,51 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
   useGSAP(
     () => {
       const legende = legendeRef.current;
-      const nom = stripRef.current?.querySelector<HTMLElement>(
+      const nomLegende = nomLegendeRef.current;
+      const nomTuile = stripRef.current?.querySelector<HTMLElement>(
         `[data-tile-id="${PROJECTS[active].id}"] .${styles.name}`,
       );
-      if (!legende || !nom) return;
+      if (!legende || !nomLegende || !nomTuile) return;
 
       const mm = gsap.matchMedia();
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const depart = nom.getBoundingClientRect();
-        const arrivee = legende.getBoundingClientRect();
-        if (!arrivee.height) return;
+        /* Remise a plat avant de mesurer. Une frappe rapide au clavier
+           relance l'animation alors que la precedente court encore : sans ce
+           `set`, le repere d'arrivee serait pris sur une legende encore
+           reduite et decalee, et la suivante viserait cette position-la. */
+        gsap.set(legende, { clearProps: 'transform,opacity' });
 
-        gsap.from(legende, {
-          y: depart.top - arrivee.top,
-          scaleX: depart.height / arrivee.height,
-          scaleY: depart.height / arrivee.height,
-          opacity: 0.25,
-          duration: 0.45,
-          ease: 'power3.out',
-          overwrite: true,
-        });
+        const arrivee = nomLegende.getBoundingClientRect();
+        const depart = nomTuile.getBoundingClientRect();
+        if (!arrivee.height) return;
+        const echelle = depart.height / arrivee.height;
+
+        /**
+         * `fromTo` et non `from`. `from` anime depuis les valeurs donnees
+         * jusqu'a celles trouvees sur l'element : en enchainant les fleches,
+         * la nouvelle animation prenait pour arrivee l'etat a mi-course de la
+         * precedente, et la legende restait petite et pale a mi-chemin. Avec
+         * `fromTo`, les deux bouts sont ecrits, le point de chute ne depend
+         * plus de l'instant ou on relance.
+         */
+        gsap.fromTo(
+          legende,
+          {
+            y: depart.top - arrivee.top,
+            scaleX: echelle,
+            scaleY: echelle,
+            opacity: 0.25,
+          },
+          {
+            y: 0,
+            scaleX: 1,
+            scaleY: 1,
+            opacity: 1,
+            duration: 0.45,
+            ease: 'power3.out',
+            overwrite: true,
+          },
+        );
       });
       return () => mm.revert();
     },
@@ -214,13 +240,25 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
         })}
       </div>
 
+      {/* Le nom du projet choisi, puis ce qu'il faut savoir avant d'ouvrir :
+          son rang, sa nature et son annee. Masque aux lecteurs d'ecran, la
+          tuile portant deja son nom et son `aria-current`. */}
       <p
         ref={legendeRef}
         className={styles.legende}
         style={{ ['--ink-actif' as string]: projet.palette.ink } as CSSProperties}
         aria-hidden="true"
       >
-        {projet.name}
+        <span ref={nomLegendeRef} className={styles.legendeNom}>
+          {projet.name}
+        </span>
+        <span className={styles.legendeMeta}>
+          {projet.index} / {PROJECTS.length.toString().padStart(2, '0')}
+          <i>·</i>
+          {projet.kind}
+          <i>·</i>
+          {projet.year}
+        </span>
       </p>
 
       {/* Le conseil parlait de fleches et d'Entree, ce qui ne veut rien dire
