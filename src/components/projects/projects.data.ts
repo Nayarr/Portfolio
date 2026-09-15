@@ -54,13 +54,20 @@ export type Project = {
 };
 
 /**
+ * `kind` et `role` sont lus par des recruteurs, pas par l'universite : pas de
+ * « SAE », pas de « S4 », aucun sigle qui ne veuille dire quelque chose qu'a
+ * l'UPEC. Un diplome se nomme, un module interne ne se nomme pas. Et pas
+ * d'abreviation non plus : « personnel » et non « perso », « developpement »
+ * et non « dev ». Ces deux champs sont ecrits en capitales a l'ecran, ou une
+ * abreviation se voit deux fois plus.
+ *
  * Du plus recent au plus vieux : un recruteur lit les premieres tuiles, elles
  * doivent porter le travail le plus frais. `index` suit l'ordre du tableau, il
  * est affiche tel quel sur la tuile et dans le compteur de la pellicule.
  *
  * En ajoutant un projet, l'inserer a sa place chronologique et renumeroter.
  * Chiron. passe devant ASSURFAST bien que tous deux soient de 2026 : le stage
- * s'est termine en juin, la SAE est de septembre.
+ * s'est termine en juin, le projet universitaire est de septembre.
  */
 export const PROJECTS: Project[] = [
   {
@@ -68,13 +75,13 @@ export const PROJECTS: Project[] = [
     index: '01',
     name: 'Chiron.',
     year: '2026',
-    kind: 'Projet universitaire, SAE BUT3, en equipe',
+    kind: 'Projet universitaire, en équipe',
     /**
      * Perimetre confirme. L'animation des dailies Scrum et le role de product
      * owner face au MOA ne sont pas encore arretes : a ajouter ici une fois
      * actes, c'est la part qui distingue le plus le profil.
      */
-    role: 'Dev, planification et documentation',
+    role: 'Développement, planification et documentation',
     stack: ['React 19', 'TypeScript', 'FastAPI', 'PostgreSQL', 'Docker', 'PyTorch'],
     pitch:
       'Plateforme de dossier patient qui réunit deux mondes d’imagerie qui ne se parlent pas : la radiologie DICOM et la biopsie numérisée. Une lame pèse de 100 Mo à plusieurs gigaoctets, donc elle est tuilée en pyramide DZI et servie au zoom. S’y ajoutent une segmentation de noyaux par IA en aide au diagnostic, et un compte rendu que le serveur force à suivre son protocole en quatre étapes.',
@@ -90,7 +97,7 @@ export const PROJECTS: Project[] = [
     index: '02',
     name: 'Portfolio',
     year: '2026',
-    kind: 'Perso, en ligne',
+    kind: 'Personnel, en ligne',
     role: 'Conception et développement, seul',
     stack: ['React 19', 'TypeScript', 'Vite', 'GSAP', 'CSS Modules'],
     pitch:
@@ -115,7 +122,7 @@ export const PROJECTS: Project[] = [
     index: '03',
     name: 'DASHBOARD',
     year: '2026',
-    kind: 'Perso, outil interne',
+    kind: 'Personnel, outil interne',
     role: 'Conception et développement, seul',
     stack: ['Python', 'Flask', 'SQLite', 'JavaScript natif', 'Playwright', 'Claude Code'],
     pitch:
@@ -139,7 +146,7 @@ export const PROJECTS: Project[] = [
     index: '04',
     name: 'ASSURFAST',
     year: '2026',
-    kind: 'Stage S4, seul profil technique',
+    kind: 'Stage, seul profil technique',
     role: 'Conception vers mise en production',
     stack: ['Extension Chrome', 'PaddleOCR', 'OpenCV', 'Flask', 'CI GitHub'],
     pitch:
