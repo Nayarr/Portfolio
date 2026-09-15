@@ -194,12 +194,9 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
 
   return (
     <div ref={wrapRef} className={styles.wrap}>
-      <p className={styles.kicker}>
-        02, Projets
-        <span className={styles.count}>
-          {PROJECTS[active].index} / {PROJECTS.length.toString().padStart(2, '0')}
-        </span>
-      </p>
+      {/* Plus de compteur ici : il est sous le nom du projet, la ou l'oeil se
+          pose. L'afficher aux deux bouts de l'ecran ne l'apprenait pas mieux. */}
+      <p className={styles.kicker}>02, Projets</p>
 
       <div
         ref={stripRef}
