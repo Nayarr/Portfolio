@@ -27,11 +27,38 @@
   pointer-events: none;
 }
 
+/**
+ * Deux colonnes : le titre a gauche, tout le contact a droite.
+ *
+ * Le mail et le telephone etaient sous le titre, dans la colonne de gauche.
+ * L'ecran se lisait donc en L, avec un grand vide en bas a droite et les deux
+ * profils isoles au-dessus. Reunir les quatre a droite donne un seul point de
+ * contact, et le titre recupere la hauteur que le mail occupait : le bloc
+ * entier etant centre verticalement, il redescend d'environ 70 px sans qu'on
+ * ait a le decaler a la main.
+ *
+ * `align-items: end` cale le bas du bloc de contact sur le bas du titre,
+ * l'oeil suit alors une ligne d'horizon commune.
+ */
 .inner {
   position: relative;
   width: 100%;
   max-width: 1180px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  column-gap: clamp(32px, 6vw, 80px);
+}
+.status {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+.title {
+  grid-column: 1;
+}
+.grid {
+  grid-column: 2;
 }
 
 .status {
@@ -48,7 +75,10 @@
 }
 
 .title {
-  margin: 28px 0 0;
+  /* Le titre descend : le mail et le telephone ne sont plus sous lui, et sans
+     cette respiration il restait colle a la pastille d'etat, tout en haut
+     d'une colonne devenue vide. */
+  margin: clamp(32px, 9vh, 110px) 0 0;
   font-family: var(--font-display);
   font-weight: 400;
   /* `16vh` en plus de `16vw` : sur un portable 1280 x 720, le titre seul
@@ -67,22 +97,19 @@
 
 .grid {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: flex-end;
-  gap: 40px;
+  text-align: right;
+  gap: 10px;
   /* Meme raison : la gouttiere se cale sur la hauteur disponible. */
   margin-top: clamp(32px, 8vh, 96px);
 }
 
-.primary {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
 .email {
   font-family: var(--font-display);
-  font-size: clamp(24px, 4vw, 40px);
+  /* Plus petit qu'avant : le mail partageait la largeur de l'ecran avec le
+     vide, il partage maintenant une ligne avec le titre geant. */
+  font-size: clamp(20px, 2.6vw, 34px);
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--dark-ink);
@@ -107,6 +134,10 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  /* Un filet separe ce qui joint Rayan de ce qui le montre. */
+  margin-top: 14px;
+  padding-top: 18px;
+  border-top: 1px solid var(--dark-line);
   gap: 16px;
   font-family: var(--font-mono);
   font-size: 13px;
@@ -129,8 +160,18 @@
   .contact {
     padding: var(--chrome-top) 24px var(--chrome-bottom);
   }
+  /* Une colonne : a 390 px il n'y a pas deux colonnes a tenir, et un bloc
+     aligne a droite sous un titre aligne a gauche se lit de travers. */
+  .inner {
+    display: block;
+  }
+  .grid {
+    align-items: flex-start;
+    text-align: left;
+  }
   .links {
     align-items: flex-start;
+    align-self: stretch;
   }
 
   /**
