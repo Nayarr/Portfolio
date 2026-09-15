@@ -122,33 +122,67 @@
 }
 
 /**
- * Le nom occupe la tuile, en grand, dans la couleur d'accent du projet.
- * `vertical-rl` puis rotation de 180 deg : le texte se lit du bas vers le
- * haut, sens le plus naturel pour une etiquette verticale.
+ * Le nom se lit droit, en pied de tuile.
+ *
+ * Il etait vertical et occupait toute la hauteur : imposant, mais il fallait
+ * pencher la tete pour le lire, et c'est la premiere chose qu'on demande a un
+ * visiteur sur l'ecran qui presente les projets. Il garde la couleur d'accent
+ * du projet, qui reste sa signature.
+ *
+ * Contre-echelle : la tuile est reduite horizontalement, le nom doit garder
+ * ses proportions, sinon les capitales d'Anton, deja etroites, se tassent.
+ * `nowrap` avec elle : la boite fait 120 px quelle que soit l'echelle, donc un
+ * retour a la ligne se calculerait sur une largeur que la tuile n'a pas.
  */
 .name {
   position: absolute;
-  inset: 14px 0 14px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  writing-mode: vertical-rl;
-  /* Contre-echelle : la tuile est reduite horizontalement, le nom doit garder
-     ses proportions, sinon les capitales d'Anton, deja etroites, se tassent. */
-  transform: rotate(180deg) scaleX(calc(1 / var(--ech, 0.6833)));
-  transition: transform 0.45s var(--ease-out);
+  left: 0;
+  right: 0;
+  bottom: 14px;
+  padding: 0 6px;
+  text-align: center;
+  transform: scaleX(calc(1 / var(--ech, 0.6833)));
+  transition:
+    transform 0.45s var(--ease-out),
+    opacity 0.3s var(--ease-out);
   font-family: var(--font-display);
-  /* Le nom doit remplir la tuile : c'est lui qui identifie le projet, pas la
-     vignette. Borne haute calee sur la largeur de tuile, 82 px, pour que les
-     capitales ne touchent pas les bords. */
-  font-size: clamp(26px, 3.4vw, 46px);
-  line-height: 1;
-  letter-spacing: 0.005em;
+  font-size: 14px;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--ink, #ffffff);
-  /* Le nom doit tenir dans la hauteur de la tuile, quel qu'il soit. */
-  overflow: hidden;
   white-space: nowrap;
+  overflow: hidden;
+}
+
+/**
+ * La tuile choisie n'affiche plus son nom : il est parti en bas de la
+ * pellicule, en grand. C'est la meme etiquette qui se deplace, pas une
+ * seconde qui apparait, et l'animation de la legende part d'ici.
+ */
+.tile.current .name {
+  opacity: 0;
+}
+
+/**
+ * Le nom du projet choisi, sous la pellicule, dans sa couleur d'accent.
+ * Il est annonce par la pellicule elle-meme (`aria-live` serait redondant
+ * avec `aria-current` sur la tuile), il n'est donc la que pour l'oeil.
+ */
+.legende {
+  position: relative;
+  margin: 22px 0 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(34px, 4.6vw, 56px);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--ink-actif, #ffffff);
+  /* Le point de depart de l'animation est le pied de la tuile, au-dessus :
+     l'echelle part de la, donc l'origine doit y etre aussi. */
+  transform-origin: 50% 0;
 }
 
 .idx {
@@ -163,7 +197,7 @@
 
 .hint {
   position: relative;
-  margin: 40px 0 0;
+  margin: 26px 0 0;
   text-align: center;
   font-family: var(--font-mono);
   font-size: 11px;
@@ -172,8 +206,30 @@
   color: #8b80b8;
 }
 
+/**
+ * Ecran court. La legende ajoute 78 px sous la pellicule, et le rappel, une
+ * seule ligne centree de pres de 840 px, passait deja sous la fleche
+ * « l'experience » posee en bas a droite : a 1280 x 700, les deux se
+ * recouvraient de 21 px avant meme cet ecran. On coupe le rappel clavier,
+ * qui ramene la ligne a 500 px, largement en deca du bouton, et on resserre
+ * la legende.
+ */
+@media (max-height: 760px) {
+  .legende {
+    margin-top: 16px;
+    font-size: clamp(30px, 4.4vh, 44px);
+  }
+  .hint {
+    margin-top: 18px;
+  }
+  .hintKeys {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .tile {
+  .tile,
+  .name {
     transition: none;
   }
 }
