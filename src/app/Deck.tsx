@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { gsap } from '@/lib/gsap';
-import { DeckProvider, type DeckApi } from '@/lib/deck';
+import { DeckProvider, PanneauProvider, type Capteur, type DeckApi } from '@/lib/deck';
 import { useWheelNavigation } from '@/lib/useWheelNavigation';
 import { SiteHeader } from '@/components/ui/SiteHeader';
 import { NextSlide } from '@/components/ui/NextSlide';
@@ -26,6 +26,15 @@ const TONS = ['clair', 'sombre', 'clair', 'clair', 'sombre'] as const;
 
 /** Duree d'une transition, et temps pendant lequel les gestes sont ignores. */
 const DUREE = 0.75;
+
+/**
+ * Temps d'attente apres un pas absorbe par un ecran. Il est plus court qu'une
+ * transition de diapo parce que la pellicule, elle, bouge en 450 ms, et il
+ * existe pour la meme raison que le verrou principal : sans lui, une seule
+ * poussee de pave tactile, qui emet des dizaines d'evenements, traverserait
+ * les sept projets d'un coup.
+ */
+const PAS_INTERNE = 420;
 
 /**
  * Le site est un diaporama : une diapo par ecran, un geste par diapo.
@@ -62,13 +71,46 @@ export function Deck() {
     document.documentElement.dataset.ton = TONS[index];
   }, [index]);
 
+  /**
+   * Une seule minuterie pour le verrou, partagee par le changement de diapo et
+   * le pas absorbe : deux minuteries sur la meme ref se seraient annulees
+   * l'une l'autre, celle qui tombe en dernier deverrouillant au mauvais
+   * moment.
+   */
+  const minuterieRef = useRef(0);
+  const verrouiller = useCallback((ms: number) => {
+    window.clearTimeout(minuterieRef.current);
+    verrouRef.current = true;
+    minuterieRef.current = window.setTimeout(() => {
+      verrouRef.current = false;
+    }, ms);
+  }, []);
+
+  /** Capteur de l'ecran visible, s'il en a pose un. */
+  const capteurRef = useRef<Capteur | null>(null);
+  const capter = useCallback((fn: Capteur | null) => {
+    capteurRef.current = fn;
+  }, []);
+
   const goTo = useCallback((cible: number) => {
     setIndex(() => Math.min(Math.max(cible, 0), ECRANS.length - 1));
   }, []);
 
+  /**
+   * Un pas de navigation. L'ecran visible a la priorite : tant que la
+   * pellicule des projets a des tuiles devant elle, la molette les parcourt et
+   * le diaporama ne bouge pas. Arrivee en butee, elle rend la main et le pas
+   * suivant change de diapo.
+   */
   const deplacer = useCallback(
-    (sens: number) => setIndex((i) => Math.min(Math.max(i + sens, 0), ECRANS.length - 1)),
-    [],
+    (sens: number) => {
+      if (capteurRef.current?.(sens)) {
+        verrouiller(PAS_INTERNE);
+        return;
+      }
+      setIndex((i) => Math.min(Math.max(i + sens, 0), ECRANS.length - 1));
+    },
+    [verrouiller],
   );
 
   const verrouille = useCallback(() => verrouRef.current, []);
@@ -97,13 +139,7 @@ export function Deck() {
      * en arriere-plan gele le rendu. Dans les deux cas la navigation restait
      * bloquee pour de bon. Une minuterie, elle, finit toujours par tomber.
      */
-    verrouRef.current = true;
-    const minuterie = window.setTimeout(
-      () => {
-        verrouRef.current = false;
-      },
-      reduit ? 0 : DUREE * 1000,
-    );
+    verrouiller(reduit ? 0 : DUREE * 1000);
 
     tweenRef.current = gsap.to(track, {
       x: -index * root.clientWidth,
@@ -113,11 +149,11 @@ export function Deck() {
     });
 
     return () => {
-      window.clearTimeout(minuterie);
+      window.clearTimeout(minuterieRef.current);
       tweenRef.current?.kill();
       verrouRef.current = false;
     };
-  }, [index]);
+  }, [index, verrouiller]);
 
   // Un redimensionnement change la largeur d'une diapo : on recale sans animer.
   // L'index est lu dans une ref pour ne pas re-observer a chaque changement.
@@ -134,7 +170,10 @@ export function Deck() {
     return () => observateur.disconnect();
   }, []);
 
-  const api = useMemo<DeckApi>(() => ({ index, count: ECRANS.length, goTo }), [index, goTo]);
+  const api = useMemo<DeckApi>(
+    () => ({ index, count: ECRANS.length, goTo, capter }),
+    [index, goTo, capter],
+  );
 
   return (
     <DeckProvider value={api}>
@@ -152,7 +191,9 @@ export function Deck() {
               aria-hidden={i !== index}
               inert={i !== index}
             >
-              <Ecran />
+              <PanneauProvider value={i}>
+                <Ecran />
+              </PanneauProvider>
             </div>
           ))}
         </div>
