@@ -68,24 +68,6 @@ export function Hub() {
                 </svg>
               </a>
             ))}
-            <a
-              href="https://instagram.com/rayan.ough"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Instagram"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                aria-hidden="true"
-              >
-                <rect x="3" y="3" width="18" height="18" rx="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-              </svg>
-            </a>
           </nav>
         </div>
       </div>
@@ -110,9 +92,15 @@ export function Hub() {
             </div>
           ))}
         </dl>
+        {/* Deux lignes explicites. Sur une seule, les trois informations se
+            suivaient separees par des virgules et la ligne se coupait la ou la
+            largeur tombait, pas la ou le sens change : on lisait un bloc
+            fouillis. Le quoi est maintenant au-dessus, le quand en dessous. */}
         <p className={styles.avail}>
           <span className={styles.availDot} aria-hidden="true" />
-          Dispo en alternance, 1 an, sept. 2026
+          <span className={styles.availTexte}>
+            <strong>Dispo en alternance</strong>1 an, à partir de sept. 2026
+          </span>
         </p>
       </aside>
     </section>

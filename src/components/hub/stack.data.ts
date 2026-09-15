@@ -48,6 +48,9 @@ export const STACK: Famille[] = [
       { nom: 'Prompt engineering', ton: 2 },
       { nom: 'Agents IA', ton: 1 },
       { nom: 'LLM', ton: 2 },
+      { nom: 'RAG', ton: 1 },
+      { nom: 'Embedding', ton: 1 },
+      { nom: 'Chunking', ton: 1 },
     ],
   },
   {

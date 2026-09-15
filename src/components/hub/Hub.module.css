@@ -185,7 +185,10 @@
   margin: 20px 0 0;
   padding-top: 16px;
   border-top: 1px solid var(--line);
-  max-width: 30ch;
+  /* Assez large pour que « 1 an, a partir de sept. 2026 » tienne d'un bloc :
+     la coupure doit venir du sens, pas de la place. Les capitales et
+     l'interlettrage rendent le `ch` optimiste, d'ou la marge. */
+  max-width: 38ch;
   font-family: var(--font-mono);
   font-size: 11px;
   line-height: 1.6;
@@ -193,6 +196,18 @@
   text-transform: uppercase;
   color: var(--ink-muted);
 }
+.availTexte {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+/* La disponibilite elle-meme porte, la date la precise : deux niveaux de
+   lecture plutot qu'une enfilade de virgules de meme poids. */
+.availTexte strong {
+  font-weight: 400;
+  color: var(--ink);
+}
+
 .availDot {
   width: 7px;
   height: 7px;

@@ -1,5 +1,6 @@
-import { useEffect, useRef, type KeyboardEvent } from 'react';
+import { useEffect, useRef, type CSSProperties, type KeyboardEvent } from 'react';
 
+import { gsap, useGSAP } from '@/lib/gsap';
 import { PROJECTS } from './projects.data';
 import styles from './Filmstrip.module.css';
 
@@ -34,6 +35,76 @@ function posFor(offset: number): number {
  */
 export function Filmstrip({ active, onActivate, onOpen }: Props) {
   const stripRef = useRef<HTMLDivElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const legendeRef = useRef<HTMLParagraphElement>(null);
+  const nomLegendeRef = useRef<HTMLSpanElement>(null);
+
+  /**
+   * Le nom de la tuile choisie descend en pied de pellicule.
+   *
+   * Chaque tuile porte son nom en petit, a son pied. Quand l'une devient
+   * active, le sien s'efface et la legende le reprend en grand, en partant de
+   * l'endroit exact qu'il occupait : une seule etiquette qui se deplace,
+   * plutot qu'une qui disparait et une autre qui apparait ailleurs.
+   *
+   * Les deux reperes sont mesures au vol. Celui de la tuile reste fiable
+   * pendant sa transition : une tuile ne se deplace qu'en X et ne change que
+   * d'echelle horizontale, son sommet ne bouge pas. Et la tuile active etant
+   * toujours centree, il n'y a pas d'ecart horizontal a rattraper.
+   */
+  useGSAP(
+    () => {
+      const legende = legendeRef.current;
+      const nomLegende = nomLegendeRef.current;
+      const nomTuile = stripRef.current?.querySelector<HTMLElement>(
+        `[data-tile-id="${PROJECTS[active].id}"] .${styles.name}`,
+      );
+      if (!legende || !nomLegende || !nomTuile) return;
+
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        /* Remise a plat avant de mesurer. Une frappe rapide au clavier
+           relance l'animation alors que la precedente court encore : sans ce
+           `set`, le repere d'arrivee serait pris sur une legende encore
+           reduite et decalee, et la suivante viserait cette position-la. */
+        gsap.set(legende, { clearProps: 'transform,opacity' });
+
+        const arrivee = nomLegende.getBoundingClientRect();
+        const depart = nomTuile.getBoundingClientRect();
+        if (!arrivee.height) return;
+        const echelle = depart.height / arrivee.height;
+
+        /**
+         * `fromTo` et non `from`. `from` anime depuis les valeurs donnees
+         * jusqu'a celles trouvees sur l'element : en enchainant les fleches,
+         * la nouvelle animation prenait pour arrivee l'etat a mi-course de la
+         * precedente, et la legende restait petite et pale a mi-chemin. Avec
+         * `fromTo`, les deux bouts sont ecrits, le point de chute ne depend
+         * plus de l'instant ou on relance.
+         */
+        gsap.fromTo(
+          legende,
+          {
+            y: depart.top - arrivee.top,
+            scaleX: echelle,
+            scaleY: echelle,
+            opacity: 0.25,
+          },
+          {
+            y: 0,
+            scaleX: 1,
+            scaleY: 1,
+            opacity: 1,
+            duration: 0.45,
+            ease: 'power3.out',
+            overwrite: true,
+          },
+        );
+      });
+      return () => mm.revert();
+    },
+    { dependencies: [active], scope: wrapRef },
+  );
 
   /** Deplace la selection et emmene le focus avec elle. */
   const moveTo = (index: number) => {
@@ -119,14 +190,13 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
     }
   };
 
+  const projet = PROJECTS[active];
+
   return (
-    <div className={styles.wrap}>
-      <p className={styles.kicker}>
-        02, Projets
-        <span className={styles.count}>
-          {PROJECTS[active].index} / {PROJECTS.length.toString().padStart(2, '0')}
-        </span>
-      </p>
+    <div ref={wrapRef} className={styles.wrap}>
+      {/* Plus de compteur ici : il est sous le nom du projet, la ou l'oeil se
+          pose. L'afficher aux deux bouts de l'ecran ne l'apprenait pas mieux. */}
+      <p className={styles.kicker}>02, Projets</p>
 
       <div
         ref={stripRef}
@@ -166,6 +236,27 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
           );
         })}
       </div>
+
+      {/* Le nom du projet choisi, puis ce qu'il faut savoir avant d'ouvrir :
+          son rang, sa nature et son annee. Masque aux lecteurs d'ecran, la
+          tuile portant deja son nom et son `aria-current`. */}
+      <p
+        ref={legendeRef}
+        className={styles.legende}
+        style={{ ['--ink-actif' as string]: projet.palette.ink } as CSSProperties}
+        aria-hidden="true"
+      >
+        <span ref={nomLegendeRef} className={styles.legendeNom}>
+          {projet.name}
+        </span>
+        <span className={styles.legendeMeta}>
+          {projet.index} / {PROJECTS.length.toString().padStart(2, '0')}
+          <i>·</i>
+          {projet.kind}
+          <i>·</i>
+          {projet.year}
+        </span>
+      </p>
 
       {/* Le conseil parlait de fleches et d'Entree, ce qui ne veut rien dire
           au doigt. Il decrit maintenant le geste, le clavier en complement. */}
