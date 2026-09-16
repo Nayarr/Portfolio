@@ -4,6 +4,15 @@ import { useEffect, useRef } from 'react';
 const SEUIL_MOLETTE = 42;
 /** Distance de doigt, horizontale, avant de changer de diapo. */
 const SEUIL_TACTILE = 50;
+/**
+ * Silence qui separe deux gestes de molette.
+ *
+ * Un pave tactile de Mac n'arrete pas d'emettre quand les doigts se levent :
+ * il continue pendant pres d'une seconde, avec des deltas qui decroissent,
+ * pour simuler l'inertie. Ces evenements-la appartiennent encore au geste
+ * precedent. En deca de ce silence, on est donc toujours dans le meme geste.
+ */
+const PAUSE_GESTE = 140;
 
 /**
  * Remonte les ancetres du point touche pour savoir si l'un d'eux peut encore
@@ -43,23 +52,64 @@ type Options = {
  */
 export function useWheelNavigation({ cible, onDeplacer, verrouille }: Options) {
   const cumul = useRef(0);
+  /** Date du dernier evenement de molette, pour reperer le debut d'un geste. */
+  const dernierWheel = useRef(0);
+  /** Vrai quand le geste en cours a deja fait avancer d'un cran. */
+  const gesteServi = useRef(false);
+  /** Plus grande amplitude vue depuis le debut du geste. */
+  const picGeste = useRef(0);
   const departTactile = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     const zone = cible.current;
     if (!zone) return;
 
+    /**
+     * Un balayage de pave tactile, un cran. Jamais deux.
+     *
+     * Le verrou seul ne suffisait pas : il tombe au bout de quelques centaines
+     * de millisecondes, alors que l'inertie d'un pave Mac emet encore pendant
+     * pres d'une seconde. La traine relancait donc un second cran toute seule,
+     * et un balayage franchissait deux projets.
+     *
+     * L'inertie se reconnait a son amplitude : elle demarre sous le pic du
+     * geste et ne fait que decroitre. Une molette qu'on continue de tourner,
+     * elle, envoie des crans d'amplitude constante. Apres un cran servi, on
+     * n'en accorde donc un autre que si l'amplitude revient a son pic, ce qui
+     * revient a exiger que l'utilisateur pousse encore. La traine, qui
+     * n'atteint jamais ce pic, ne passe pas ; la molette passe, et le verrou
+     * l'espace.
+     */
     const onWheel = (e: WheelEvent) => {
-      const sens = Math.sign(e.deltaY || e.deltaX);
+      /* Axe dominant, et non `deltaY || deltaX`. Un balayage lateral sur pave
+         tactile porte toujours un peu de vertical : un demi-pixel parasite
+         l'emportait sur les trente pixels horizontaux, et pouvait meme donner
+         le sens inverse de celui du doigt. */
+      const delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      const sens = Math.sign(delta);
       if (!sens) return;
       if (peutDefilerDedans(e.target, sens, zone)) return;
 
       e.preventDefault();
+
+      const maintenant = performance.now();
+      if (maintenant - dernierWheel.current > PAUSE_GESTE) {
+        cumul.current = 0;
+        gesteServi.current = false;
+        picGeste.current = 0;
+      }
+      dernierWheel.current = maintenant;
+
+      const amplitude = Math.abs(delta);
+      if (gesteServi.current && amplitude < picGeste.current) return;
+      picGeste.current = Math.max(picGeste.current, amplitude);
+
       if (verrouille()) return;
 
-      cumul.current += e.deltaY || e.deltaX;
+      cumul.current += delta;
       if (Math.abs(cumul.current) < SEUIL_MOLETTE) return;
       cumul.current = 0;
+      gesteServi.current = true;
       onDeplacer(sens);
     };
 
