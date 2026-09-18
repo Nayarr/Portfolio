@@ -115,7 +115,7 @@ export const PROJECTS: Project[] = [
     links: [],
     media: {
       src: neuralMedia,
-      alt: 'Le réseau en marche : une colonne de pixels à gauche, les neurones cachés au centre, les dix chiffres à droite avec leurs pourcentages, reliés par des traits violets et roses dont l’épaisseur varie.',
+      alt: 'L’outil en marche : à gauche le chiffre manuscrit à reconnaître, au centre le réseau avec ses pixels, ses neurones cachés et ses dix sorties reliés par des traits violets et roses, à droite la prédiction et la probabilité de chacun des dix chiffres.',
     },
     /* La DA du projet reprend les jetons du portfolio, avec le rose des poids
        inhibiteurs pour seul ajout. C'est donc lui qui distingue la tuile de

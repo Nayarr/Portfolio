@@ -72,7 +72,12 @@ export function Filmstrip({ active, onActivate, onOpen }: Props) {
         const arrivee = nomLegende.getBoundingClientRect();
         const depart = nomTuile.getBoundingClientRect();
         if (!arrivee.height) return;
-        const echelle = depart.height / arrivee.height;
+        /* Le rapport se prend sur les corps et non sur les hauteurs de bloc :
+           un nom qui s'empile sur deux lignes au pied de la tuile serait deux
+           fois trop haut, et l'animation partirait deux fois trop grande. */
+        const echelle =
+          parseFloat(getComputedStyle(nomTuile).fontSize) /
+          parseFloat(getComputedStyle(nomLegende).fontSize);
 
         /**
          * `fromTo` et non `from`. `from` anime depuis les valeurs donnees
