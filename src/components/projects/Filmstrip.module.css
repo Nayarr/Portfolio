@@ -122,17 +122,25 @@
  *
  * Contre-echelle : la tuile est reduite horizontalement, le nom doit garder
  * ses proportions, sinon les capitales d'Anton, deja etroites, se tassent.
- * `nowrap` avec elle : la boite fait 120 px quelle que soit l'echelle, donc un
- * retour a la ligne se calculerait sur une largeur que la tuile n'a pas.
+ *
+ * La boite, elle, suit la largeur *visible* de la tuile : 120 px multiplies
+ * par l'echelle. Sans ca elle mesurerait toujours 120 px et un nom long
+ * comme « Neural Network » debordait de chaque cote d'une tuile qui n'en fait
+ * que 82. Avec la bonne largeur, le nom se coupe tout seul et s'empile sur
+ * deux lignes, qui montent depuis le pied puisque le bloc y est ancre.
+ *
+ * L'echelle nette du nom vaut donc 1 : la boite est reduite par la tuile puis
+ * rendue par la contre-echelle, le texte se coupe et se dessine a la meme
+ * largeur que la tuile.
  */
 .name {
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 50%;
   bottom: 14px;
-  padding: 0 6px;
+  width: calc(120px * var(--ech, 0.6833));
+  padding: 0 5px;
   text-align: center;
-  transform: scaleX(calc(1 / var(--ech, 0.6833)));
+  transform: translateX(-50%) scaleX(calc(1 / var(--ech, 0.6833)));
   transition:
     transform 0.45s var(--ease-out),
     opacity 0.3s var(--ease-out);
@@ -142,17 +150,26 @@
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--ink, #ffffff);
-  white-space: nowrap;
-  overflow: hidden;
+  /* Coupure entre les mots, et sur le mot lui-meme s'il ne tient pas seul. */
+  overflow-wrap: anywhere;
 }
 
 /**
  * La tuile choisie n'affiche plus son nom : il est parti en bas de la
  * pellicule, en grand. C'est la meme etiquette qui se deplace, pas une
  * seconde qui apparait, et l'animation de la legende part d'ici.
+ *
+ * Disparition immediate et non fondue. La boite du nom suit la largeur de la
+ * tuile : en devenant active elle passe de 82 a 120 px, et un nom empile sur
+ * deux lignes se recollait alors en une seule, a 65 % d'opacite, soit en plein
+ * dans le fondu. En coupant la transition, le changement de largeur et
+ * l'effacement tombent sur la meme image et le recollement ne se voit pas. Le
+ * fondu reste a l'aller, quand la tuile cesse d'etre choisie et que son nom
+ * revient.
  */
 .tile.current .name {
   opacity: 0;
+  transition: transform 0.45s var(--ease-out);
 }
 
 /**

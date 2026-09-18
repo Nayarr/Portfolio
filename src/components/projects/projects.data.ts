@@ -1,4 +1,5 @@
 import assurfastLogo from './media/assurfast.png';
+import neuralMedia from './media/neural-network.jpg';
 import dashboardMedia from './media/dashboard.jpg';
 import portfolioMedia from './media/portfolio.jpg';
 import echoceanMedia from './media/echocean.jpg';
@@ -93,8 +94,37 @@ export const PROJECTS: Project[] = [
     palette: { from: '#1e2a3a', to: '#46586f', ink: '#10b981' },
   },
   {
-    id: 'portfolio',
+    id: 'neural-network',
     index: '02',
+    name: 'Neural Network',
+    year: '2026',
+    kind: 'Personnel, dans le navigateur',
+    role: 'Conception et développement, seul',
+    stack: ['Python', 'NumPy', 'JavaScript natif', 'Web Worker', 'Canvas'],
+    pitch:
+      'Un réseau de neurones écrit à la main, sans bibliothèque d’apprentissage : 784 pixels, 128 neurones cachés, 10 chiffres, avec ReLU, softmax et une rétropropagation posée ligne à ligne. D’abord en Python avec NumPy, puis porté en JavaScript nu pour qu’il s’entraîne dans le navigateur, dans un worker qui laisse la page réactive. L’écran montre le réseau en marche : les pixels qui comptent, les neurones qui s’allument, et chaque liaison dont l’épaisseur vaut le poids fois l’activation, violette quand elle excite, rose quand elle inhibe.',
+    /* Mesures faites sur l'outil : 4 000 iterations par lots de 512, alpha a
+       0,1, puis le bouton d'evaluation sur les 10 000 images de test. Le taux
+       est celui du jeu de test, pas celui du lot d'entrainement, qui est
+       toujours plus flatteur. */
+    metrics: [
+      { value: '96,2 %', label: 'sur les 10 000 images de test' },
+      { value: '0', label: 'bibliothèque d’apprentissage' },
+      { value: '83 s', label: 'd’entraînement, dans le navigateur' },
+    ],
+    links: [],
+    media: {
+      src: neuralMedia,
+      alt: 'L’outil en marche : à gauche le chiffre manuscrit à reconnaître, au centre le réseau avec ses pixels, ses neurones cachés et ses dix sorties reliés par des traits violets et roses, à droite la prédiction et la probabilité de chacun des dix chiffres.',
+    },
+    /* La DA du projet reprend les jetons du portfolio, avec le rose des poids
+       inhibiteurs pour seul ajout. C'est donc lui qui distingue la tuile de
+       celle du portfolio : fond sombre contre fond clair, rose contre blanc. */
+    palette: { from: '#140f2b', to: '#4a3f7a', ink: '#ff6b9d' },
+  },
+  {
+    id: 'portfolio',
+    index: '03',
     name: 'Portfolio',
     year: '2026',
     kind: 'Personnel, en ligne',
@@ -119,7 +149,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'dashboard',
-    index: '03',
+    index: '04',
     name: 'DASHBOARD',
     year: '2026',
     kind: 'Personnel, outil interne',
@@ -143,7 +173,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'assurfast',
-    index: '04',
+    index: '05',
     name: 'ASSURFAST',
     year: '2026',
     kind: 'Stage, seul profil technique',
@@ -169,7 +199,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'papyrus',
-    index: '05',
+    index: '06',
     name: 'Papyrus',
     year: '2025',
     kind: 'Projet universitaire, collaboratif',
@@ -190,7 +220,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'echocean',
-    index: '06',
+    index: '07',
     name: 'ECHOcean',
     year: '2025',
     kind: 'Projet universitaire',
@@ -208,7 +238,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'hubleau',
-    index: '07',
+    index: '08',
     name: 'Hubleau',
     year: '2025',
     kind: 'Projet universitaire',
