@@ -28,13 +28,16 @@ const TONS = ['clair', 'sombre', 'clair', 'clair', 'sombre'] as const;
 const DUREE = 0.75;
 
 /**
- * Temps d'attente apres un pas absorbe par un ecran. Il est plus court qu'une
- * transition de diapo parce que la pellicule, elle, bouge en 450 ms, et il
- * existe pour la meme raison que le verrou principal : sans lui, une seule
- * poussee de pave tactile, qui emet des dizaines d'evenements, traverserait
- * les sept projets d'un coup.
+ * Temps d'attente apres un pas absorbe par un ecran. Il existe pour la meme
+ * raison que le verrou principal : sans lui, une seule poussee de pave
+ * tactile, qui emet des dizaines d'evenements, traverserait tous les projets
+ * d'un coup.
+ *
+ * 300 ms et non 420 : l'inertie etant maintenant reconnue a sa decroissance,
+ * ce verrou n'a plus a la couvrir, il n'espace plus que de vrais gestes. A 420
+ * il bridait encore l'enchainement rapide de balayages.
  */
-const PAS_INTERNE = 420;
+const PAS_INTERNE = 300;
 
 /**
  * Le site est un diaporama : une diapo par ecran, un geste par diapo.
