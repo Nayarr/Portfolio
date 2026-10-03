@@ -73,30 +73,8 @@ export type Project = {
  */
 export const PROJECTS: Project[] = [
   {
-    id: 'rts-saas',
-    index: '01',
-    name: 'RTS SaaS',
-    year: '2026',
-    kind: 'Application métier, pour un atelier poids lourds',
-    role: 'Conception et développement, seul',
-    stack: ['React 19', 'TypeScript', 'Supabase', 'PostgreSQL', 'Tailwind 4', 'PWA'],
-    pitch:
-      'L’application qui fait tourner un atelier de poids lourds, de l’arrivée du camion à la facture : ordres de réparation, planning, devis signés en ligne, facturation, stock, location, pointage et congés. Elle remplace une application Firebase tenue dans un seul fichier. Trois publics, trois usages : le bureau garde l’écran ouvert toute la journée, le technicien n’a que son téléphone et les mains occupées, et le client transporteur signe son devis sans avoir de compte. La sécurité est posée dans la base plutôt que dans le code : chaque table a ses politiques, et le serveur reste seul juge de ce qu’un rôle peut lire.',
-    metrics: [
-      { value: '54', label: 'tables, 102 politiques de sécurité' },
-      { value: '516', label: 'tests automatisés, hors base de données' },
-      { value: '28', label: 'domaines métier, du devis au pointage' },
-    ],
-    links: [],
-    /* Le vert de la marque RTS, repris tel quel du theme de l'application.
-       Il porte la tuile au lieu de n'en etre que l'accent : l'ecran de
-       l'outil est blanc, un fond clair ne passerait pas dans la fiche, et le
-       vert plein est ce qui le distingue des huit autres. */
-    palette: { from: '#137017', to: '#4a9e52', ink: '#ffffff' },
-  },
-  {
     id: 'chiron',
-    index: '02',
+    index: '01',
     name: 'Chiron.',
     year: '2026',
     kind: 'Projet universitaire, en équipe',
@@ -122,6 +100,28 @@ export const PROJECTS: Project[] = [
        est inverse : l'ecran de Chiron est blanc, et la fiche derive son fond
        en melangeant `from` a 70 % avec du quasi-noir. */
     palette: { from: '#1e2a3a', to: '#46586f', ink: '#10b981' },
+  },
+  {
+    id: 'rts-saas',
+    index: '02',
+    name: 'RTS SaaS',
+    year: '2026',
+    kind: 'Application métier, pour un atelier poids lourds',
+    role: 'Conception et développement, seul',
+    stack: ['React 19', 'TypeScript', 'Supabase', 'PostgreSQL', 'Tailwind 4', 'PWA'],
+    pitch:
+      'L’application qui fait tourner un atelier de poids lourds, de l’arrivée du camion à la facture : ordres de réparation, planning, devis signés en ligne, facturation, stock, location, pointage et congés. Elle remplace une application Firebase tenue dans un seul fichier. Trois publics, trois usages : le bureau garde l’écran ouvert toute la journée, le technicien n’a que son téléphone et les mains occupées, et le client transporteur signe son devis sans avoir de compte. La sécurité est posée dans la base plutôt que dans le code : chaque table a ses politiques, et le serveur reste seul juge de ce qu’un rôle peut lire.',
+    metrics: [
+      { value: '54', label: 'tables, 102 politiques de sécurité' },
+      { value: '516', label: 'tests automatisés, hors base de données' },
+      { value: '28', label: 'domaines métier, du devis au pointage' },
+    ],
+    links: [],
+    /* Le vert de la marque RTS, repris tel quel du theme de l'application.
+       Il porte la tuile au lieu de n'en etre que l'accent : l'ecran de
+       l'outil est blanc, un fond clair ne passerait pas dans la fiche, et le
+       vert plein est ce qui le distingue des huit autres. */
+    palette: { from: '#137017', to: '#4a9e52', ink: '#ffffff' },
   },
   {
     id: 'neural-network',
