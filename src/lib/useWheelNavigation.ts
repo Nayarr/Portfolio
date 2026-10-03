@@ -13,6 +13,25 @@ const SEUIL_TACTILE = 50;
  * precedent. En deca de ce silence, on est donc toujours dans le meme geste.
  */
 const PAUSE_GESTE = 140;
+/**
+ * Amplitude minimale pour relancer un cran a l'interieur d'un geste.
+ *
+ * Elle ecarte la fin de traine, ou les deltas tombent a quelques dixiemes de
+ * pixel et ou deux valeurs consecutives finissent par etre egales. Un vrai
+ * coup de doigt depasse largement ce seuil des sa montee.
+ */
+const SEUIL_RELANCE = 15;
+/**
+ * Amplitude d'un cran de molette de souris plein.
+ *
+ * Une molette qu'on tourne sans s'arreter envoie des crans de meme taille,
+ * cent pixels le plus souvent : ils ne montent jamais, et la regle de la
+ * montee les bloquerait tous. Au-dessus de ce seuil, une amplitude qui se
+ * maintient suffit donc a relancer. L'inertie d'un pave, elle, ne se maintient
+ * pas : elle decroit a chaque evenement, et ses paliers, quand elle en a,
+ * arrivent bien plus bas.
+ */
+const CRAN_PLEIN = 50;
 
 /**
  * Remonte les ancetres du point touche pour savoir si l'un d'eux peut encore
@@ -56,8 +75,8 @@ export function useWheelNavigation({ cible, onDeplacer, verrouille }: Options) {
   const dernierWheel = useRef(0);
   /** Vrai quand le geste en cours a deja fait avancer d'un cran. */
   const gesteServi = useRef(false);
-  /** Plus grande amplitude vue depuis le debut du geste. */
-  const picGeste = useRef(0);
+  /** Amplitude de l'evenement precedent, pour voir si le doigt repousse. */
+  const amplitudePrecedente = useRef(0);
   const departTactile = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
@@ -72,13 +91,17 @@ export function useWheelNavigation({ cible, onDeplacer, verrouille }: Options) {
      * pres d'une seconde. La traine relancait donc un second cran toute seule,
      * et un balayage franchissait deux projets.
      *
-     * L'inertie se reconnait a son amplitude : elle demarre sous le pic du
-     * geste et ne fait que decroitre. Une molette qu'on continue de tourner,
-     * elle, envoie des crans d'amplitude constante. Apres un cran servi, on
-     * n'en accorde donc un autre que si l'amplitude revient a son pic, ce qui
-     * revient a exiger que l'utilisateur pousse encore. La traine, qui
-     * n'atteint jamais ce pic, ne passe pas ; la molette passe, et le verrou
-     * l'espace.
+     * L'inertie se reconnait a ceci qu'elle ne fait que decroitre. Apres un
+     * cran servi, on n'en accorde donc un autre que si l'amplitude remonte,
+     * c'est-a-dire si le doigt repousse.
+     *
+     * La comparaison porte sur l'evenement precedent et non sur le pic du
+     * geste. Avec le pic, un second balayage plus mou que le premier etait
+     * ignore tant que la traine du premier vivait : comme elle entretient le
+     * geste pendant pres de deux secondes, il fallait attendre qu'elle meure
+     * pour etre entendu. C'est le « cooldown » qu'on sentait au pave tactile.
+     * Compare au precedent, le moindre coup de doigt rompt la decroissance et
+     * passe aussitot.
      */
     const onWheel = (e: WheelEvent) => {
       /* Axe dominant, et non `deltaY || deltaX`. Un balayage lateral sur pave
@@ -96,13 +119,21 @@ export function useWheelNavigation({ cible, onDeplacer, verrouille }: Options) {
       if (maintenant - dernierWheel.current > PAUSE_GESTE) {
         cumul.current = 0;
         gesteServi.current = false;
-        picGeste.current = 0;
+        amplitudePrecedente.current = 0;
       }
       dernierWheel.current = maintenant;
 
+      /* Sous un cran plein, la comparaison est stricte : une traine finit par
+         rendre deux valeurs identiques, qui passeraient sinon pour une
+         relance. Au-dessus, le maintien suffit, pour la molette de souris. */
       const amplitude = Math.abs(delta);
-      if (gesteServi.current && amplitude < picGeste.current) return;
-      picGeste.current = Math.max(picGeste.current, amplitude);
+      const precedente = amplitudePrecedente.current;
+      amplitudePrecedente.current = amplitude;
+      const relance =
+        amplitude >= CRAN_PLEIN
+          ? amplitude >= precedente
+          : amplitude > precedente && amplitude >= SEUIL_RELANCE;
+      if (gesteServi.current && !relance) return;
 
       if (verrouille()) return;
 
