@@ -1,5 +1,6 @@
 import assurfastLogo from './media/assurfast.png';
 import chironMedia from './media/chiron.jpg';
+import rtsMedia from './media/rts-saas.jpg';
 import neuralMedia from './media/neural-network.jpg';
 import dashboardMedia from './media/dashboard.jpg';
 import portfolioMedia from './media/portfolio.jpg';
@@ -106,17 +107,21 @@ export const PROJECTS: Project[] = [
     index: '02',
     name: 'RTS SaaS',
     year: '2026',
-    kind: 'Application métier, pour un atelier poids lourds',
+    kind: 'Application métier, en freelance',
     role: 'Conception et développement, seul',
     stack: ['React 19', 'TypeScript', 'Supabase', 'PostgreSQL', 'Tailwind 4', 'PWA'],
     pitch:
-      'L’application qui fait tourner un atelier de poids lourds, de l’arrivée du camion à la facture : ordres de réparation, planning, devis signés en ligne, facturation, stock, location, pointage et congés. Elle remplace une application Firebase tenue dans un seul fichier. Trois publics, trois usages : le bureau garde l’écran ouvert toute la journée, le technicien n’a que son téléphone et les mains occupées, et le client transporteur signe son devis sans avoir de compte. La sécurité est posée dans la base plutôt que dans le code : chaque table a ses politiques, et le serveur reste seul juge de ce qu’un rôle peut lire.',
+      'Développée en freelance pour un atelier de poids lourds, l’application suit le camion de son arrivée jusqu’à la facture : ordres de réparation, planning, devis signés en ligne, facturation, stock, location, pointage et congés. Trois publics, trois usages : le bureau garde l’écran ouvert toute la journée, le technicien n’a que son téléphone et les mains occupées, et le client transporteur signe son devis sans avoir de compte. La sécurité est posée dans la base plutôt que dans le code : chaque table a ses politiques, et le serveur reste seul juge de ce qu’un rôle peut lire.',
     metrics: [
       { value: '54', label: 'tables, 102 politiques de sécurité' },
       { value: '516', label: 'tests automatisés, hors base de données' },
       { value: '28', label: 'domaines métier, du devis au pointage' },
     ],
     links: [],
+    media: {
+      src: rtsMedia,
+      alt: 'Le tableau de bord de la direction : les ordres de réparation par état, la liste de ce qui attend une action (devis, factures en retard, rappels, congés) et la charge de travail de chaque technicien.',
+    },
     /* Le vert de la marque RTS, repris tel quel du theme de l'application.
        Il porte la tuile au lieu de n'en etre que l'accent : l'ecran de
        l'outil est blanc, un fond clair ne passerait pas dans la fiche, et le
